@@ -12,6 +12,7 @@ public class CommandBarController extends TextField {
     public CommandBarController() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(COMMAND_BAR_LAYOUT_FXML));
         loader.setController(this);
+        loader.setRoot(this);
         try {
             loader.load();
         } catch (IOException e) {
