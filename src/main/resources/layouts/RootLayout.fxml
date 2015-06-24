@@ -6,8 +6,6 @@
 <?import javafx.scene.layout.BorderPane?>
 
 
-<BorderPane prefHeight="500.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40">
-   <bottom>
-      <TextField BorderPane.alignment="CENTER" />
-   </bottom>
-</BorderPane>
+<BorderPane id="root" prefHeight="500.0" prefWidth="500.0"
+	stylesheets="@../styles/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.40"
+	xmlns:fx="http://javafx.com/fxml/1" />
