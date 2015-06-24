@@ -28,8 +28,8 @@ public class MainApp extends Application {
         initPrimaryStage(primaryStage);
 
         // Add components to RootLayout
-        addOverview();
         addCommandBar();
+        addOverview();        
     }
 
     /**
