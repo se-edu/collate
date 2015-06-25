@@ -53,11 +53,19 @@ public class Logic {
     private static void handleEnterPress(String userInput) {
         Command command = new Command(userInput);
         executeCommand(command);
+
+        ArrayList<String> data = new ArrayList<String>();
+        int totalLines = 0;
         for (Author author : authors.values()) {
-            OverviewLayoutController.updateOverviewDisplay(author.getName() +
-                                                           ", total lines: " +
-                                                           author.getTotalLines());
+            totalLines += author.getTotalLines();
         }
+        for (Author author : authors.values()) {
+            int numLines = author.getTotalLines();
+            double percentage = (double) numLines / totalLines * 100;
+            data.add(author.getName() + ", total lines: " + numLines +
+                     ", percentage: " + String.format("%.2f", percentage) + "%");
+        }
+        OverviewLayoutController.updateOverviewDisplay(data, true);
     }
 
     private static void executeCommand(Command command) {
@@ -87,7 +95,8 @@ public class Logic {
         }
     }
 
-    private static void traverseDirectory(String directory, boolean willScanSubFolders) {
+    private static void traverseDirectory(String directory,
+                                          boolean willScanSubFolders) {
         File folder = new File(directory);
         traverseDirectory(folder, willScanSubFolders);
     }
@@ -104,7 +113,8 @@ public class Logic {
         }
     }
 
-    private static void traverseDirectory(File folder, boolean willScanSubFolders) {
+    private static void traverseDirectory(File folder,
+                                          boolean willScanSubFolders) {
         for (File file : folder.listFiles()) {
             if (willScanSubFolders && file.isDirectory()) {
                 traverseDirectory(file, willScanSubFolders);

@@ -32,11 +32,17 @@ public class OverviewLayoutController extends StackPane {
         overviewList.setItems(obsList);
     }
     
-    public static void updateOverviewDisplay(ArrayList<String> stats) {
+    public static void updateOverviewDisplay(ArrayList<String> stats, boolean clearAll) {
+        if (clearAll) {
+            obsList.clear();
+        }
         obsList.addAll(stats);
     }
     
-    public static void updateOverviewDisplay(String stat) {
+    public static void updateOverviewDisplay(String stat, boolean clearAll) {
+        if (clearAll) {
+            obsList.clear();
+        }
         obsList.add(stat);
     }
 }
