@@ -5,16 +5,19 @@ import java.util.Arrays;
 
 public class CommandParser {
     
+    private static final String DIRECTORY_KEYWORD = "from";
     private static final String STRING_ONE_SPACE = " ";
     
     public CommandParser() {
     }
 
     public String getDirectory(String arguments) {
-        ArrayList<String> argArray = splitArguments(arguments);
-        if (argArray.contains("from")) {
-            int directoryIndex = argArray.indexOf("from") + 1;
-            return argArray.get(directoryIndex);
+        if (arguments != null) {
+            ArrayList<String> argArray = splitArguments(arguments);
+            if (argArray.contains(DIRECTORY_KEYWORD)) {
+                int directoryIndex = argArray.indexOf(DIRECTORY_KEYWORD) + 1;
+                return argArray.get(directoryIndex);
+            }
         }
         return null;
     }
