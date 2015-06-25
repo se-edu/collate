@@ -15,6 +15,7 @@ public class CodeSnippet {
         this.fileLocation = fileLocation;
         this.language = language;
         this.lines = new ArrayList<String>();
+        author.addCodeSnippet(this);
     }
     
     public void addLine(String line) {

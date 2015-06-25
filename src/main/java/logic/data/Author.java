@@ -9,6 +9,7 @@ public class Author {
     
     public Author(String name) {
         this.name = name;
+        this.codeSnippets = new ArrayList<CodeSnippet>();
     }
     
     public String getName() {
