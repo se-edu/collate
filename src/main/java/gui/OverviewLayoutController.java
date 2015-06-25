@@ -35,4 +35,8 @@ public class OverviewLayoutController extends StackPane {
     public static void updateOverviewDisplay(ArrayList<String> stats) {
         obsList.addAll(stats);
     }
+    
+    public static void updateOverviewDisplay(String stat) {
+        obsList.add(stat);
+    }
 }

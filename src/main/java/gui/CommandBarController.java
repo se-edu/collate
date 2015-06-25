@@ -1,13 +1,12 @@
 package main.java.gui;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import main.java.logic.Logic;
 
 public class CommandBarController extends TextField {
 
@@ -29,14 +28,9 @@ public class CommandBarController extends TextField {
         this.setText(text);
         this.selectAll();
     }
-    
+
     @FXML
     public void onKeyPress(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER){
-            ArrayList<String> array = new ArrayList<String>();
-            array.add(this.getText());
-            OverviewLayoutController.updateOverviewDisplay(array);
-            this.clear();
-        }
+        Logic.handleKeyPress(this, event.getCode(), this.getText());
     }
 }
