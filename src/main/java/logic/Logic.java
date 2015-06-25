@@ -77,16 +77,18 @@ public class Logic {
 
     private static void handleCollate(String arguments) {
         String directory = commandParser.getDirectory(arguments);
+        boolean hasRecursionFlag = commandParser.hasRecursionFlag(arguments);
+        
         if (directory != null) {
             authors = new HashMap<String, Author>(INITIAL_NUM_CONTRIBUTORS);
-            traverseDirectory(directory);
+            traverseDirectory(directory, hasRecursionFlag);
             saveCollatedFiles();
         }
     }
 
-    private static void traverseDirectory(String directory) {
+    private static void traverseDirectory(String directory, boolean willScanSubFolders) {
         File folder = new File(directory);
-        traverseDirectory(folder);
+        traverseDirectory(folder, willScanSubFolders);
     }
 
     private static void saveCollatedFiles() {
@@ -101,11 +103,11 @@ public class Logic {
         }
     }
 
-    private static void traverseDirectory(File folder) {
+    private static void traverseDirectory(File folder, boolean willScanSubFolders) {
         for (File file : folder.listFiles()) {
-            if (file.isDirectory()) {
-                traverseDirectory(file);
-            } else if (getFileExtension(file).equals("java")) {
+            if (willScanSubFolders && file.isDirectory()) {
+                traverseDirectory(file, willScanSubFolders);
+            } else if (file.isFile() && getFileExtension(file).equals("java")) {
                 logger.log(Level.INFO, "Found file: " + file);
                 collateFile(file);
             }
@@ -157,6 +159,6 @@ public class Logic {
         if (idxLastPeriod != -1) {
             return file.getName().substring(idxLastPeriod + 1);
         }
-        return null;
+        return "";
     }
 }
