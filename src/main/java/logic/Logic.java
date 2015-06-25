@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,11 +15,13 @@ import main.java.gui.OverviewLayoutController;
 import main.java.logic.data.Author;
 import main.java.logic.data.CodeSnippet;
 import main.java.logic.parser.CommandParser;
+import main.java.storage.CollatedFilesStorage;
 
 public class Logic {
 
     private static Logger logger;
     private static CommandParser commandParser;
+    private static CollatedFilesStorage collatedFilesStorage;
     private static HashMap<String, Author> authors;
 
     private static final String LOG_TAG = "Logic";
@@ -28,6 +31,7 @@ public class Logic {
     static {
         logger = Logger.getLogger(LOG_TAG);
         commandParser = new CommandParser();
+        collatedFilesStorage = new CollatedFilesStorage();
         authors = new HashMap<String, Author>(INITIAL_NUM_CONTRIBUTORS);
     }
 
@@ -49,9 +53,9 @@ public class Logic {
         Command command = new Command(userInput);
         executeCommand(command);
         for (Author author : authors.values()) {
-            for (CodeSnippet codeSnippet : author.getCodeSnippets()) {
-                OverviewLayoutController.updateOverviewDisplay(codeSnippet.toString());
-            }
+            OverviewLayoutController.updateOverviewDisplay(author.getName() +
+                                                           ", total lines: " +
+                                                           author.getTotalLines());
         }
     }
 
@@ -74,13 +78,27 @@ public class Logic {
     private static void handleCollate(String arguments) {
         String directory = commandParser.getDirectory(arguments);
         if (directory != null) {
+            authors = new HashMap<String, Author>(INITIAL_NUM_CONTRIBUTORS);
             traverseDirectory(directory);
+            saveCollatedFiles();
         }
     }
 
     private static void traverseDirectory(String directory) {
         File folder = new File(directory);
         traverseDirectory(folder);
+    }
+
+    private static void saveCollatedFiles() {
+        for (Author author : authors.values()) {
+            ArrayList<String> collatedLines = new ArrayList<String>();
+            collatedLines.add("#" + author.getName());
+            for (CodeSnippet codeSnippet : author.getCodeSnippets()) {
+                collatedLines.add(codeSnippet.toString());
+            }
+            collatedFilesStorage.addCollatedFile(author.getName(),
+                                                 collatedLines);
+        }
     }
 
     private static void traverseDirectory(File folder) {
@@ -109,6 +127,7 @@ public class Logic {
                     if (!authors.containsKey(authorName)) {
                         currentAuthor = new Author(authorName);
                         authors.put(authorName, currentAuthor);
+                        logger.log(Level.INFO, "New author created");
                     } else {
                         currentAuthor = authors.get(authorName);
                     }
@@ -122,6 +141,7 @@ public class Logic {
 
                 line = reader.readLine();
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
