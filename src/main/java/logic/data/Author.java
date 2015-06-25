@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Author {
     private String name;
     private ArrayList<CodeSnippet> codeSnippets;
-    private int totalLines;
     
     public Author(String name) {
         this.name = name;
@@ -21,6 +20,10 @@ public class Author {
     }
     
     public int getTotalLines() {
+        int totalLines = 0;
+        for (CodeSnippet codeSnippet : codeSnippets) {
+            totalLines += codeSnippet.getNumLines();
+        }
         return totalLines;
     }
     
