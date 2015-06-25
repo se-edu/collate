@@ -1,6 +1,7 @@
 package main.java.gui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +16,7 @@ public class OverviewLayoutController extends StackPane {
 
     private static final String OVERVIEW_LAYOUT_FXML = "/main/resources/layouts/Overview.fxml";
     
-    private ObservableList<String> obsList = FXCollections.observableArrayList();
+    private static ObservableList<String> obsList = FXCollections.observableArrayList();
 
     public OverviewLayoutController() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(OVERVIEW_LAYOUT_FXML));
@@ -31,7 +32,7 @@ public class OverviewLayoutController extends StackPane {
         overviewList.setItems(obsList);
     }
     
-    public void updateOverviewDisplay(ObservableList<String> stats) {
+    public static void updateOverviewDisplay(ArrayList<String> stats) {
         obsList.addAll(stats);
     }
 }
