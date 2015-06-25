@@ -1,4 +1,33 @@
 # Sebastian Quek
+###### CommandBarController.java
+```java
+public class CommandBarController extends TextField {
+
+    private static final String COMMAND_BAR_LAYOUT_FXML = "/main/resources/layouts/CommandBar.fxml";
+
+    public CommandBarController() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(COMMAND_BAR_LAYOUT_FXML));
+        loader.setController(this);
+        loader.setRoot(this);
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public CommandBarController(String text) {
+        this();
+        this.setText(text);
+        this.selectAll();
+    }
+
+    @FXML
+    public void onKeyPress(KeyEvent event) {
+        Logic.handleKeyPress(this, event.getCode(), this.getText());
+    }
+}
+```
 ###### MainApp.java
 ```java
 public class MainApp extends Application {
@@ -55,6 +84,45 @@ public class MainApp extends Application {
 
     private void addCommandBar() {
         rootLayout.setBottom(new CommandBarController(COMMAND_BAR_DEFAULT_TEXT));
+    }
+}
+```
+###### OverviewLayoutController.java
+```java
+public class OverviewLayoutController extends StackPane {
+    @FXML
+    private ListView<String> overviewList;
+
+    private static final String OVERVIEW_LAYOUT_FXML = "/main/resources/layouts/Overview.fxml";
+    
+    private static ObservableList<String> obsList = FXCollections.observableArrayList();
+
+    public OverviewLayoutController() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(OVERVIEW_LAYOUT_FXML));
+        loader.setController(this);
+        loader.setRoot(this);
+
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        overviewList.setItems(obsList);
+    }
+    
+    public static void updateOverviewDisplay(ArrayList<String> stats, boolean clearAll) {
+        if (clearAll) {
+            obsList.clear();
+        }
+        obsList.addAll(stats);
+    }
+    
+    public static void updateOverviewDisplay(String stat, boolean clearAll) {
+        if (clearAll) {
+            obsList.clear();
+        }
+        obsList.add(stat);
     }
 }
 ```
