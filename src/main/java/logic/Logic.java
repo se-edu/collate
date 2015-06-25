@@ -94,7 +94,7 @@ public class Logic {
     private static void saveCollatedFiles() {
         for (Author author : authors.values()) {
             ArrayList<String> collatedLines = new ArrayList<String>();
-            collatedLines.add("#" + author.getName());
+            collatedLines.add("# " + author.getName());
             for (CodeSnippet codeSnippet : author.getCodeSnippets()) {
                 collatedLines.add(codeSnippet.toString());
             }
