@@ -98,7 +98,11 @@ public class Logic {
     private static void traverseDirectory(String directory,
                                           boolean willScanSubFolders) {
         File folder = new File(directory);
-        traverseDirectory(folder, willScanSubFolders);
+        if (folder.isFile()) {
+            collateFile(folder);
+        } else {
+            traverseDirectory(folder, willScanSubFolders);
+        }
     }
 
     private static void saveCollatedFiles() {
@@ -161,6 +165,9 @@ public class Logic {
     }
 
     private static String getRelativePath(String path) {
+        if (path.equals(rootDirectory)) {
+            return path.substring(path.lastIndexOf("\\") + 1);
+        }
         return path.replace(rootDirectory, "").substring(1);
     }
 

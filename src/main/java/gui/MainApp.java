@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+//@author Sebastian Quek
 public class MainApp extends Application {
 
     private static final String ROOT_LAYOUT_FXML = "/main/resources/layouts/RootLayout.fxml";
