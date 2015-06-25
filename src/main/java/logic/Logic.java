@@ -23,6 +23,7 @@ public class Logic {
     private static CommandParser commandParser;
     private static CollatedFilesStorage collatedFilesStorage;
     private static HashMap<String, Author> authors;
+    private static String rootDirectory;
 
     private static final String LOG_TAG = "Logic";
     private static final int INITIAL_NUM_CONTRIBUTORS = 5;
@@ -76,12 +77,12 @@ public class Logic {
     // ================================================================
 
     private static void handleCollate(String arguments) {
-        String directory = commandParser.getDirectory(arguments);
+        rootDirectory = commandParser.getDirectory(arguments);
         boolean hasRecursionFlag = commandParser.hasRecursionFlag(arguments);
         
-        if (directory != null) {
+        if (rootDirectory != null) {
             authors = new HashMap<String, Author>(INITIAL_NUM_CONTRIBUTORS);
-            traverseDirectory(directory, hasRecursionFlag);
+            traverseDirectory(rootDirectory, hasRecursionFlag);
             saveCollatedFiles();
         }
     }
@@ -135,7 +136,7 @@ public class Logic {
                     }
 
                     currentSnippet = new CodeSnippet(currentAuthor,
-                                                     file.getPath(),
+                                                     getRelativePath(file.getPath()),
                                                      "java");
                 } else if (currentSnippet != null) {
                     currentSnippet.addLine(line);
@@ -147,6 +148,10 @@ public class Logic {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static String getRelativePath(String path) {
+        return path.replace(rootDirectory, "").substring(1);
     }
 
     private static String findAuthorName(String line) {
