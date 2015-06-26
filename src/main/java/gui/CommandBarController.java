@@ -12,8 +12,9 @@ import main.java.logic.Logic;
 public class CommandBarController extends TextField {
 
     private static final String COMMAND_BAR_LAYOUT_FXML = "/main/resources/layouts/CommandBar.fxml";
+    private Logic logic;
 
-    public CommandBarController() {
+    public CommandBarController(Logic logic) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(COMMAND_BAR_LAYOUT_FXML));
         loader.setController(this);
         loader.setRoot(this);
@@ -22,16 +23,17 @@ public class CommandBarController extends TextField {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.logic = logic;
     }
 
-    public CommandBarController(String text) {
-        this();
+    public CommandBarController(String text, Logic logic) {
+        this(logic);
         this.setText(text);
         this.selectAll();
     }
 
     @FXML
     public void onKeyPress(KeyEvent event) {
-        Logic.handleKeyPress(this, event.getCode(), this.getText());
+        logic.handleKeyPress(this, event.getCode(), this.getText());
     }
 }
