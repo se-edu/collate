@@ -51,9 +51,13 @@ public class Logic {
     // ================================================================
 
     private void handleEnterPress(String userInput) {
-        Command command = new Command(userInput);
+        Command command = commandParser.parse(userInput);
         executeCommand(command);
 
+        updateOverviewDisplay();
+    }
+
+    private void updateOverviewDisplay() {
         ArrayList<String> data = new ArrayList<String>();
         int totalLines = 0;
         for (Author author : authors.values()) {
@@ -71,7 +75,8 @@ public class Logic {
     private void executeCommand(Command command) {
         switch (command.getCommandType()) {
             case COLLATE :
-                handleCollate(command.getArguments());
+                logger.log(Level.INFO, "Collate command detected");
+                handleCollate(command);
                 break;
             case INVALID :
             default :
@@ -84,24 +89,39 @@ public class Logic {
     // Collate methods
     // ================================================================
 
-    private void handleCollate(String arguments) {
-        rootDirectory = commandParser.getDirectory(arguments);
-        boolean hasRecursionFlag = commandParser.hasRecursionFlag(arguments);
+    private void handleCollate(Command command) {
+        rootDirectory = command.getDirectory();
+        boolean willScanCurrentDirOnly = command.willScanCurrentDirOnly();
 
         if (rootDirectory != null) {
             authors = new HashMap<String, Author>(INITIAL_NUM_CONTRIBUTORS);
-            traverseDirectory(rootDirectory, hasRecursionFlag);
+            traverseDirectory(rootDirectory, willScanCurrentDirOnly);
             saveCollatedFiles();
         }
     }
 
-    private void traverseDirectory(String directory, boolean willScanSubFolders) {
+    private void traverseDirectory(String directory,
+                                   boolean willScanCurrentDirOnly) {
         File folder = new File(directory);
-        if (folder.isFile()) {
-            collateFile(folder);
-        } else {
-            traverseDirectory(folder, willScanSubFolders);
+        if (folder.exists()) {
+            if (folder.isFile()) {
+                collateFile(folder);
+            } else {
+                traverseDirectory(folder, willScanCurrentDirOnly);
+            }
         }
+    }
+
+    private void traverseDirectory(File folder, boolean willScanCurrentDirOnly) {
+        for (File file : folder.listFiles()) {
+            if (!willScanCurrentDirOnly && file.isDirectory()) {
+                traverseDirectory(file, willScanCurrentDirOnly);
+            } else if (file.isFile() && getFileExtension(file).equals("java")) {
+                logger.log(Level.INFO, "Found file: " + file);
+                collateFile(file);
+            }
+        }
+
     }
 
     private void saveCollatedFiles() {
@@ -116,16 +136,6 @@ public class Logic {
         }
     }
 
-    private void traverseDirectory(File folder, boolean willScanSubFolders) {
-        for (File file : folder.listFiles()) {
-            if (willScanSubFolders && file.isDirectory()) {
-                traverseDirectory(file, willScanSubFolders);
-            } else if (file.isFile() && getFileExtension(file).equals("java")) {
-                logger.log(Level.INFO, "Found file: " + file);
-                collateFile(file);
-            }
-        }
-    }
 
     private void collateFile(File file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
