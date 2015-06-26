@@ -27,7 +27,7 @@ public class Logic {
 
     private static final String LOG_TAG = "Logic";
     private static final int INITIAL_NUM_CONTRIBUTORS = 5;
-    private static final String JAVA_AUTHOR_TAG = "@author";
+    private static final String AUTHOR_TAG = "@author";
 
     public Logic() {
         logger = Logger.getLogger(LOG_TAG);
@@ -138,8 +138,8 @@ public class Logic {
 
             while (line != null) {
 
-                if (line.contains(JAVA_AUTHOR_TAG)) {
-                    String authorName = findAuthorName(line, JAVA_AUTHOR_TAG);
+                if (line.contains(AUTHOR_TAG)) {
+                    String authorName = findAuthorName(line, AUTHOR_TAG);
                     logger.log(Level.INFO, "Found author: " + authorName);
 
                     if (!authors.containsKey(authorName)) {
@@ -174,7 +174,7 @@ public class Logic {
 
     private String findAuthorName(String line, String authorTag) {
         String[] split = line.split(authorTag);
-        return split[1].trim();
+        return split[1].replaceAll("[^ a-zA-Z0-9]+", "").trim();
     }
 
     private String getFileExtension(File file) {
