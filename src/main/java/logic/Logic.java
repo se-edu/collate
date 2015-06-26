@@ -57,6 +57,18 @@ public class Logic {
         updateOverviewDisplay();
     }
 
+    private void executeCommand(Command command) {
+        switch (command.getCommandType()) {
+            case COLLATE :
+                logger.log(Level.INFO, "Collate command detected");
+                handleCollate(command);
+                break;
+            case INVALID :
+            default :
+                break;
+        }
+    }
+    
     private void updateOverviewDisplay() {
         ArrayList<String> data = new ArrayList<String>();
         int totalLines = 0;
@@ -72,18 +84,6 @@ public class Logic {
         OverviewLayoutController.updateOverviewDisplay(data, true);
     }
 
-    private void executeCommand(Command command) {
-        switch (command.getCommandType()) {
-            case COLLATE :
-                logger.log(Level.INFO, "Collate command detected");
-                handleCollate(command);
-                break;
-            case INVALID :
-            default :
-                break;
-        }
-    }
-
 
     // ================================================================
     // Collate methods
@@ -95,33 +95,26 @@ public class Logic {
 
         if (rootDirectory != null) {
             authors = new HashMap<String, Author>(INITIAL_NUM_CONTRIBUTORS);
-            traverseDirectory(rootDirectory, willScanCurrentDirOnly);
+            traverseDirectory(new File(rootDirectory), willScanCurrentDirOnly);
             saveCollatedFiles();
         }
     }
 
-    private void traverseDirectory(String directory,
-                                   boolean willScanCurrentDirOnly) {
-        File folder = new File(directory);
+    private void traverseDirectory(File folder, boolean willScanCurrentDirOnly) {
         if (folder.exists()) {
             if (folder.isFile()) {
-                collateFile(folder);
-            } else {
-                traverseDirectory(folder, willScanCurrentDirOnly);
+                collateFile(folder, getFileExtension(folder));
+            } else if (folder.isDirectory()) {
+                for (File file : folder.listFiles()) {
+                    if (!willScanCurrentDirOnly && file.isDirectory()) {
+                        traverseDirectory(file, willScanCurrentDirOnly);
+                    } else if (file.isFile()) {
+                        logger.log(Level.INFO, "Found file: " + file);
+                        collateFile(file, getFileExtension(file));
+                    }
+                }
             }
         }
-    }
-
-    private void traverseDirectory(File folder, boolean willScanCurrentDirOnly) {
-        for (File file : folder.listFiles()) {
-            if (!willScanCurrentDirOnly && file.isDirectory()) {
-                traverseDirectory(file, willScanCurrentDirOnly);
-            } else if (file.isFile() && getFileExtension(file).equals("java")) {
-                logger.log(Level.INFO, "Found file: " + file);
-                collateFile(file);
-            }
-        }
-
     }
 
     private void saveCollatedFiles() {
@@ -137,7 +130,7 @@ public class Logic {
     }
 
 
-    private void collateFile(File file) {
+    private void collateFile(File file, String extension) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line = reader.readLine();
             Author currentAuthor = null;
@@ -146,7 +139,7 @@ public class Logic {
             while (line != null) {
 
                 if (line.contains(JAVA_AUTHOR_TAG)) {
-                    String authorName = findAuthorName(line);
+                    String authorName = findAuthorName(line, JAVA_AUTHOR_TAG);
                     logger.log(Level.INFO, "Found author: " + authorName);
 
                     if (!authors.containsKey(authorName)) {
@@ -159,7 +152,7 @@ public class Logic {
 
                     currentSnippet = new CodeSnippet(currentAuthor,
                                                      getRelativePath(file.getPath()),
-                                                     "java");
+                                                     extension);
                 } else if (currentSnippet != null) {
                     currentSnippet.addLine(line);
                 }
@@ -179,8 +172,8 @@ public class Logic {
         return path.replace(rootDirectory, "").substring(1);
     }
 
-    private String findAuthorName(String line) {
-        String[] split = line.split(JAVA_AUTHOR_TAG);
+    private String findAuthorName(String line, String authorTag) {
+        String[] split = line.split(authorTag);
         return split[1].trim();
     }
 
