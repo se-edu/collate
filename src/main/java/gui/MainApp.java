@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import main.java.logic.Logic;
 
 //@author Sebastian Quek
 public class MainApp extends Application {
@@ -27,10 +28,12 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         initRootLayout();
         initPrimaryStage(primaryStage);
+        
+        Logic logic = initLogic();
 
         // Add components to RootLayout
-        addCommandBar();
-        addOverview();        
+        addCommandBar(logic);
+        addOverview();
     }
 
     /**
@@ -56,12 +59,16 @@ public class MainApp extends Application {
         this.primaryStage.setScene(new Scene(rootLayout));
         this.primaryStage.show();
     }
+    
+    private Logic initLogic() {
+        return new Logic();       
+    }
 
     private void addOverview() {
         rootLayout.setCenter(new OverviewLayoutController());
     }
 
-    private void addCommandBar() {
-        rootLayout.setBottom(new CommandBarController(COMMAND_BAR_DEFAULT_TEXT));
+    private void addCommandBar(Logic logic) {
+        rootLayout.setBottom(new CommandBarController(COMMAND_BAR_DEFAULT_TEXT, logic));
     }
 }
