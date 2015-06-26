@@ -68,7 +68,7 @@ public class Logic {
                 break;
         }
     }
-    
+
     private void updateOverviewDisplay() {
         ArrayList<String> data = new ArrayList<String>();
         int totalLines = 0;
@@ -92,28 +92,46 @@ public class Logic {
     private void handleCollate(Command command) {
         rootDirectory = command.getDirectory();
         boolean willScanCurrentDirOnly = command.willScanCurrentDirOnly();
+        ArrayList<String> fileTypes = command.getFileTypes();
 
         if (rootDirectory != null) {
             authors = new HashMap<String, Author>(INITIAL_NUM_CONTRIBUTORS);
-            traverseDirectory(new File(rootDirectory), willScanCurrentDirOnly);
+            traverseDirectory(new File(rootDirectory),
+                              willScanCurrentDirOnly,
+                              fileTypes);
             saveCollatedFiles();
         }
     }
 
-    private void traverseDirectory(File folder, boolean willScanCurrentDirOnly) {
+    private void traverseDirectory(File folder,
+                                   boolean willScanCurrentDirOnly,
+                                   ArrayList<String> fileTypes) {
         if (folder.exists()) {
             if (folder.isFile()) {
                 collateFile(folder, getFileExtension(folder));
             } else if (folder.isDirectory()) {
                 for (File file : folder.listFiles()) {
                     if (!willScanCurrentDirOnly && file.isDirectory()) {
-                        traverseDirectory(file, willScanCurrentDirOnly);
-                    } else if (file.isFile()) {
+                        traverseDirectory(file,
+                                          willScanCurrentDirOnly,
+                                          fileTypes);
+                    } else if (file.isFile() &&
+                               hasIncludedFileType(fileTypes,
+                                                   getFileExtension(file))) {
                         logger.log(Level.INFO, "Found file: " + file);
                         collateFile(file, getFileExtension(file));
                     }
                 }
             }
+        }
+    }
+
+    private boolean hasIncludedFileType(ArrayList<String> fileTypes,
+                                        String fileExtension) {
+        if (fileTypes.isEmpty() || fileTypes.contains(fileExtension)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
