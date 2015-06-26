@@ -1,5 +1,7 @@
 package main.java.logic;
 
+import java.util.ArrayList;
+
 public class Command {
     public static enum Type {
         COLLATE, INVALID
@@ -8,11 +10,14 @@ public class Command {
     private Type type;
     private String directory;
     private boolean scanCurrentDirOnly;
+    private ArrayList<String> fileTypes;
 
     public Command() {
         setScanCurrentDirOnly(false);
+        fileTypes = new ArrayList<String>();
     }
 
+    
     // ================================================================
     // Public getters
     // ================================================================
@@ -41,4 +46,11 @@ public class Command {
         this.scanCurrentDirOnly = scanCurrentDirOnly;
     }
 
+    public ArrayList<String> getFileTypes() {
+        return fileTypes;
+    }
+
+    public void setFileTypes(ArrayList<String> fileTypes) {
+        this.fileTypes = fileTypes;
+    }
 }

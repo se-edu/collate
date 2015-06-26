@@ -6,15 +6,17 @@ import java.util.Arrays;
 import main.java.logic.Command;
 
 public class CommandParser {
+
     private static final int POSITION_PARAM_COMMAND = 0;
     private static final int POSITION_FIRST_PARAM_ARGUMENT = 1;
     private static final String STRING_ONE_SPACE = " ";
 
     private static final String USER_COMMAND_COLLATE = "collate";
-    
-    private static final String SCAN_CURRENT_DIR_ONLY_KEYWORD = "only";
-    private static final String DIRECTORY_KEYWORD = "from";
 
+    private static final String[] KEYWORDS = {"from", "only", "include"};
+    private static final String KEYWORD_DIRECTORY = KEYWORDS[0];
+    private static final String KEYWORD_SCAN_CURRENT_DIR_ONLY = KEYWORDS[1];
+    private static final String KEYWORD_INCLUDE = KEYWORDS[2];
 
     public CommandParser() {
     }
@@ -65,17 +67,13 @@ public class CommandParser {
         command.setType(Command.Type.COLLATE);
         command.setDirectory(findDirectory(arguments));
         command.setScanCurrentDirOnly(hasScanCurrentDirOnlyKeyword(arguments));
+        command.setFileTypes(findIncludedFileTypes(arguments));
         return command;
     }
 
-
-    private boolean hasScanCurrentDirOnlyKeyword(ArrayList<String> arguments) {
-        return arguments.contains(SCAN_CURRENT_DIR_ONLY_KEYWORD);
-    }
-
     private String findDirectory(ArrayList<String> arguments) {
-        if (arguments.contains(DIRECTORY_KEYWORD)) {
-            int directoryIndex = arguments.indexOf(DIRECTORY_KEYWORD) + 1;
+        if (arguments.contains(KEYWORD_DIRECTORY)) {
+            int directoryIndex = arguments.indexOf(KEYWORD_DIRECTORY) + 1;
             try {
                 return arguments.get(directoryIndex);
             } catch (IndexOutOfBoundsException e) {
@@ -85,6 +83,33 @@ public class CommandParser {
         return "";
     }
 
+    private boolean hasScanCurrentDirOnlyKeyword(ArrayList<String> arguments) {
+        return arguments.contains(KEYWORD_SCAN_CURRENT_DIR_ONLY);
+    }
+
+    private ArrayList<String> findIncludedFileTypes(ArrayList<String> arguments) {
+        ArrayList<String> fileTypes = new ArrayList<String>();
+        if (arguments.contains(KEYWORD_INCLUDE)) {
+            int fileTypesIndex = arguments.indexOf(KEYWORD_INCLUDE) + 1;
+            for (int i = fileTypesIndex; i < arguments.size(); i++) {
+                addToFileTypesIfValid(fileTypes, arguments.get(i));
+            }
+        }
+        return fileTypes;
+    }
+
+    private void addToFileTypesIfValid(ArrayList<String> fileTypes,
+                                       String inputFileType) {
+        String sanitisedFileType = inputFileType.replaceAll("[^a-zA-Z0-9]+", "")
+                                               .trim();
+        for (String keyword : KEYWORDS) {
+            if (keyword.equals(sanitisedFileType)) {
+                return;
+            } else {
+                fileTypes.add(sanitisedFileType);
+            }
+        }
+    }
 
     // ================================================================
     // Create invalid command method
