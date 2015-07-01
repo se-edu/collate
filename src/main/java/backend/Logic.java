@@ -23,7 +23,7 @@ public class Logic {
 
     private static final String LOG_TAG = "Logic";
     private static final int INITIAL_NUM_CONTRIBUTORS = 5;
-    private static final String AUTHOR_TAG = "@author";
+    private static final String AUTHOR_TAG = "@@author";
 
     public Logic() {
         logger = Logger.getLogger(LOG_TAG);
@@ -104,7 +104,7 @@ public class Logic {
                                    ArrayList<String> fileTypes) {
         if (folder.exists()) {
             if (folder.isFile()) {
-                collateFile(folder, getFileExtension(folder));
+                scanFile(folder, getFileExtension(folder));
             } else if (folder.isDirectory()) {
                 for (File file : folder.listFiles()) {
                     if (!willScanCurrentDirOnly && file.isDirectory()) {
@@ -115,7 +115,7 @@ public class Logic {
                                hasIncludedFileType(fileTypes,
                                                    getFileExtension(file))) {
                         logger.log(Level.INFO, "Found file: " + file);
-                        collateFile(file, getFileExtension(file));
+                        scanFile(file, getFileExtension(file));
                     }
                 }
             }
@@ -144,17 +144,24 @@ public class Logic {
     }
 
 
-    private void collateFile(File file, String extension) {
+    private void scanFile(File file, String extension) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line = reader.readLine();
             Author currentAuthor = null;
             CodeSnippet currentSnippet = null;
+            boolean ignoreLine = false;
 
             while (line != null) {
 
                 if (line.contains(AUTHOR_TAG)) {
                     String authorName = findAuthorName(line, AUTHOR_TAG);
-                    logger.log(Level.INFO, "Found author: " + authorName);
+                    logger.log(Level.INFO, "Found author tag: " + authorName);
+                    
+                    if (authorName.isEmpty()) {
+                        ignoreLine = true;
+                        line = reader.readLine();
+                        continue;
+                    }
 
                     if (!authors.containsKey(authorName)) {
                         currentAuthor = new Author(authorName);
@@ -164,10 +171,11 @@ public class Logic {
                         currentAuthor = authors.get(authorName);
                     }
 
+                    ignoreLine = false;
                     currentSnippet = new CodeSnippet(currentAuthor,
                                                      getRelativePath(file.getPath()),
                                                      extension);
-                } else if (currentSnippet != null) {
+                } else if (!ignoreLine && currentSnippet != null) {
                     currentSnippet.addLine(line);
                 }
 

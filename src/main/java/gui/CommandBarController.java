@@ -8,12 +8,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import main.java.backend.Logic;
 
-//@author Sebastian Quek
+//@@author Sebastian Quek
 public class CommandBarController extends TextField {
 
     private static final String COMMAND_BAR_LAYOUT_FXML = "/main/resources/layouts/CommandBar.fxml";
     private Logic logic;
 
+    //@@author    
     public CommandBarController(Logic logic) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(COMMAND_BAR_LAYOUT_FXML));
         loader.setController(this);
