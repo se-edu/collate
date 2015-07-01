@@ -17,7 +17,7 @@ public class Logic {
 
     private Logger logger;
     private CommandParser commandParser;
-    private Storage collatedFilesStorage;
+    private Storage storage;
     private HashMap<String, Author> authors;
     private String rootDirectory;
 
@@ -28,7 +28,7 @@ public class Logic {
     public Logic() {
         logger = Logger.getLogger(LOG_TAG);
         commandParser = new CommandParser();
-        collatedFilesStorage = new Storage();
+        storage = new Storage();
         authors = new HashMap<String, Author>(INITIAL_NUM_CONTRIBUTORS);
     }
 
@@ -84,7 +84,6 @@ public class Logic {
     // ================================================================
     // Collate methods
     // ================================================================
-
     private void handleCollate(Command command) {
         rootDirectory = command.getDirectory();
         boolean willScanCurrentDirOnly = command.willScanCurrentDirOnly();
@@ -138,8 +137,7 @@ public class Logic {
             for (CodeSnippet codeSnippet : author.getCodeSnippets()) {
                 collatedLines.add(codeSnippet.toString());
             }
-            collatedFilesStorage.addCollatedFile(author.getName(),
-                                                 collatedLines);
+            storage.addCollatedFile(author.getName(), collatedLines);
         }
     }
 
