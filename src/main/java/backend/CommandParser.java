@@ -1,9 +1,7 @@
-package main.java.logic.parser;
+package main.java.backend;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import main.java.logic.Command;
 
 public class CommandParser {
 

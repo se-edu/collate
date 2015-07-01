@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import main.java.logic.Logic;
+import main.java.backend.Logic;
 
 //@author Sebastian Quek
 public class MainApp extends Application {

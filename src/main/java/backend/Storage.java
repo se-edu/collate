@@ -1,4 +1,4 @@
-package main.java.storage;
+package main.java.backend;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CollatedFilesStorage {
+public class Storage {
 
     private static Logger logger;
     
     private static final String LOG_TAG = "CollatedFilesStorage";
     private static final String DEFAULT_SAVE_DIRECTORY = "collated";
 
-    public CollatedFilesStorage() {
+    public Storage() {
         createSaveDirectory();
         logger = Logger.getLogger(LOG_TAG);
     }

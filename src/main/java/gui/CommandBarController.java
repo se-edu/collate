@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import main.java.logic.Logic;
+import main.java.backend.Logic;
 
 //@author Sebastian Quek
 public class CommandBarController extends TextField {

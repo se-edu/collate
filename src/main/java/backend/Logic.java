@@ -1,4 +1,4 @@
-package main.java.logic;
+package main.java.backend;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,16 +12,12 @@ import java.util.logging.Logger;
 import javafx.scene.input.KeyCode;
 import main.java.gui.CommandBarController;
 import main.java.gui.OverviewLayoutController;
-import main.java.logic.data.Author;
-import main.java.logic.data.CodeSnippet;
-import main.java.logic.parser.CommandParser;
-import main.java.storage.CollatedFilesStorage;
 
 public class Logic {
 
     private Logger logger;
     private CommandParser commandParser;
-    private CollatedFilesStorage collatedFilesStorage;
+    private Storage collatedFilesStorage;
     private HashMap<String, Author> authors;
     private String rootDirectory;
 
@@ -32,7 +28,7 @@ public class Logic {
     public Logic() {
         logger = Logger.getLogger(LOG_TAG);
         commandParser = new CommandParser();
-        collatedFilesStorage = new CollatedFilesStorage();
+        collatedFilesStorage = new Storage();
         authors = new HashMap<String, Author>(INITIAL_NUM_CONTRIBUTORS);
     }
 
