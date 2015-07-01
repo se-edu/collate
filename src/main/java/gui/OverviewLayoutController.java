@@ -20,6 +20,7 @@ public class OverviewLayoutController extends StackPane {
     private static ObservableList<String> obsList = FXCollections.observableArrayList();
 
     public OverviewLayoutController() {
+    public OverviewLayoutController(MainApp mainApp) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(OVERVIEW_LAYOUT_FXML));
         loader.setController(this);
         loader.setRoot(this);

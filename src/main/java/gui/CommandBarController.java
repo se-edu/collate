@@ -6,16 +6,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import main.java.backend.Logic;
 
-//@@author Sebastian Quek
+// @@author Sebastian Quek
 public class CommandBarController extends TextField {
 
     private static final String COMMAND_BAR_LAYOUT_FXML = "/main/resources/layouts/CommandBar.fxml";
-    private Logic logic;
 
-    //@@author    
-    public CommandBarController(Logic logic) {
+    private MainApp mainApp;
+
+    // @@author
+    public CommandBarController(MainApp mainApp) {
+        this.mainApp = mainApp;
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource(COMMAND_BAR_LAYOUT_FXML));
         loader.setController(this);
         loader.setRoot(this);
@@ -24,17 +26,16 @@ public class CommandBarController extends TextField {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.logic = logic;
     }
 
-    public CommandBarController(String text, Logic logic) {
-        this(logic);
+    public CommandBarController(String text, MainApp mainApp) {
+        this(mainApp);
         this.setText(text);
         this.selectAll();
     }
 
     @FXML
     public void onKeyPress(KeyEvent event) {
-        logic.handleKeyPress(this, event.getCode(), this.getText());
+        mainApp.handleKeyPress(this, event.getCode(), this.getText());
     }
 }
