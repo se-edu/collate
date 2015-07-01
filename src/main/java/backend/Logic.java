@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
 import main.java.gui.CommandBarController;
 import main.java.gui.OverviewLayoutController;
@@ -20,6 +22,7 @@ public class Logic {
     private Storage storage;
     private HashMap<String, Author> authors;
     private String rootDirectory;
+    private ObservableList<Author> obsList = FXCollections.observableArrayList();
 
     private static final String LOG_TAG = "Logic";
     private static final int INITIAL_NUM_CONTRIBUTORS = 5;
@@ -164,6 +167,7 @@ public class Logic {
                     if (!authors.containsKey(authorName)) {
                         currentAuthor = new Author(authorName);
                         authors.put(authorName, currentAuthor);
+                        obsList.add(currentAuthor);
                         logger.log(Level.INFO, "New author created");
                     } else {
                         currentAuthor = authors.get(authorName);
@@ -203,5 +207,9 @@ public class Logic {
             return file.getName().substring(idxLastPeriod + 1);
         }
         return "";
+    }
+
+    public ObservableList<Author> getOverviewData() {
+        return obsList;
     }
 }
