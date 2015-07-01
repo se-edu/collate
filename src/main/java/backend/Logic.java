@@ -13,7 +13,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
 import main.java.gui.CommandBarController;
-import main.java.gui.OverviewLayoutController;
 
 public class Logic {
 
@@ -48,12 +47,9 @@ public class Logic {
     // ================================================================
     // Private methods
     // ================================================================
-
     private void handleEnterPress(String userInput) {
         Command command = commandParser.parse(userInput);
         executeCommand(command);
-
-        updateOverviewDisplay();
     }
 
     private void executeCommand(Command command) {
@@ -66,21 +62,6 @@ public class Logic {
             default :
                 break;
         }
-    }
-
-    private void updateOverviewDisplay() {
-        ArrayList<String> data = new ArrayList<String>();
-        int totalLines = 0;
-        for (Author author : authors.values()) {
-            totalLines += author.getTotalLines();
-        }
-        for (Author author : authors.values()) {
-            int numLines = author.getTotalLines();
-            double percentage = (double) numLines / totalLines * 100;
-            data.add(author.getName() + ", total lines: " + numLines +
-                     ", percentage: " + String.format("%.2f", percentage) + "%");
-        }
-        OverviewLayoutController.updateOverviewDisplay(data, true);
     }
 
 
@@ -197,8 +178,12 @@ public class Logic {
     }
 
     private String findAuthorName(String line, String authorTag) {
-        String[] split = line.split(authorTag);
-        return split[1].replaceAll("[^ a-zA-Z0-9]+", "").trim();
+        try {
+            String[] split = line.split(authorTag);
+            return split[1].replaceAll("[^ a-zA-Z0-9]+", "").trim();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return "";
+        }
     }
 
     private String getFileExtension(File file) {

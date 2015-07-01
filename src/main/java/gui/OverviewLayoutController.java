@@ -4,13 +4,22 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
+import main.java.backend.Author;
 
-//@@author Sebastian Quek
+// @@author Sebastian Quek
 public class OverviewLayoutController extends StackPane {
     @FXML
-    private ListView<String> overviewList;
+    private TableView<Author> overviewTable;
+    @FXML
+    private TableColumn<Author, String> authorNameColumn;
+    @FXML
+    private TableColumn<Author, Integer> linesOfCodeColumn;
+    @FXML
+    private TableColumn<Author, Double> proportionColumn;
 
     private static final String OVERVIEW_LAYOUT_FXML = "/main/resources/layouts/Overview.fxml";
 
@@ -24,5 +33,10 @@ public class OverviewLayoutController extends StackPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        overviewTable.setItems(mainApp.getOverviewData());
+        authorNameColumn.setCellValueFactory(new PropertyValueFactory<Author, String>("name"));
+        linesOfCodeColumn.setCellValueFactory(new PropertyValueFactory<Author, Integer>("linesOfCode"));
+        proportionColumn.setCellValueFactory(new PropertyValueFactory<Author, Double>("proportion"));
     }
 }
