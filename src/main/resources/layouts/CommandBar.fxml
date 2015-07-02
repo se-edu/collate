@@ -5,5 +5,5 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.control.TextField?>
 
-<fx:root onKeyPressed="#onKeyPress" stylesheets="@../styles/stylesheet.css"
+<fx:root onKeyPressed="#onKeyPress"
 	type="TextField" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" />
