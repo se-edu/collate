@@ -100,6 +100,7 @@ public class MainApp extends Application {
         if (key == KeyCode.ENTER) {
             switch (logic.handleEnterPress(userInput)) {
                 case COLLATE :
+                case SUMMARY :
                     addOverview(this);
                     break;
                 case VIEW :

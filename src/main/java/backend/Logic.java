@@ -53,6 +53,9 @@ public class Logic {
                 logger.log(Level.INFO, "View command detected");
                 handleView(command);
                 return Command.Type.VIEW;
+            case SUMMARY:
+                logger.log(Level.INFO, "Summary command detected");
+                return Command.Type.SUMMARY;
             case INVALID :
             default :
                 return Command.Type.INVALID;

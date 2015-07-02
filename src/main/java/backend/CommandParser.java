@@ -11,6 +11,7 @@ public class CommandParser {
 
     private static final String USER_COMMAND_COLLATE = "collate";
     private static final String USER_COMMAND_VIEW = "view";
+    private static final String USER_COMMAND_SUMMARY = "summary";
 
     private static final String[] KEYWORDS = {"from", "only", "include"};
     private static final String KEYWORD_DIRECTORY = KEYWORDS[0];
@@ -32,6 +33,9 @@ public class CommandParser {
                 break;
             case USER_COMMAND_VIEW :
                 command = initViewCommand(arguments);
+                break;
+            case USER_COMMAND_SUMMARY :
+                command = initSummaryCommand(arguments);
                 break;
             default :
                 command = initInvalidCommand();
@@ -132,12 +136,20 @@ public class CommandParser {
         return builder.toString().trim();
     }
 
+    
+    // ================================================================
+    // Create summary command method
+    // ================================================================
+    private Command initSummaryCommand(ArrayList<String> arguments) {
+        return new Command(Command.Type.SUMMARY);
+    }
+    
+    
     // ================================================================
     // Create invalid command method
     // ================================================================
 
     private Command initInvalidCommand() {
-        Command command = new Command(Command.Type.INVALID);
-        return command;
+        return new Command(Command.Type.INVALID);
     }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Command {
     public static enum Type {
-        COLLATE, VIEW, INVALID
+        COLLATE, VIEW, SUMMARY, INVALID
     }
 
     private Type type;
