@@ -78,7 +78,11 @@ public class MainApp extends Application {
         rootLayout.setCenter(new OverviewController(mainApp, getOverviewData()));
     }
     
-    
+    private void addFileStats() {
+        rootLayout.setCenter(new FileStatsController());
+    }
+
+
     // ================================================================
     // Methods which refer to Logic directly
     // ================================================================
