@@ -3,3 +3,40 @@
 #root {
 	-fx-padding: 10px;
 }
+
+.fileStatsItem {
+	-fx-padding: 10px;
+}
+
+.cardBg {
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.7), 5, 0, 0, 2);
+}
+
+.card {
+	-fx-padding: 14px;
+	-fx-background-color: rgb(255,255,255);
+}
+
+.card .text {
+	-fx-padding: 0 16px 0 0;
+}
+
+.card .filename {
+	-fx-font-size: 24px;
+	-fx-font-weight: bold;
+}
+
+.card .linesOfCode {
+	-fx-font-size: 14px;
+}
+
+.card .circle {
+	-fx-fill: #46ff1f;
+	-fx-stroke: #dddddd;
+	-fx-stroke-width: 0.8;
+}
+
+.card .percentage {
+	-fx-font-size: 18px;
+	-fx-stroke-width: 0;
+}
