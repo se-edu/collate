@@ -145,7 +145,7 @@ public class Logic {
 
                     ignoreLine = false;
                     currentSnippet = new CodeSnippet(currentAuthor,
-                                                     getRelativePath(file.getPath()),
+                                                     new SourceFile(getRelativePath(file.getPath())),
                                                      extension);
                 } else if (!ignoreLine && currentSnippet != null) {
                     currentSnippet.addLine(line);

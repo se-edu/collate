@@ -11,13 +11,13 @@ public class CodeSnippet {
     private static final String MARKDOWN_ONE_LINE = "%s\n";
 
     private Author author;
-    private String fileLocation;
+    private SourceFile file;
     private ArrayList<String> lines;
     private String language;
 
-    public CodeSnippet(Author author, String fileLocation, String language) {
+    public CodeSnippet(Author author, SourceFile file, String language) {
         this.author = author;
-        this.fileLocation = fileLocation;
+        this.file = file;
         this.language = language;
         this.lines = new ArrayList<String>();
         author.addCodeSnippet(this);
@@ -26,6 +26,7 @@ public class CodeSnippet {
     public void addLine(String line) {
         lines.add(line);
         totalLines++;
+        file.updateNumLines(1);
     }
 
     public Author getAuthor() {
@@ -39,7 +40,7 @@ public class CodeSnippet {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format(MARKDOWN_H6, fileLocation));
+        builder.append(String.format(MARKDOWN_H6, file.getFileLocation()));
         builder.append(String.format(MARKDOWN_CODE_LANGUAGE_START, language));
         for (String line : lines) {
             builder.append(String.format(MARKDOWN_ONE_LINE, line));

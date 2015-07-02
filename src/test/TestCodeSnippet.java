@@ -3,6 +3,7 @@ package test;
 import static org.junit.Assert.assertEquals;
 import main.java.backend.Author;
 import main.java.backend.CodeSnippet;
+import main.java.backend.SourceFile;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,7 @@ public class TestCodeSnippet {
     @Before
     public void init() {
         Author author = new Author("John Doe");
-        codeSnippet = new CodeSnippet(author, "test.java", "java");
+        codeSnippet = new CodeSnippet(author, new SourceFile("test.java"), "java");
         codeSnippet.addLine("public class Test {");
         codeSnippet.addLine("");
         codeSnippet.addLine("\tpublic Test() {");
