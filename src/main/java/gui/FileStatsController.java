@@ -2,6 +2,7 @@ package main.java.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -57,6 +58,7 @@ public class FileStatsController extends ListView<FileStatsItem> {
 
         addFileStatsItem(currentFile, currentNumLines);
 
+        Collections.sort(items);
         fileStats.setItems(FXCollections.observableList(items));
     }
 
