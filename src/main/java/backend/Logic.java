@@ -11,8 +11,6 @@ import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.input.KeyCode;
-import main.java.gui.CommandBarController;
 
 public class Logic {
 
@@ -34,33 +32,24 @@ public class Logic {
         authors = new HashMap<String, Author>(INITIAL_NUM_CONTRIBUTORS);
     }
 
-    public void handleKeyPress(CommandBarController commandBar,
-                               KeyCode key,
-                               String userInput) {
-        if (key == KeyCode.ENTER) {
-            handleEnterPress(userInput);
-            commandBar.clear();
-        }
+    public Command.Type handleEnterPress(String userInput) {
+        Command command = commandParser.parse(userInput);
+        return executeCommand(command);
     }
 
-
+    
     // ================================================================
     // Private methods
     // ================================================================
-    private void handleEnterPress(String userInput) {
-        Command command = commandParser.parse(userInput);
-        executeCommand(command);
-    }
-
-    private void executeCommand(Command command) {
+    private Command.Type executeCommand(Command command) {
         switch (command.getCommandType()) {
             case COLLATE :
                 logger.log(Level.INFO, "Collate command detected");
                 handleCollate(command);
-                break;
+                return Command.Type.COLLATE;
             case INVALID :
             default :
-                break;
+                return Command.Type.INVALID;
         }
     }
 

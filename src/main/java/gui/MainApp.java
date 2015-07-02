@@ -38,7 +38,7 @@ public class MainApp extends Application {
 
         // Add components to RootLayout
         addCommandBar(this);
-        addOverview(this);
+//        addOverview(this);
     }
 
     /**
@@ -75,7 +75,7 @@ public class MainApp extends Application {
     }
 
     private void addOverview(MainApp mainApp) {
-        rootLayout.setCenter(new OverviewLayoutController(mainApp));
+        rootLayout.setCenter(new OverviewController(mainApp, getOverviewData()));
     }
     
     
@@ -89,6 +89,15 @@ public class MainApp extends Application {
     public void handleKeyPress(CommandBarController commandBarController,
                                KeyCode key,
                                String userInput) {
-        logic.handleKeyPress(commandBarController, key, userInput);
+        if (key == KeyCode.ENTER) {
+            switch (logic.handleEnterPress(userInput)) {
+                case COLLATE :
+                    addOverview(this);
+                    break;
+                case INVALID :
+                    break;
+            }
+            commandBarController.clear();
+        }
     }
 }
