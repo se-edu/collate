@@ -7,33 +7,32 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.HBox?>
 
-<fx:root styleClass="fileStatsItem" stylesheets="@../styles/stylesheet.css" type="BorderPane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
-   <center>
-      <StackPane styleClass="cardBg">
-         <children>
-            <BorderPane styleClass="card">
-               <left>
-                  <VBox alignment="TOP_LEFT" prefWidth="100.0" styleClass="text">
-                     <children>
-                        <Text fx:id="filename" strokeWidth="0.0" styleClass="filename" text="Filename" />
-                        <Text fx:id="linesOfCode" fill="#515151" strokeWidth="0.0" styleClass="linesOfCode" text="Lines of code" />
-                     </children>
-                  </VBox>
-               </left>
-               <right>
-                  <StackPane>
-                     <children>
-                        <Circle fx:id="circle" radius="30.0" styleClass="circle" />
-                        <Text fx:id="percentage" styleClass="percentage" text="100%">
-                           <StackPane.margin>
-                              <Insets bottom="2.0" />
-                           </StackPane.margin>
-                        </Text>
-                     </children>
-                  </StackPane>
-               </right>
-            </BorderPane>
-         </children>
-      </StackPane>
-   </center>
+<fx:root styleClass="fileStatsItem" stylesheets="@../styles/stylesheet.css"
+	type="BorderPane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+	<center>
+		<StackPane styleClass="cardBg">
+			<children>
+				<HBox styleClass="card">
+					<StackPane BorderPane.alignment="CENTER">
+						<children>
+							<Circle fx:id="circle" radius="30.0" styleClass="circle" />
+							<Text fx:id="percentage" styleClass="percentage" text="100%">
+								<StackPane.margin>
+									<Insets bottom="2.0" />
+								</StackPane.margin>
+							</Text>
+						</children>
+					</StackPane>
+					<VBox alignment="TOP_LEFT" prefWidth="100.0" styleClass="text">
+						<children>
+							<Text fx:id="filename" strokeWidth="0.0" styleClass="filename"
+								text="Filename" />
+							<Text fx:id="linesOfCode" fill="#515151" strokeWidth="0.0"
+								styleClass="linesOfCode" text="Lines of code" />
+						</children>
+					</VBox>
+				</HBox>
+			</children>
+		</StackPane>
+	</center>
 </fx:root>

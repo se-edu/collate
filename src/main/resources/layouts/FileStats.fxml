@@ -5,5 +5,5 @@
 <?import javafx.scene.control.ListView?>
 
 
-<fx:root type="ListView" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40" fx:id="fileStats">
+<fx:root id="fileStats" fx:id="fileStats" stylesheets="@../styles/stylesheet.css" type="ListView" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
 </fx:root>

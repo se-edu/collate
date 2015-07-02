@@ -16,6 +16,7 @@ public class CodeSnippet {
     private String language;
 
     public CodeSnippet(Author author, SourceFile file, String language) {
+        totalLines++;
         this.author = author;
         this.file = file;
         this.language = language;
@@ -26,7 +27,6 @@ public class CodeSnippet {
     public void addLine(String line) {
         lines.add(line);
         totalLines++;
-        file.updateNumLines(1);
     }
 
     public Author getAuthor() {
@@ -34,7 +34,11 @@ public class CodeSnippet {
     }
 
     public int getNumLines() {
-        return lines.size();
+        return lines.size() + 1;
+    }
+    
+    public SourceFile getFile() {
+        return file;
     }
 
     @Override

@@ -78,8 +78,8 @@ public class MainApp extends Application {
         rootLayout.setCenter(new OverviewController(mainApp, getOverviewData()));
     }
     
-    private void addFileStats() {
-        rootLayout.setCenter(new FileStatsController());
+    private void addFileStats(Author author) {
+        rootLayout.setCenter(new FileStatsController(author));
     }
 
 
@@ -88,6 +88,10 @@ public class MainApp extends Application {
     // ================================================================
     public ObservableList<Author> getOverviewData() {
         return logic.getOverviewData();
+    }
+    
+    private Author getTargetAuthor() {
+        return logic.getTargetAuthor();
     }
 
     public void handleKeyPress(CommandBarController commandBarController,
@@ -98,7 +102,10 @@ public class MainApp extends Application {
                 case COLLATE :
                     addOverview(this);
                     break;
+                case VIEW :
+                    addFileStats(getTargetAuthor());
                 case INVALID :
+                default :
                     break;
             }
             commandBarController.clear();

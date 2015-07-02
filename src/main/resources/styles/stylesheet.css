@@ -2,14 +2,33 @@
 
 #root {
 	-fx-padding: 10px;
+	-fx-background-color: white;
+}
+
+#fileStats {
+	-fx-background-color: white;
+}
+
+#fileStats .list-cell {
+	-fx-background-color: white;
+}
+
+#fileStats .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-padding: -7;
+}
+
+#fileStats .scroll-bar:vertical {
+    -fx-opacity: 0;
+    -fx-padding: -7;
 }
 
 .fileStatsItem {
-	-fx-padding: 10px;
+	-fx-padding: 5px;
 }
 
 .cardBg {
-	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.7), 5, 0, 0, 2);
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
 }
 
 .card {
@@ -18,11 +37,11 @@
 }
 
 .card .text {
-	-fx-padding: 0 16px 0 0;
+	-fx-padding: 0 0 0 16px;
 }
 
 .card .filename {
-	-fx-font-size: 24px;
+	-fx-font-size: 16px;
 	-fx-font-weight: bold;
 }
 
