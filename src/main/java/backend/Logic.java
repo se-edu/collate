@@ -25,7 +25,7 @@ public class Logic {
 
     private static final String LOG_TAG = "Logic";
     private static final int INITIAL_NUM_CONTRIBUTORS = 5;
-    private static final String AUTHOR_TAG = "@author";
+    private static final String AUTHOR_TAG = "@@author";
 
     public Logic() {
         logger = Logger.getLogger(LOG_TAG);
