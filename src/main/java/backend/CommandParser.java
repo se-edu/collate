@@ -10,6 +10,7 @@ public class CommandParser {
     private static final String STRING_ONE_SPACE = " ";
 
     private static final String USER_COMMAND_COLLATE = "collate";
+    private static final String USER_COMMAND_VIEW = "view";
 
     private static final String[] KEYWORDS = {"from", "only", "include"};
     private static final String KEYWORD_DIRECTORY = KEYWORDS[0];
@@ -28,6 +29,9 @@ public class CommandParser {
         switch (userCommand.toLowerCase()) {
             case USER_COMMAND_COLLATE :
                 command = initCollateCommand(arguments);
+                break;
+            case USER_COMMAND_VIEW :
+                command = initViewCommand(arguments);
                 break;
             default :
                 command = initInvalidCommand();
@@ -61,8 +65,7 @@ public class CommandParser {
     // ================================================================
 
     private Command initCollateCommand(ArrayList<String> arguments) {
-        Command command = new Command();
-        command.setType(Command.Type.COLLATE);
+        Command command = new Command(Command.Type.COLLATE);
         command.setDirectory(findDirectory(arguments));
         command.setScanCurrentDirOnly(hasScanCurrentDirOnlyKeyword(arguments));
         command.setFileTypes(findIncludedFileTypes(arguments));
@@ -108,14 +111,33 @@ public class CommandParser {
             }
         }
     }
+    
+    
+    // ================================================================
+    // Create view command methods
+    // ================================================================
+    
+    private Command initViewCommand(ArrayList<String> arguments) {
+        Command command = new Command(Command.Type.VIEW);
+        command.setAuthorName(findAuthorName(arguments));
+        return command;
+    }
+
+    private String findAuthorName(ArrayList<String> arguments) {
+        StringBuilder builder = new StringBuilder();
+        for (String word : arguments) {
+            builder.append(word);
+            builder.append(STRING_ONE_SPACE);
+        }
+        return builder.toString().trim();
+    }
 
     // ================================================================
     // Create invalid command method
     // ================================================================
 
     private Command initInvalidCommand() {
-        Command command = new Command();
-        command.setType(Command.Type.INVALID);
+        Command command = new Command(Command.Type.INVALID);
         return command;
     }
 }

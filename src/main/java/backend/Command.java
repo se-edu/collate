@@ -4,22 +4,25 @@ import java.util.ArrayList;
 
 public class Command {
     public static enum Type {
-        COLLATE, INVALID
+        COLLATE, VIEW, INVALID
     }
 
     private Type type;
     private String directory;
     private boolean scanCurrentDirOnly;
     private ArrayList<String> fileTypes;
+    
+    private String authorName;
 
-    public Command() {
+    public Command(Type type) {
         setScanCurrentDirOnly(false);
         fileTypes = new ArrayList<String>();
+        this.type = type;
     }
 
     
     // ================================================================
-    // Public getters
+    // Public getters and setters
     // ================================================================
 
     public Type getCommandType() {
@@ -52,5 +55,15 @@ public class Command {
 
     public void setFileTypes(ArrayList<String> fileTypes) {
         this.fileTypes = fileTypes;
+    }
+    
+    
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 }

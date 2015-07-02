@@ -19,7 +19,9 @@ public class Logic {
     private Storage storage;
     private HashMap<String, Author> authors;
     private String rootDirectory;
+    
     private ObservableList<Author> obsList = FXCollections.observableArrayList();
+    private ObservableList<Author> obsAuthor = FXCollections.observableArrayList();
 
     private static final String LOG_TAG = "Logic";
     private static final int INITIAL_NUM_CONTRIBUTORS = 5;
@@ -47,6 +49,10 @@ public class Logic {
                 logger.log(Level.INFO, "Collate command detected");
                 handleCollate(command);
                 return Command.Type.COLLATE;
+            case VIEW :
+                logger.log(Level.INFO, "View command detected");
+                handleView(command);
+                return Command.Type.VIEW;
             case INVALID :
             default :
                 return Command.Type.INVALID;
@@ -55,7 +61,7 @@ public class Logic {
 
 
     // ================================================================
-    // Collate methods
+    // Collate command methods
     // ================================================================
     private void handleCollate(Command command) {
         rootDirectory = command.getDirectory();
@@ -182,8 +188,30 @@ public class Logic {
         }
         return "";
     }
+    
+    
+    // ================================================================
+    // View command methods
+    // ================================================================
+    private void handleView(Command command) {
+        String inputName = command.getAuthorName();
+        for (Author author : authors.values()) {
+            if (author.getName().equals(inputName)) {
+                obsAuthor.add(author);
+                break;
+            }
+        }
+    }
 
     public ObservableList<Author> getOverviewData() {
         return obsList;
+    }
+    
+    public Author getTargetAuthor() {
+        try {
+            return obsAuthor.get(0);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 }
