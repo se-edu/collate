@@ -2,15 +2,14 @@
 
 #root {
 	-fx-padding: 10px;
-	-fx-background-color: white;
 }
 
 #fileStats {
-	-fx-background-color: white;
+	-fx-background-color: transparent;
 }
 
 #fileStats .list-cell {
-	-fx-background-color: white;
+	-fx-background-color: transparent;
 }
 
 #fileStats .scroll-bar:horizontal {
@@ -24,16 +23,16 @@
 }
 
 .fileStatsItem {
-	-fx-padding: 5px;
+	-fx-padding: 2px;
 }
 
 .cardBg {
-	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0, 0, 2);
 }
 
 .card {
 	-fx-padding: 14px;
-	-fx-background-color: rgb(255,255,255);
+	
 }
 
 .card .text {
@@ -43,19 +42,21 @@
 .card .filename {
 	-fx-font-size: 16px;
 	-fx-font-weight: bold;
+	-fx-fill: white;
 }
 
 .card .linesOfCode {
-	-fx-font-size: 14px;
+	-fx-font-size: 15px;
+	-fx-fill: white;
 }
 
 .card .circle {
-	-fx-fill: #46ff1f;
-	-fx-stroke: #dddddd;
-	-fx-stroke-width: 0.8;
+	-fx-fill: white;
+
 }
 
 .card .percentage {
-	-fx-font-size: 18px;
+	-fx-font-size: 14px;
+	-fx-font-weight: bold;
 	-fx-stroke-width: 0;
 }

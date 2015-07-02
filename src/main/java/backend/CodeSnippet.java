@@ -3,7 +3,7 @@ package main.java.backend;
 import java.util.ArrayList;
 
 public class CodeSnippet {
-    public static int totalLines = 0;
+    private static int totalLines = 0;
 
     private static final String MARKDOWN_H6 = "###### %s\n";
     private static final String MARKDOWN_CODE_LANGUAGE_START = "``` %s\n";
@@ -39,6 +39,14 @@ public class CodeSnippet {
     
     public SourceFile getFile() {
         return file;
+    }
+    
+    public static int getTotalLines() {
+        return totalLines;
+    }
+    
+    public static void resetTotalLines() {
+        totalLines = 0;
     }
 
     @Override

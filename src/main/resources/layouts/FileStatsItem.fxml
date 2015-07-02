@@ -7,15 +7,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.HBox?>
 
-<fx:root styleClass="fileStatsItem" stylesheets="@../styles/stylesheet.css"
-	type="BorderPane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root styleClass="fileStatsItem" stylesheets="@../styles/stylesheet.css" type="BorderPane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
 	<center>
 		<StackPane styleClass="cardBg">
 			<children>
-				<HBox styleClass="card">
+				<HBox fx:id="card" styleClass="card">
 					<StackPane BorderPane.alignment="CENTER">
 						<children>
-							<Circle fx:id="circle" radius="30.0" styleClass="circle" />
+							<Circle fx:id="circle" radius="25.0" styleClass="circle" />
 							<Text fx:id="percentage" styleClass="percentage" text="100%">
 								<StackPane.margin>
 									<Insets bottom="2.0" />
@@ -25,10 +24,8 @@
 					</StackPane>
 					<VBox alignment="TOP_LEFT" prefWidth="100.0" styleClass="text">
 						<children>
-							<Text fx:id="filename" strokeWidth="0.0" styleClass="filename"
-								text="Filename" />
-							<Text fx:id="linesOfCode" fill="#515151" strokeWidth="0.0"
-								styleClass="linesOfCode" text="Lines of code" />
+							<Text fx:id="filename" strokeWidth="0.0" styleClass="filename" text="Filename" />
+							<Text fx:id="linesOfCode" strokeWidth="0.0" styleClass="linesOfCode" text="Lines of code" />
 						</children>
 					</VBox>
 				</HBox>

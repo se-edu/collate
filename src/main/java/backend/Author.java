@@ -23,6 +23,7 @@ public class Author {
         this.codeSnippets = new ArrayList<CodeSnippet>();
     }
 
+    
     // ================================================================
     // Name property
     // ================================================================
@@ -82,7 +83,7 @@ public class Author {
 
     private Double calculateProportion() {
         double percentage = (double) (getLinesOfCode()) /
-                            CodeSnippet.totalLines * 100;
+                            CodeSnippet.getTotalLines() * 100;
         return (double) Math.round(percentage * 100) / 100;
     }
     

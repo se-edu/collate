@@ -25,7 +25,7 @@ public class Logic {
 
     private static final String LOG_TAG = "Logic";
     private static final int INITIAL_NUM_CONTRIBUTORS = 5;
-    private static final String AUTHOR_TAG = "@@author";
+    private static final String AUTHOR_TAG = "@author";
 
     public Logic() {
         logger = Logger.getLogger(LOG_TAG);
@@ -69,12 +69,19 @@ public class Logic {
         ArrayList<String> fileTypes = command.getFileTypes();
 
         if (rootDirectory != null) {
-            authors = new HashMap<String, Author>(INITIAL_NUM_CONTRIBUTORS);
+            reInitVar();
+            
             traverseDirectory(new File(rootDirectory),
                               willScanCurrentDirOnly,
                               fileTypes);
             saveCollatedFiles();
         }
+    }
+
+    private void reInitVar() {
+        obsList = FXCollections.observableArrayList();
+        authors = new HashMap<String, Author>(INITIAL_NUM_CONTRIBUTORS);
+        CodeSnippet.resetTotalLines();
     }
 
     private void traverseDirectory(File folder,
@@ -199,7 +206,9 @@ public class Logic {
     private void handleView(Command command) {
         String inputName = command.getAuthorName();
         for (Author author : authors.values()) {
-            if (author.getName().equals(inputName)) {
+            if (author.getName().toLowerCase().equals(inputName.toLowerCase())) {
+                logger.log(Level.INFO, "Found target author: " + author.getName());
+                obsAuthor.clear();
                 obsAuthor.add(author);
                 break;
             }
