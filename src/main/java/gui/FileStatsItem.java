@@ -51,7 +51,7 @@ public class FileStatsItem extends BorderPane implements Comparable<FileStatsIte
         this.filename.setText(truncatedName(filename));
         this.linesOfCode.setText(linesOfCode + " lines");
         this.percentage.setText(String.format("%.0f%%", percentage));
-        this.card.setStyle("-fx-background-color: " + generateColour(percentage));
+        this.circle.setStyle("-fx-fill: " + generateColour(percentage));
     }
 
     private String generateColour(double percentage) {

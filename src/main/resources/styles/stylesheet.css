@@ -32,7 +32,7 @@
 
 .card {
 	-fx-padding: 14px;
-	
+	-fx-background-color: white;
 }
 
 .card .text {
@@ -42,17 +42,14 @@
 .card .filename {
 	-fx-font-size: 16px;
 	-fx-font-weight: bold;
-	-fx-fill: white;
 }
 
 .card .linesOfCode {
 	-fx-font-size: 15px;
-	-fx-fill: white;
 }
 
 .card .circle {
 	-fx-fill: white;
-
 }
 
 .card .percentage {
