@@ -140,8 +140,6 @@ public class Logic {
             SourceFile currentFile = new SourceFile(getRelativePath(file.getPath()));
             
             while (line != null) {
-                currentFile.updateNumLines(1);
-                
                 if (line.contains(AUTHOR_TAG)) {
                     String authorName = findAuthorName(line, AUTHOR_TAG);
                     logger.log(Level.INFO, "Found author tag: " + authorName);
@@ -166,8 +164,11 @@ public class Logic {
                     currentSnippet = new CodeSnippet(currentAuthor,
                                                      currentFile,
                                                      extension);
-                } else if (!ignoreLine && currentSnippet != null) {
-                    currentSnippet.addLine(line);
+                } else {
+                    currentFile.addNumLines(1);
+                    if (!ignoreLine && currentSnippet != null) {
+                        currentSnippet.addLine(line);
+                    }
                 }
 
                 line = reader.readLine();
