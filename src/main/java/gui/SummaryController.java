@@ -12,7 +12,7 @@ import javafx.scene.layout.StackPane;
 import main.java.backend.Author;
 
 // @@author Sebastian Quek
-public class OverviewController extends StackPane {
+public class SummaryController extends StackPane {
     @FXML
     private TableView<Author> overviewTable;
     @FXML
@@ -24,7 +24,7 @@ public class OverviewController extends StackPane {
 
     private static final String OVERVIEW_LAYOUT_FXML = "/main/resources/layouts/Overview.fxml";
 
-    public OverviewController(MainApp mainApp, ObservableList<Author> overviewData) {
+    public SummaryController(MainApp mainApp, ObservableList<Author> overviewData) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(OVERVIEW_LAYOUT_FXML));
         loader.setController(this);
         loader.setRoot(this);

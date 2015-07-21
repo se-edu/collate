@@ -38,7 +38,6 @@ public class MainApp extends Application {
 
         // Add components to RootLayout
         addCommandBar(this);
-//        addOverview(this);
     }
 
     /**
@@ -70,12 +69,12 @@ public class MainApp extends Application {
     }
 
     private void addCommandBar(MainApp mainApp) {
-        rootLayout.setBottom(new CommandBarController(COMMAND_BAR_DEFAULT_TEXT,
-                                                      mainApp));
+        rootLayout.setBottom(new CommandBarController(mainApp,
+                                                      COMMAND_BAR_DEFAULT_TEXT));
     }
 
-    private void addOverview(MainApp mainApp) {
-        rootLayout.setCenter(new OverviewController(mainApp, getOverviewData()));
+    private void addSummary(MainApp mainApp) {
+        rootLayout.setCenter(new SummaryController(mainApp, getOverviewData()));
     }
     
     private void addFileStats(Author author) {
@@ -101,7 +100,7 @@ public class MainApp extends Application {
             switch (logic.handleEnterPress(userInput)) {
                 case COLLATE :
                 case SUMMARY :
-                    addOverview(this);
+                    addSummary(this);
                     break;
                 case VIEW :
                     addFileStats(getTargetAuthor());

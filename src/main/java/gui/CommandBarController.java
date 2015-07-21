@@ -28,7 +28,7 @@ public class CommandBarController extends TextField {
         }
     }
 
-    public CommandBarController(String text, MainApp mainApp) {
+    public CommandBarController(MainApp mainApp, String text) {
         this(mainApp);
         this.setText(text);
         this.selectAll();
