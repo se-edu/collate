@@ -13,11 +13,11 @@ public class SourceFile {
         return fileLocation;
     }
     
-    public void updateNumLines(int value) {
-        numLines += value;
-    }
-    
     public int getNumLines() {
         return numLines;
+    }
+    
+    public void addNumLines(int value) {
+        numLines += value;
     }
 }
