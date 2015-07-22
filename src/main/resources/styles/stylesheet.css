@@ -4,6 +4,12 @@
 	-fx-padding: 10px;
 }
 
+#title {
+	-fx-padding: 10px;
+	-fx-font-size: 24px;
+	-fx-font-weight: bold;
+}
+
 #fileStats {
 	-fx-background-color: transparent;
 }

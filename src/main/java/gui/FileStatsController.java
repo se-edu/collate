@@ -8,13 +8,18 @@ import java.util.HashMap;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
 import main.java.backend.SourceFile;
 
-public class FileStatsController extends ListView<FileStatsItem> {
+public class FileStatsController extends VBox {
 
     @FXML
     private ListView<FileStatsItem> fileStats;
+    
+    @FXML
+    private Label title;
 
     private ArrayList<FileStatsItem> items;
 
@@ -31,6 +36,7 @@ public class FileStatsController extends ListView<FileStatsItem> {
             e.printStackTrace();
         }
         
+        title.setText(authorName);
         initStats(statistics);
     }
 
