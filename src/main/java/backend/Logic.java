@@ -19,9 +19,9 @@ public class Logic {
     private Storage storage;
     private HashMap<String, Author> authors;
     private String rootDirectory;
+    private Author targetAuthor;
     
     private ObservableList<Author> obsList = FXCollections.observableArrayList();
-    private ObservableList<Author> obsAuthor = FXCollections.observableArrayList();
 
     private static final String LOG_TAG = "Logic";
     private static final int INITIAL_NUM_CONTRIBUTORS = 5;
@@ -208,22 +208,45 @@ public class Logic {
             if (author.getName().toLowerCase().equals(inputName.toLowerCase())) {
                 logger.log(Level.INFO,
                            "Found target author: " + author.getName());
-                obsAuthor.clear();
-                obsAuthor.add(author);
-                break;
+                targetAuthor = author;
+                return;
             }
         }
+        targetAuthor = null;
     }
 
     public ObservableList<Author> getOverviewData() {
         return obsList;
     }
     
-    public Author getTargetAuthor() {
-        try {
-            return obsAuthor.get(0);
-        } catch (IndexOutOfBoundsException e) {
-            return null;
+    public String getTargetAuthorName() {
+        if (targetAuthor != null) {
+            return targetAuthor.getName();
         }
+        return null;
+    }
+    
+    public HashMap<SourceFile, Integer> getTargetAuthorStatistics() {
+        HashMap<SourceFile, Integer> statistics = new HashMap<SourceFile, Integer>();
+        SourceFile currentFile = null;
+        int currentNumLines = 0;
+
+        if (targetAuthor != null) {
+            for (CodeSnippet snippet : targetAuthor.getCodeSnippets()) {
+                if (currentFile == null) {
+                    currentFile = snippet.getFile();
+                    currentNumLines += snippet.getNumLines();
+                } else if (currentFile.equals(snippet.getFile())) {
+                    currentNumLines += snippet.getNumLines();
+                } else if (!currentFile.equals(snippet.getFile())) {
+                    statistics.put(currentFile, currentNumLines);
+                    currentFile = snippet.getFile();
+                    currentNumLines = snippet.getNumLines();
+                }
+            }
+            statistics.put(currentFile, currentNumLines);
+        }
+
+        return statistics;
     }
 }

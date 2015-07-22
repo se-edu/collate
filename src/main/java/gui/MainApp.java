@@ -1,6 +1,7 @@
 package main.java.gui;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -11,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import main.java.backend.Author;
 import main.java.backend.Logic;
+import main.java.backend.SourceFile;
 
 // @@author Sebastian Quek
 public class MainApp extends Application {
@@ -76,9 +78,10 @@ public class MainApp extends Application {
     private void addSummary(MainApp mainApp) {
         rootLayout.setCenter(new SummaryController(mainApp, getOverviewData()));
     }
-    
-    private void addFileStats(Author author) {
-        rootLayout.setCenter(new FileStatsController(author));
+
+    private void addFileStats(String authorName,
+                              HashMap<SourceFile, Integer> statistics) {
+        rootLayout.setCenter(new FileStatsController(authorName, statistics));
     }
 
 
@@ -87,10 +90,6 @@ public class MainApp extends Application {
     // ================================================================
     public ObservableList<Author> getOverviewData() {
         return logic.getOverviewData();
-    }
-    
-    private Author getTargetAuthor() {
-        return logic.getTargetAuthor();
     }
 
     public void handleKeyPress(CommandBarController commandBarController,
@@ -103,7 +102,11 @@ public class MainApp extends Application {
                     addSummary(this);
                     break;
                 case VIEW :
-                    addFileStats(getTargetAuthor());
+                    String authorName = logic.getTargetAuthorName();
+                    if (authorName != null) {
+                        addFileStats(authorName,
+                                     logic.getTargetAuthorStatistics());
+                    }
                 case INVALID :
                 default :
                     break;
