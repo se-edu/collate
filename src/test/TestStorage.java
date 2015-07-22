@@ -19,10 +19,11 @@ import org.junit.Test;
 
 public class TestStorage {
 
-    private static final String FILENAME = "storageTest";
-    private static final String FULL_FILENAME = "storageTest.md";
+    private static final String FILENAME1 = "storageTest1";
+    private static final String FILENAME2 = "storageTest2";
+    private static final String FILENAME1_WITH_EXTENSION = FILENAME1 + ".md";
     private static final String PATHNAME = Storage.DEFAULT_SAVE_DIRECTORY +
-                                           "/" + FULL_FILENAME;
+                                           "/" + FILENAME1_WITH_EXTENSION;
     private Storage storage;
 
     @Before
@@ -39,7 +40,7 @@ public class TestStorage {
     @Test
     public void testAddCollatedFile() {
         ArrayList<String> collatedLines = generateCollatedLines();
-        storage.addCollatedFile(FILENAME, collatedLines);
+        storage.addCollatedFile(FILENAME1, collatedLines);
 
         File file = new File(PATHNAME);
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -70,7 +71,7 @@ public class TestStorage {
         dir.delete();
         
         ArrayList<String> collatedLines = generateCollatedLines();
-        storage.addCollatedFile(FILENAME, collatedLines);
+        storage.addCollatedFile(FILENAME2, collatedLines);
         
         File file = new File(PATHNAME);
         assertFalse(file.exists());
