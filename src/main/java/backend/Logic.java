@@ -53,7 +53,7 @@ public class Logic {
                 logger.log(Level.INFO, "View command detected");
                 handleView(command);
                 return Command.Type.VIEW;
-            case SUMMARY:
+            case SUMMARY :
                 logger.log(Level.INFO, "Summary command detected");
                 return Command.Type.SUMMARY;
             case INVALID :
@@ -71,14 +71,12 @@ public class Logic {
         boolean willScanCurrentDirOnly = command.willScanCurrentDirOnly();
         ArrayList<String> fileTypes = command.getFileTypes();
 
-        if (rootDirectory != null) {
-            reInitVar();
-            
-            traverseDirectory(new File(rootDirectory),
-                              willScanCurrentDirOnly,
-                              fileTypes);
-            saveCollatedFiles();
-        }
+        reInitVar();
+
+        traverseDirectory(new File(rootDirectory),
+                          willScanCurrentDirOnly,
+                          fileTypes);
+        saveCollatedFiles();
     }
 
     private void reInitVar() {
@@ -90,24 +88,21 @@ public class Logic {
     private void traverseDirectory(File folder,
                                    boolean willScanCurrentDirOnly,
                                    ArrayList<String> fileTypes) {
-        if (folder.exists()) {
-            if (folder.isFile()) {
-                scanFile(folder, getFileExtension(folder));
-            } else if (folder.isDirectory()) {
-                for (File file : folder.listFiles()) {
-                    if (!willScanCurrentDirOnly && file.isDirectory()) {
-                        traverseDirectory(file,
-                                          willScanCurrentDirOnly,
-                                          fileTypes);
-                    } else if (file.isFile() &&
-                               hasIncludedFileType(fileTypes,
-                                                   getFileExtension(file))) {
-                        logger.log(Level.INFO, "Found file: " + file);
-                        scanFile(file, getFileExtension(file));
-                    }
+        if (folder.isFile()) {
+            scanFile(folder, getFileExtension(folder));
+        } else if (folder.isDirectory()) {
+            for (File file : folder.listFiles()) {
+                if (!willScanCurrentDirOnly && file.isDirectory()) {
+                    traverseDirectory(file, willScanCurrentDirOnly, fileTypes);
+                } else if (file.isFile() &&
+                           hasIncludedFileType(fileTypes,
+                                               getFileExtension(file))) {
+                    logger.log(Level.INFO, "Found file: " + file);
+                    scanFile(file, getFileExtension(file));
                 }
             }
         }
+
     }
 
     private boolean hasIncludedFileType(ArrayList<String> fileTypes,
@@ -211,7 +206,8 @@ public class Logic {
         String inputName = command.getAuthorName();
         for (Author author : authors.values()) {
             if (author.getName().toLowerCase().equals(inputName.toLowerCase())) {
-                logger.log(Level.INFO, "Found target author: " + author.getName());
+                logger.log(Level.INFO,
+                           "Found target author: " + author.getName());
                 obsAuthor.clear();
                 obsAuthor.add(author);
                 break;

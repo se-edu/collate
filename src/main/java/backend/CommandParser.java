@@ -1,10 +1,12 @@
 package main.java.backend;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CommandParser {
 
+    private static final String EMPTY_STRING = "";
     private static final int POSITION_PARAM_COMMAND = 0;
     private static final int POSITION_FIRST_PARAM_ARGUMENT = 1;
     private static final String STRING_ONE_SPACE = " ";
@@ -69,23 +71,49 @@ public class CommandParser {
     // ================================================================
 
     private Command initCollateCommand(ArrayList<String> arguments) {
-        Command command = new Command(Command.Type.COLLATE);
-        command.setDirectory(findDirectory(arguments));
-        command.setScanCurrentDirOnly(hasScanCurrentDirOnlyKeyword(arguments));
-        command.setFileTypes(findIncludedFileTypes(arguments));
-        return command;
+        String directory = findDirectory(arguments);
+        ArrayList<String> fileTypes = findIncludedFileTypes(arguments);
+
+        if (isValidCollateCommand(arguments, directory, fileTypes)) {
+            Command command = new Command(Command.Type.COLLATE);
+            command.setDirectory(directory);
+            command.setScanCurrentDirOnly(hasScanCurrentDirOnlyKeyword(arguments));
+            command.setFileTypes(fileTypes);
+            return command;
+        } else {
+            return initInvalidCommand();
+        }
+    }
+
+    private boolean isValidCollateCommand(ArrayList<String> arguments,
+                                          String directory,
+                                          ArrayList<String> fileTypes) {
+        File dir = new File(directory);
+        return !directory.isEmpty() && dir.exists() &&
+               !(arguments.contains(KEYWORD_INCLUDE) && fileTypes.isEmpty());
     }
 
     private String findDirectory(ArrayList<String> arguments) {
         if (arguments.contains(KEYWORD_DIRECTORY)) {
-            int directoryIndex = arguments.indexOf(KEYWORD_DIRECTORY) + 1;
+            int directoryIndex = arguments.indexOf(KEYWORD_DIRECTORY) + 1; 
             try {
-                return arguments.get(directoryIndex);
+                String directory =  arguments.get(directoryIndex);
+                if (directory.contains("\"")) {
+                    for (int i = directoryIndex + 1; i < arguments.size(); i++) {
+                        directory += " " + arguments.get(i);
+                        if (arguments.get(i).contains("\"")) {
+                            break;
+                        }
+                    }
+                    directory = directory.replace("\"", EMPTY_STRING);
+                }
+                directory = directory.replace("/", "\\");
+                return directory;
             } catch (IndexOutOfBoundsException e) {
-                return "";
+                return EMPTY_STRING;
             }
         }
-        return "";
+        return EMPTY_STRING;
     }
 
     private boolean hasScanCurrentDirOnlyKeyword(ArrayList<String> arguments) {
@@ -97,23 +125,28 @@ public class CommandParser {
         if (arguments.contains(KEYWORD_INCLUDE)) {
             int fileTypesIndex = arguments.indexOf(KEYWORD_INCLUDE) + 1;
             for (int i = fileTypesIndex; i < arguments.size(); i++) {
-                addToFileTypesIfValid(fileTypes, arguments.get(i));
+                String inputFileType = arguments.get(i);
+                if (isValidFileType(inputFileType)) {
+                    fileTypes.add(inputFileType);
+                } else {
+                    break;
+                }
             }
         }
         return fileTypes;
     }
 
-    private void addToFileTypesIfValid(ArrayList<String> fileTypes,
-                                       String inputFileType) {
-        String sanitisedFileType = inputFileType.replaceAll("[^a-zA-Z0-9]+", "")
-                                               .trim();
+    private boolean isValidFileType(String inputFileType) {
+        String sanitisedFileType = inputFileType.replaceAll("[^a-zA-Z0-9]+",
+                                                            EMPTY_STRING)
+                                                .trim()
+                                                .toLowerCase();
         for (String keyword : KEYWORDS) {
             if (keyword.equals(sanitisedFileType)) {
-                return;
-            } else {
-                fileTypes.add(sanitisedFileType);
+                return false;
             }
         }
+        return true;
     }
     
     
@@ -122,9 +155,14 @@ public class CommandParser {
     // ================================================================
     
     private Command initViewCommand(ArrayList<String> arguments) {
-        Command command = new Command(Command.Type.VIEW);
-        command.setAuthorName(findAuthorName(arguments));
-        return command;
+        String authorName = findAuthorName(arguments);
+        if (!authorName.isEmpty()) {
+            Command command = new Command(Command.Type.VIEW);
+            command.setAuthorName(authorName);
+            return command;
+        } else {
+            return initInvalidCommand();
+        }
     }
 
     private String findAuthorName(ArrayList<String> arguments) {

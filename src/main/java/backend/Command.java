@@ -3,7 +3,7 @@ package main.java.backend;
 import java.util.ArrayList;
 
 public class Command {
-    public static enum Type {
+    public enum Type {
         COLLATE, VIEW, SUMMARY, INVALID
     }
 
@@ -27,10 +27,6 @@ public class Command {
 
     public Type getCommandType() {
         return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
     }
 
     public String getDirectory() {
@@ -57,8 +53,6 @@ public class Command {
         this.fileTypes = fileTypes;
     }
     
-    
-
     public String getAuthorName() {
         return authorName;
     }
