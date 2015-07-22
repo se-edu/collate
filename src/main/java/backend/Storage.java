@@ -12,7 +12,7 @@ public class Storage {
     private static Logger logger;
     
     private static final String LOG_TAG = "CollatedFilesStorage";
-    private static final String DEFAULT_SAVE_DIRECTORY = "collated";
+    public static final String DEFAULT_SAVE_DIRECTORY = "collated";
 
     public Storage() {
         createSaveDirectory();
