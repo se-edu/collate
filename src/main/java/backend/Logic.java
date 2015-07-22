@@ -177,8 +177,10 @@ public class Logic {
     private String getRelativePath(String path) {
         if (path.equals(rootDirectory)) {
             return path.substring(path.lastIndexOf("\\") + 1);
+        } else if (rootDirectory.endsWith("\\")) {
+            return path.replace(rootDirectory, "");
         }
-        return path.replace(rootDirectory, "").substring(1);
+        return path.replace(rootDirectory, "").substring(1);        
     }
 
     private String findAuthorName(String line, String authorTag) {
