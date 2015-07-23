@@ -96,7 +96,7 @@ public class MainApp extends Application {
                                KeyCode key,
                                String userInput) {
         if (key == KeyCode.ENTER) {
-            switch (logic.handleEnterPress(userInput)) {
+            switch (logic.executeCommand(userInput)) {
                 case COLLATE :
                 case SUMMARY :
                     addSummary(this);

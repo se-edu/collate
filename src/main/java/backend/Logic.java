@@ -6,59 +6,55 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * This class handles commands created from a user's input.
+ * 
+ * @author Sebastian Quek
+ *
+ */
 public class Logic {
 
-    private Logger logger;
     private CommandParser commandParser;
     private Storage storage;
     private HashMap<String, Author> authors;
     private String rootDirectory;
     private Author targetAuthor;
-    
-    private ObservableList<Author> obsList = FXCollections.observableArrayList();
 
-    private static final String LOG_TAG = "Logic";
-    private static final int INITIAL_NUM_CONTRIBUTORS = 5;
+    private ObservableList<Author> authorObsList = FXCollections.observableArrayList();
+
     private static final String AUTHOR_TAG = "@@author";
 
     private static final String MARKDOWN_TITLE = "# %s";
     private static final String MARKDOWN_H6 = "###### %s";
     private static final String MARKDOWN_CODE_LANGUAGE_START = "``` %s";
     private static final String MARKDOWN_CODE_LANGUAGE_END = "```";
+
+    private static final String STRING_EMPTY = "";
+    private static final String STRING_BACKSLASH = "\\";
+    private static final char STRING_PERIOD = '.';
+
+    private static final String REGEX_NEITHER_ALPHANUMERIC_NOR_SPACE = "[^ a-zA-Z0-9]+";
+
     public Logic() {
-        logger = Logger.getLogger(LOG_TAG);
         commandParser = new CommandParser();
         storage = new Storage();
-        authors = new HashMap<String, Author>(INITIAL_NUM_CONTRIBUTORS);
+        authors = new HashMap<String, Author>();
     }
 
-    public Command.Type handleEnterPress(String userInput) {
+    public Command.Type executeCommand(String userInput) {
         Command command = commandParser.parse(userInput);
-        return executeCommand(command);
-    }
-
-    
-    // ================================================================
-    // Private methods
-    // ================================================================
-    private Command.Type executeCommand(Command command) {
         switch (command.getCommandType()) {
             case COLLATE :
-                logger.log(Level.INFO, "Collate command detected");
                 handleCollate(command);
                 return Command.Type.COLLATE;
             case VIEW :
-                logger.log(Level.INFO, "View command detected");
                 handleView(command);
                 return Command.Type.VIEW;
             case SUMMARY :
-                logger.log(Level.INFO, "Summary command detected");
                 return Command.Type.SUMMARY;
             case INVALID :
             default :
@@ -68,14 +64,15 @@ public class Logic {
 
 
     // ================================================================
-    // Collate command methods
+    // "Collate" command methods
     // ================================================================
+
     private void handleCollate(Command command) {
+        resetVariables();
+
         rootDirectory = command.getDirectory();
         boolean willScanCurrentDirOnly = command.willScanCurrentDirOnly();
         ArrayList<String> fileTypes = command.getFileTypes();
-
-        reInitVar();
 
         traverseDirectory(new File(rootDirectory),
                           willScanCurrentDirOnly,
@@ -83,121 +80,153 @@ public class Logic {
         saveCollatedFiles();
     }
 
-    private void reInitVar() {
-        obsList = FXCollections.observableArrayList();
-        authors = new HashMap<String, Author>(INITIAL_NUM_CONTRIBUTORS);
+    /**
+     * Resets variables so that "collate" commands will not show data from
+     * previously entered "collate" commands.
+     */
+    private void resetVariables() {
+        authorObsList = FXCollections.observableArrayList();
+        authors = new HashMap<String, Author>();
         CodeSnippet.resetTotalLines();
     }
 
+    /**
+     * Scans the input folder recursively to create new Author, SourceFile and
+     * CodeSnippet objects.
+     * 
+     * @param folder
+     * @param willScanCurrentDirOnly
+     * @param fileTypes
+     */
     private void traverseDirectory(File folder,
                                    boolean willScanCurrentDirOnly,
                                    ArrayList<String> fileTypes) {
         if (folder.isFile()) {
             scanFile(folder, getFileExtension(folder));
         } else if (folder.isDirectory()) {
-            for (File file : folder.listFiles()) {
-                if (!willScanCurrentDirOnly && file.isDirectory()) {
-                    traverseDirectory(file, willScanCurrentDirOnly, fileTypes);
-                } else if (file.isFile() &&
-                           hasIncludedFileType(fileTypes,
-                                               getFileExtension(file))) {
-                    logger.log(Level.INFO, "Found file: " + file);
-                    scanFile(file, getFileExtension(file));
-                }
-            }
+            scanFilesInFolder(folder, willScanCurrentDirOnly, fileTypes);
         }
-
     }
 
+    private void scanFilesInFolder(File folder,
+                                   boolean willScanCurrentDirOnly,
+                                   ArrayList<String> fileTypes) {
+        for (File file : folder.listFiles()) {
+            if (!willScanCurrentDirOnly && file.isDirectory()) {
+                // If no "only" keyword was given, traverse the directory
+                // recursively
+                traverseDirectory(file, willScanCurrentDirOnly, fileTypes);
+            } else if (file.isFile() &&
+                       hasIncludedFileType(fileTypes, getFileExtension(file))) {
+                scanFile(file, getFileExtension(file));
+            }
+        }
+    }
+
+    /**
+     * An empty fileTypes ArrayList indicates that no "include" keyword was
+     * given.
+     * 
+     * @param fileTypes
+     * @param fileExtension
+     */
     private boolean hasIncludedFileType(ArrayList<String> fileTypes,
                                         String fileExtension) {
-        if (fileTypes.isEmpty() || fileTypes.contains(fileExtension)) {
-            return true;
-        } else {
-            return false;
-        }
+        return fileTypes.isEmpty() || fileTypes.contains(fileExtension);
     }
-            }
-            storage.addCollatedFile(author.getName(), collatedLines);
-        }
-    }
-
 
     private void scanFile(File file, String extension) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line = reader.readLine();
+            boolean ignoreLine = false;
             Author currentAuthor = null;
             CodeSnippet currentSnippet = null;
-            boolean ignoreLine = false;
-            SourceFile currentFile = new SourceFile(getRelativePath(file.getPath()));
-            
-            while (line != null) {
+            SourceFile currentFile = new SourceFile(generateRelativePath(file.getPath()));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
                 if (line.contains(AUTHOR_TAG)) {
-                    String authorName = findAuthorName(line, AUTHOR_TAG);
-                    logger.log(Level.INFO, "Found author tag: " + authorName);
-                    
+                    String authorName = findAuthorNameInLine(line, AUTHOR_TAG);
+
                     if (authorName.isEmpty()) {
+                        // Author tag with no author name
                         ignoreLine = true;
-                        line = reader.readLine();
-                        continue;
-                    }
-
-                    if (!authors.containsKey(authorName)) {
-                        currentAuthor = new Author(authorName);
-                        authors.put(authorName, currentAuthor);
-                        obsList.add(currentAuthor);
-                        logger.log(Level.INFO, "New author created");
                     } else {
-                        currentAuthor = authors.get(authorName);
+                        ignoreLine = false;
+                        currentAuthor = getAuthorByName(authorName);
+                        currentSnippet = new CodeSnippet(currentAuthor,
+                                                         currentFile,
+                                                         extension);
                     }
-
-                    ignoreLine = false;
-                    
-                    currentSnippet = new CodeSnippet(currentAuthor,
-                                                     currentFile,
-                                                     extension);
                 } else {
                     currentFile.addNumLines(1);
                     if (!ignoreLine && currentSnippet != null) {
                         currentSnippet.addLine(line);
                     }
                 }
-
-                line = reader.readLine();
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private String getRelativePath(String path) {
-        if (path.equals(rootDirectory)) {
-            return path.substring(path.lastIndexOf("\\") + 1);
-        } else if (rootDirectory.endsWith("\\")) {
-            return path.replace(rootDirectory, "");
+    /**
+     * Get previously created Author or create a new Author.
+     * 
+     * @param authorName
+     */
+    private Author getAuthorByName(String authorName) {
+        Author currentAuthor;
+        if (!authors.containsKey(authorName)) {
+            currentAuthor = new Author(authorName);
+            authors.put(authorName, currentAuthor);
+            authorObsList.add(currentAuthor);
+        } else {
+            currentAuthor = authors.get(authorName);
         }
-        return path.replace(rootDirectory, "").substring(1);        
+        return currentAuthor;
     }
 
-    private String findAuthorName(String line, String authorTag) {
+    /**
+     * Generates path of files relative to the root directory.
+     * 1) If the filepath is the same as the root directory, return the
+     * filename.
+     * 2) If the input root directory does not end with a backslash, return the
+     * filename without the extra starting backslash.
+     * 
+     * @param filePath
+     */
+    private String generateRelativePath(String filePath) {
+        if (filePath.equals(rootDirectory)) {
+            return filePath.substring(filePath.lastIndexOf(STRING_BACKSLASH) + 1);
+
+        } else if (rootDirectory.endsWith(STRING_BACKSLASH)) {
+            return filePath.replace(rootDirectory, STRING_EMPTY);
+
+        } else {
+            return filePath.replace(rootDirectory + STRING_BACKSLASH,
+                                    STRING_EMPTY);
+        }
+    }
+
+    private String findAuthorNameInLine(String line, String authorTag) {
         try {
             String[] split = line.split(authorTag);
-            return split[1].replaceAll("[^ a-zA-Z0-9]+", "").trim();
+
+            // Only alphanumeric characters are allowed in the author's name
+            return split[1].replaceAll(REGEX_NEITHER_ALPHANUMERIC_NOR_SPACE,
+                                       STRING_EMPTY).trim();
         } catch (ArrayIndexOutOfBoundsException e) {
-            return "";
+            return STRING_EMPTY;
         }
     }
 
     private String getFileExtension(File file) {
-        int idxLastPeriod = file.getName().lastIndexOf('.');
+        int idxLastPeriod = file.getName().lastIndexOf(STRING_PERIOD);
         if (idxLastPeriod != -1) {
             return file.getName().substring(idxLastPeriod + 1);
         }
-        return "";
+        return STRING_EMPTY;
     }
-    
-    
 
     private void saveCollatedFiles() {
         for (Author author : authors.values()) {
@@ -227,12 +256,15 @@ public class Logic {
     // ================================================================
     // View command methods
     // ================================================================
+
     private void handleView(Command command) {
-        String inputName = command.getAuthorName();
+        String authorName = command.getAuthorName();
+        setTargetAuthorIfAuthorExists(authorName);
+    }
+
+    private void setTargetAuthorIfAuthorExists(String inputName) {
         for (Author author : authors.values()) {
             if (author.getName().toLowerCase().equals(inputName.toLowerCase())) {
-                logger.log(Level.INFO,
-                           "Found target author: " + author.getName());
                 targetAuthor = author;
                 return;
             }
@@ -240,8 +272,13 @@ public class Logic {
         targetAuthor = null;
     }
 
+
+    // ================================================================
+    // Methods that MainApp uses
+    // ================================================================
+
     public ObservableList<Author> getOverviewData() {
-        return obsList;
+        return authorObsList;
     }
     
     public String getTargetAuthorName() {
@@ -250,26 +287,24 @@ public class Logic {
         }
         return null;
     }
-    
+
+    /**
+     * Finds the total number of lines of code the target author wrote for each
+     * source file.
+     */
     public HashMap<SourceFile, Integer> getTargetAuthorStatistics() {
         HashMap<SourceFile, Integer> statistics = new HashMap<SourceFile, Integer>();
-        SourceFile currentFile = null;
-        int currentNumLines = 0;
 
         if (targetAuthor != null) {
             for (CodeSnippet snippet : targetAuthor.getCodeSnippets()) {
-                if (currentFile == null) {
-                    currentFile = snippet.getFile();
-                    currentNumLines += snippet.getNumLines();
-                } else if (currentFile.equals(snippet.getFile())) {
-                    currentNumLines += snippet.getNumLines();
-                } else if (!currentFile.equals(snippet.getFile())) {
-                    statistics.put(currentFile, currentNumLines);
-                    currentFile = snippet.getFile();
-                    currentNumLines = snippet.getNumLines();
+                SourceFile currentFile = snippet.getFile();
+                if (statistics.containsKey(currentFile)) {
+                    statistics.put(currentFile, statistics.get(currentFile) +
+                                                snippet.getNumLines());
+                } else {
+                    statistics.put(currentFile, snippet.getNumLines());
                 }
             }
-            statistics.put(currentFile, currentNumLines);
         }
 
         return statistics;
