@@ -7,12 +7,19 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * This class saves collated lines as Markdown files.
+ * 
+ * @author Sebastian Quek
+ *
+ */
 public class Storage {
 
-    private static Logger logger;
+    private Logger logger;
     
     private static final String LOG_TAG = "CollatedFilesStorage";
     public static final String DEFAULT_SAVE_DIRECTORY = "collated";
+    private static final String COLLATED_FILE_PATH = DEFAULT_SAVE_DIRECTORY + "/%s.md";
 
     public Storage() {
         createSaveDirectory();
@@ -28,8 +35,7 @@ public class Storage {
     }
 
     public void addCollatedFile(String fileName, ArrayList<String> collatedLines) {
-        try (PrintWriter writer = new PrintWriter(DEFAULT_SAVE_DIRECTORY + "/" +
-                                                  fileName + ".md")) {
+        try (PrintWriter writer = new PrintWriter(String.format(COLLATED_FILE_PATH, fileName))) {
             for (String line : collatedLines) {
                 writer.println(line);
             }
