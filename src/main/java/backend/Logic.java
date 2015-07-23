@@ -27,6 +27,10 @@ public class Logic {
     private static final int INITIAL_NUM_CONTRIBUTORS = 5;
     private static final String AUTHOR_TAG = "@@author";
 
+    private static final String MARKDOWN_TITLE = "# %s";
+    private static final String MARKDOWN_H6 = "###### %s";
+    private static final String MARKDOWN_CODE_LANGUAGE_START = "``` %s";
+    private static final String MARKDOWN_CODE_LANGUAGE_END = "```";
     public Logic() {
         logger = Logger.getLogger(LOG_TAG);
         commandParser = new CommandParser();
@@ -113,13 +117,6 @@ public class Logic {
             return false;
         }
     }
-
-    private void saveCollatedFiles() {
-        for (Author author : authors.values()) {
-            ArrayList<String> collatedLines = new ArrayList<String>();
-            collatedLines.add("# " + author.getName());
-            for (CodeSnippet codeSnippet : author.getCodeSnippets()) {
-                collatedLines.add(codeSnippet.toString());
             }
             storage.addCollatedFile(author.getName(), collatedLines);
         }
@@ -201,6 +198,32 @@ public class Logic {
     }
     
     
+
+    private void saveCollatedFiles() {
+        for (Author author : authors.values()) {
+            ArrayList<String> collatedLines = new ArrayList<String>();
+
+            collatedLines.add(String.format(MARKDOWN_TITLE, author.getName()));
+            addCodeSnippetsOfAuthor(author, collatedLines);
+
+            storage.addCollatedFile(author.getName(), collatedLines);
+        }
+    }
+
+    private void addCodeSnippetsOfAuthor(Author author,
+                                         ArrayList<String> collatedLines) {
+        for (CodeSnippet codeSnippet : author.getCodeSnippets()) {
+            collatedLines.add(String.format(MARKDOWN_H6,
+                                            codeSnippet.getFile()
+                                                       .getRelativeFilePath()));
+            collatedLines.add(String.format(MARKDOWN_CODE_LANGUAGE_START,
+                                            codeSnippet.getLanguage()));
+            collatedLines.add(codeSnippet.toString());
+            collatedLines.add(MARKDOWN_CODE_LANGUAGE_END);
+        }
+    }
+
+
     // ================================================================
     // View command methods
     // ================================================================
