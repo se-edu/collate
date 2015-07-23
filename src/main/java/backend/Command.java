@@ -2,7 +2,15 @@ package main.java.backend;
 
 import java.util.ArrayList;
 
+/**
+ * Command is a class that contains all the required information for Logic to
+ * execute it. It is created by CommandParser's parse method.
+ * 
+ * @author Sebastian Quek
+ *
+ */
 public class Command {
+    
     public enum Type {
         COLLATE, VIEW, SUMMARY, INVALID
     }
@@ -15,19 +23,19 @@ public class Command {
     private String authorName;
 
     public Command(Type type) {
-        setScanCurrentDirOnly(false);
-        fileTypes = new ArrayList<String>();
+        this.scanCurrentDirOnly = false;
+        this.fileTypes = new ArrayList<String>();
         this.type = type;
     }
-
-    
-    // ================================================================
-    // Public getters and setters
-    // ================================================================
 
     public Type getCommandType() {
         return type;
     }
+
+
+    // ================================================================
+    // "Collate" command methods
+    // ================================================================
 
     public String getDirectory() {
         return directory;
@@ -53,6 +61,11 @@ public class Command {
         this.fileTypes = fileTypes;
     }
     
+
+    // ================================================================
+    // "View" command methods
+    // ================================================================
+
     public String getAuthorName() {
         return authorName;
     }

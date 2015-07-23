@@ -9,7 +9,17 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * This class contains information about an author.
+ * It utilises Properties so that JavaFX can display the information easily.
+ * 
+ * https://docs.oracle.com/javase/8/javafx/properties-binding-tutorial/binding.htm
+ * 
+ * @author Sebastian Quek
+ * 
+ */
 public class Author {
+    
     private StringProperty name;
     private IntegerProperty linesOfCode;
     private DoubleProperty proportion;
@@ -27,6 +37,7 @@ public class Author {
     // ================================================================
     // Name property
     // ================================================================
+    
     public StringProperty nameProperty() {
         return name;
     }
@@ -43,6 +54,7 @@ public class Author {
     // ================================================================
     // Lines of code property
     // ================================================================
+    
     public IntegerProperty linesOfCodeProperty() {
         setLinesOfCode(calculateNumLines());
         return linesOfCode;
@@ -68,6 +80,7 @@ public class Author {
     // ================================================================
     // Proportion property
     // ================================================================
+    
     public DoubleProperty proportionProperty() {
         setProportion(calculateProportion());
         return proportion;
@@ -91,6 +104,7 @@ public class Author {
     // ================================================================
     // Code snippets field
     // ================================================================
+    
     public ArrayList<CodeSnippet> getCodeSnippets() {
         return codeSnippets;
     }
