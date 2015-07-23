@@ -52,7 +52,7 @@ public class FileStatsController extends VBox {
     }
 
     private void addFileStatsItem(SourceFile currentFile, int currentNumLines) {
-        items.add(new FileStatsItem(currentFile.getFileLocation(),
+        items.add(new FileStatsItem(currentFile.getRelativeFilePath(),
                                     currentNumLines,
                                     (double) currentNumLines /
                                             currentFile.getNumLines() * 100));
