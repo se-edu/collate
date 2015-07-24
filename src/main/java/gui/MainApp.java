@@ -100,22 +100,27 @@ public class MainApp extends Application {
                                KeyCode key,
                                String userInput) {
         if (key == KeyCode.ENTER) {
-            switch (logic.executeCommand(userInput)) {
-                case COLLATE :
-                case SUMMARY :
-                    addSummary(this);
-                    break;
-                case VIEW :
-                    String authorName = logic.getTargetAuthorName();
-                    if (authorName != null) {
-                        addFileStats(authorName,
-                                     logic.getTargetAuthorStatistics());
-                    }
-                case INVALID :
-                default :
-                    break;
-            }
-            commandBarController.clear();
+            handleEnterPress(commandBarController, userInput);
         }
+    }
+
+    private void handleEnterPress(CommandBarController commandBarController,
+                                  String userInput) {
+        switch (logic.executeCommand(userInput)) {
+            case COLLATE :
+            case SUMMARY :
+                addSummary(this);
+                break;
+            case VIEW :
+                String authorName = logic.getTargetAuthorName();
+                if (authorName != null) {
+                    addFileStats(authorName,
+                                 logic.getTargetAuthorStatistics());
+                }
+            case INVALID :
+            default :
+                break;
+        }
+        commandBarController.clear();
     }
 }
