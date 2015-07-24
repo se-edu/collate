@@ -24,7 +24,7 @@ public class Logic {
     private String rootDirectory;
     private Author targetAuthor;
 
-    private ObservableList<Author> authorObsList = FXCollections.observableArrayList();
+    
 
     private static final String AUTHOR_TAG = "@@author";
 
@@ -85,7 +85,6 @@ public class Logic {
      * previously entered "collate" commands.
      */
     private void resetVariables() {
-        authorObsList = FXCollections.observableArrayList();
         authors = new HashMap<String, Author>();
         CodeSnippet.resetTotalLines();
     }
@@ -179,7 +178,6 @@ public class Logic {
         if (!authors.containsKey(authorName)) {
             currentAuthor = new Author(authorName);
             authors.put(authorName, currentAuthor);
-            authorObsList.add(currentAuthor);
         } else {
             currentAuthor = authors.get(authorName);
         }
@@ -277,7 +275,9 @@ public class Logic {
     // Methods that MainApp uses
     // ================================================================
 
-    public ObservableList<Author> getOverviewData() {
+    public ObservableList<Author> getSummaryData() {
+        ObservableList<Author> authorObsList = FXCollections.observableArrayList();
+        authorObsList.addAll(authors.values());
         return authorObsList;
     }
     
