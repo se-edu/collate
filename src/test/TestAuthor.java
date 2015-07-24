@@ -44,26 +44,26 @@ public class TestAuthor {
 
     @Test
     public void testName() {
-        assertEquals(author1.getName(), AUTHOR_NAME_1);
+        assertEquals(AUTHOR_NAME_1, author1.getName());
         author1.setName(AUTHOR_NAME_2);
-        assertEquals(author1.getName(), AUTHOR_NAME_2);
+        assertEquals(AUTHOR_NAME_2, author1.getName());
     }
 
     @Test
     public void testLinesOfCode() {
-        assertEquals(author1.getLinesOfCode(), 8);
-        assertEquals(author2.getLinesOfCode(), 2);
+        assertEquals(8, author1.getLinesOfCode());
+        assertEquals(2, author2.getLinesOfCode());
     }
 
     @Test
     public void testProportion() {
-        assertEquals(author1.getProportion(), 80, 0);
-        assertEquals(author2.getProportion(), 20, 0);
+        assertEquals(80, author1.getProportion(), 0);
+        assertEquals(20, author2.getProportion(), 0);
     }
 
     @Test
     public void testCodeSnippets() {
-        assertEquals(author1.getCodeSnippets().size(), 2);
-        assertEquals(author2.getCodeSnippets().size(), 1);
+        assertEquals(2, author1.getCodeSnippets().size());
+        assertEquals(1, author2.getCodeSnippets().size());
     }
 }

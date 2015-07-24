@@ -17,13 +17,13 @@ public class TestSourceFile {
 
     @Test
     public void testGetFileLocation() {
-        assertEquals(sourceFile.getFileLocation(), FILE_LOCATION);
+        assertEquals(FILE_LOCATION, sourceFile.getRelativeFilePath());
     }
 
     @Test
     public void testNumLines() {
-        assertEquals(sourceFile.getNumLines(), 0);
+        assertEquals(0, sourceFile.getNumLines());
         sourceFile.addNumLines(5);
-        assertEquals(sourceFile.getNumLines(), 5);
+        assertEquals(5, sourceFile.getNumLines());
     }
 }

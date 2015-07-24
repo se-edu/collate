@@ -36,34 +36,32 @@ public class TestCodeSnippet {
     
     @Test
     public void testGetAuthor() {
-        assertEquals(codeSnippet.getAuthor(), author);
+        assertEquals(author, codeSnippet.getAuthor());
     }
     
     @Test
     public void testGetNumLines() {
-        assertEquals(codeSnippet.getNumLines(), 5);
+        assertEquals(5, codeSnippet.getNumLines());
     }
     
     @Test
     public void testGetFile() {
-        assertEquals(codeSnippet.getFile(), file);
+        assertEquals(file, codeSnippet.getFile());
     }
     
     @Test
     public void testTotalLines() {
-        assertEquals(CodeSnippet.getTotalLines(), 5);
+        assertEquals(5, CodeSnippet.getTotalLines());
         CodeSnippet.resetTotalLines();
-        assertEquals(CodeSnippet.getTotalLines(), 0);
+        assertEquals(0, CodeSnippet.getTotalLines());
     }   
 
     @Test
     public void testToString() {
-        String expectedResult = "###### test.java\n" + 
-                                "``` java\n" +
-                                "public class Test {\n" +
+        String expectedResult = "public class Test {\n" +
                                 "\tpublic Test() {\n" +
                                 "\t\tSystem.out.println(\"hello\");\n" + 
-                                "\t}\n" + "}\n" + "```\n";
+                                "\t}\n" + "}";
         assertEquals(expectedResult, codeSnippet.toString());
     }
 

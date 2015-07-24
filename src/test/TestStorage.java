@@ -49,7 +49,7 @@ public class TestStorage {
             while ((line = reader.readLine()) != null) {
                 lines.add(line);
             }
-            assertEquals(collatedLines.size(), lines.size());
+            assertEquals(lines.size(), collatedLines.size());
 
         } catch (FileNotFoundException e) {
             fail("File not found");

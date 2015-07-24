@@ -21,9 +21,14 @@ public class TestLogic {
     private static final String TEST_FILE2 = "testFile2.txt";
     private static final String TEST_FILE_NO_EXTENSION = "testFileNoExtension";
     private static final String TEST_FILE_IN_SUBFOLDER = "testFile1.txt";
-    private static final String RELATIVE_PATH_TEST_FILE_IN_SUBFOLDER = "subfolder\\" + TEST_FILE_IN_SUBFOLDER;
-    private static final String FULL_PATH_TEST_FILE1 = ROOT_DIR + TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH + TEST_FILE1;
-    
+    private static final String RELATIVE_PATH_TEST_FILE_IN_SUBFOLDER = "subfolder\\" +
+                                                                       TEST_FILE_IN_SUBFOLDER;
+    private static final String FULL_PATH_TEST_FILE1 = ROOT_DIR +
+                                                       TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH +
+                                                       TEST_FILE1;
+    private static final String AUTHOR1 = "author1";
+    private static final String AUTHOR2 = "author2";
+
     private Logic logic;
 
     @Before
@@ -33,79 +38,85 @@ public class TestLogic {
 
     @Test
     public void testHandleEnterPress() {
-        assertEquals(logic.handleEnterPress("collate from " + ROOT_DIR +
-                                            TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH),
-                     Command.Type.COLLATE);
-        
-        assertEquals(logic.handleEnterPress("collate from " + ROOT_DIR +
-                                            TEST_RESOURCES_DIR_NO_ENDING_BACKSLASH),
-                     Command.Type.COLLATE);
+        assertEquals(Command.Type.COLLATE,
+                     logic.executeCommand("collate from " + ROOT_DIR +
+                                          TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH));
 
-        assertEquals(logic.handleEnterPress("collate from " + ROOT_DIR +
-                                            TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH + " only"),
-                     Command.Type.COLLATE);
+        assertEquals(Command.Type.COLLATE,
+                     logic.executeCommand("collate from " + ROOT_DIR +
+                                          TEST_RESOURCES_DIR_NO_ENDING_BACKSLASH));
 
-        assertEquals(logic.handleEnterPress("collate from " + ROOT_DIR +
-                                            TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH +
-                                            " include java"),
-                     Command.Type.COLLATE);
+        assertEquals(Command.Type.COLLATE,
+                     logic.executeCommand("collate from " +
+                                          ROOT_DIR +
+                                          TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH +
+                                          " only"));
 
-        assertEquals(logic.handleEnterPress("collate from " + ROOT_DIR +
-                                            TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH + " include txt"),
-                     Command.Type.COLLATE);
+        assertEquals(Command.Type.COLLATE,
+                     logic.executeCommand("collate from " +
+                                          ROOT_DIR +
+                                          TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH +
+                                          " include java"));
 
-        assertEquals(logic.handleEnterPress("collate from " + FULL_PATH_TEST_FILE1),
-                     Command.Type.COLLATE);
+        assertEquals(Command.Type.COLLATE,
+                     logic.executeCommand("collate from " +
+                                          ROOT_DIR +
+                                          TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH +
+                                          " include txt"));
 
-        assertEquals(logic.handleEnterPress("view A1234567Z"),
-                     Command.Type.VIEW);
+        assertEquals(Command.Type.COLLATE,
+                     logic.executeCommand("collate from " +
+                                          FULL_PATH_TEST_FILE1));
 
-        assertEquals(logic.handleEnterPress("view author1"), Command.Type.VIEW);
+        assertEquals(Command.Type.VIEW, logic.executeCommand("view A1234567Z"));
 
-        assertEquals(logic.handleEnterPress("summary"), Command.Type.SUMMARY);
+        assertEquals(Command.Type.VIEW, logic.executeCommand("view author1"));
 
-        assertEquals(logic.handleEnterPress("from"), Command.Type.INVALID);
+        assertEquals(Command.Type.SUMMARY, logic.executeCommand("summary"));
+
+        assertEquals(Command.Type.INVALID, logic.executeCommand("from"));
     }
 
     @Test
     public void testGetOverviewData() {
-        logic.handleEnterPress("collate from " + FULL_PATH_TEST_FILE1);
-        assertEquals(logic.getOverviewData().size(), 1);
-        assertEquals(logic.getOverviewData().get(0).getName(), "author1");
+        logic.executeCommand("collate from " + FULL_PATH_TEST_FILE1);
+        assertEquals(1, logic.getSummaryData().size());
+        assertEquals(AUTHOR1, logic.getSummaryData().get(0).getName());
     }
 
     @Test
     public void testGetTargetAuthorName() {
-        assertEquals(logic.getTargetAuthorName(), null);
-        logic.handleEnterPress("collate from " + FULL_PATH_TEST_FILE1);
-        logic.handleEnterPress("view author1");
-        assertEquals(logic.getTargetAuthorName(), "author1");
+        assertEquals(null, logic.getTargetAuthorName());
+        logic.executeCommand("collate from " + FULL_PATH_TEST_FILE1);
+        logic.executeCommand("view " + AUTHOR1);
+        assertEquals(AUTHOR1, logic.getTargetAuthorName());
     }
-    
+
     @Test
     public void testGetTargetAuthorStatistics() {
-        logic.handleEnterPress("collate from " + ROOT_DIR + TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH);
+        logic.executeCommand("collate from " + ROOT_DIR +
+                             TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH);
         assertTrue(logic.getTargetAuthorStatistics().isEmpty());
-        
-        logic.handleEnterPress("view author1");
+
+        logic.executeCommand("view " + AUTHOR1);
         HashMap<SourceFile, Integer> statistics = logic.getTargetAuthorStatistics();
         for (SourceFile sourceFile : statistics.keySet()) {
-            String currentFileLocation = sourceFile.getFileLocation();
+            String currentFileLocation = sourceFile.getRelativeFilePath();
             if (currentFileLocation.equals(TEST_FILE1)) {
-                assertEquals((int) statistics.get(sourceFile), 5);
+                assertEquals(5, (int) statistics.get(sourceFile));
             } else if (currentFileLocation.equals(TEST_FILE2)) {
-                assertEquals((int) statistics.get(sourceFile), 2);
+                assertEquals(2, (int) statistics.get(sourceFile));
             } else if (currentFileLocation.equals(TEST_FILE_NO_EXTENSION)) {
-                assertEquals((int) statistics.get(sourceFile), 1);
+                assertEquals(1, (int) statistics.get(sourceFile));
             }
         }
-        
-        logic.handleEnterPress("view author2");
+
+        logic.executeCommand("view " + AUTHOR2);
         statistics = logic.getTargetAuthorStatistics();
         for (SourceFile sourceFile : statistics.keySet()) {
-            String currentFileLocation = sourceFile.getFileLocation();
+            String currentFileLocation = sourceFile.getRelativeFilePath();
             if (currentFileLocation.equals(RELATIVE_PATH_TEST_FILE_IN_SUBFOLDER)) {
-                assertEquals((int) statistics.get(sourceFile), 4);
+                assertEquals(4, (int) statistics.get(sourceFile));
             }
         }
     }

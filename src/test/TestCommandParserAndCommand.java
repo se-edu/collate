@@ -23,52 +23,52 @@ public class TestCommandParserAndCommand {
         Command command;
 
         command = commandParser.parse("collate from C:/");
-        assertEquals(command.getCommandType(), Command.Type.COLLATE);
-        assertEquals(command.getDirectory(), "C:\\");
+        assertEquals(Command.Type.COLLATE, command.getCommandType());
+        assertEquals("C:\\", command.getDirectory());
         assertFalse(command.willScanCurrentDirOnly());
-        assertEquals(command.getFileTypes().size(), 0);
+        assertEquals(0, command.getFileTypes().size());
 
         command = commandParser.parse("collate from C:/Windows");
-        assertEquals(command.getCommandType(), Command.Type.COLLATE);
-        assertEquals(command.getDirectory(), "C:\\Windows");
+        assertEquals(Command.Type.COLLATE, command.getCommandType());
+        assertEquals("C:\\Windows", command.getDirectory());
         assertFalse(command.willScanCurrentDirOnly());
-        assertEquals(command.getFileTypes().size(), 0);
+        assertEquals(0, command.getFileTypes().size());
 
         command = commandParser.parse("collate from C:/Users\\Default");
-        assertEquals(command.getCommandType(), Command.Type.COLLATE);
-        assertEquals(command.getDirectory(), "C:\\Users\\Default");
+        assertEquals(Command.Type.COLLATE, command.getCommandType());
+        assertEquals("C:\\Users\\Default", command.getDirectory());
         assertFalse(command.willScanCurrentDirOnly());
-        assertEquals(command.getFileTypes().size(), 0);
+        assertEquals(0, command.getFileTypes().size());
         
         command = commandParser.parse("collate from \"C:/Program Files");
-        assertEquals(command.getCommandType(), Command.Type.COLLATE);
-        assertEquals(command.getDirectory(), "C:\\Program Files");
+        assertEquals(Command.Type.COLLATE, command.getCommandType());
+        assertEquals("C:\\Program Files", command.getDirectory());
         assertFalse(command.willScanCurrentDirOnly());
-        assertEquals(command.getFileTypes().size(), 0);
+        assertEquals(0, command.getFileTypes().size());
 
         command = commandParser.parse("collate from C:/ only");
-        assertEquals(command.getCommandType(), Command.Type.COLLATE);
-        assertEquals(command.getDirectory(), "C:\\");
+        assertEquals(Command.Type.COLLATE, command.getCommandType());
+        assertEquals("C:\\", command.getDirectory());
         assertTrue(command.willScanCurrentDirOnly());
-        assertEquals(command.getFileTypes().size(), 0);
+        assertEquals(0, command.getFileTypes().size());
 
         command = commandParser.parse("collate from C:/ include java, css");
-        assertEquals(command.getCommandType(), Command.Type.COLLATE);
-        assertEquals(command.getDirectory(), "C:\\");
+        assertEquals(Command.Type.COLLATE, command.getCommandType());
+        assertEquals("C:\\", command.getDirectory());
         assertFalse(command.willScanCurrentDirOnly());
-        assertEquals(command.getFileTypes().size(), 2);
+        assertEquals(2, command.getFileTypes().size());
 
         command = commandParser.parse("collate include css from C:/");
-        assertEquals(command.getCommandType(), Command.Type.COLLATE);
-        assertEquals(command.getDirectory(), "C:\\");
+        assertEquals(Command.Type.COLLATE, command.getCommandType());
+        assertEquals("C:\\", command.getDirectory());
         assertFalse(command.willScanCurrentDirOnly());
-        assertEquals(command.getFileTypes().size(), 1);
+        assertEquals(1, command.getFileTypes().size());
 
         command = commandParser.parse("collate include css from \"C:/Program Files\" only");
-        assertEquals(command.getCommandType(), Command.Type.COLLATE);
-        assertEquals(command.getDirectory(), "C:\\Program Files");
+        assertEquals(Command.Type.COLLATE, command.getCommandType());
+        assertEquals("C:\\Program Files", command.getDirectory());
         assertTrue(command.willScanCurrentDirOnly());
-        assertEquals(command.getFileTypes().size(), 1);
+        assertEquals(1, command.getFileTypes().size());
     }
 
     @Test
@@ -77,8 +77,8 @@ public class TestCommandParserAndCommand {
 
         String authorName = "A1234567Z";
         command = commandParser.parse("view " + authorName);
-        assertEquals(command.getCommandType(), Command.Type.VIEW);
-        assertEquals(command.getAuthorName(), authorName);
+        assertEquals(Command.Type.VIEW, command.getCommandType());
+        assertEquals(authorName, command.getAuthorName());
     }
 
     @Test
@@ -86,10 +86,10 @@ public class TestCommandParserAndCommand {
         Command command;
 
         command = commandParser.parse("summary");
-        assertEquals(command.getCommandType(), Command.Type.SUMMARY);
+        assertEquals(Command.Type.SUMMARY, command.getCommandType());
 
         command = commandParser.parse("summary     C:/");
-        assertEquals(command.getCommandType(), Command.Type.SUMMARY);
+        assertEquals(Command.Type.SUMMARY, command.getCommandType());
     }
 
     @Test
@@ -97,31 +97,31 @@ public class TestCommandParserAndCommand {
         Command command;
 
         command = commandParser.parse("collate");
-        assertEquals(command.getCommandType(), Command.Type.INVALID);
+        assertEquals(Command.Type.INVALID, command.getCommandType());
 
         command = commandParser.parse("collate from");
-        assertEquals(command.getCommandType(), Command.Type.INVALID);
+        assertEquals(Command.Type.INVALID, command.getCommandType());
 
         command = commandParser.parse("collate include");
-        assertEquals(command.getCommandType(), Command.Type.INVALID);
+        assertEquals(Command.Type.INVALID, command.getCommandType());
 
         command = commandParser.parse("collate include from");
-        assertEquals(command.getCommandType(), Command.Type.INVALID);
+        assertEquals(Command.Type.INVALID, command.getCommandType());
         
         command = commandParser.parse("collate from include only");
-        assertEquals(command.getCommandType(), Command.Type.INVALID);
+        assertEquals(Command.Type.INVALID, command.getCommandType());
         
         command = commandParser.parse("collate from C:/ include only");
-        assertEquals(command.getCommandType(), Command.Type.INVALID);
+        assertEquals(Command.Type.INVALID, command.getCommandType());
         
         command = commandParser.parse("colate C:/");
-        assertEquals(command.getCommandType(), Command.Type.INVALID);
+        assertEquals(Command.Type.INVALID, command.getCommandType());
 
         command = commandParser.parse("view");
-        assertEquals(command.getCommandType(), Command.Type.INVALID);
+        assertEquals(Command.Type.INVALID, command.getCommandType());
 
         command = commandParser.parse("viewA1234567Z");
-        assertEquals(command.getCommandType(), Command.Type.INVALID);
+        assertEquals(Command.Type.INVALID, command.getCommandType());
     }
 
 }
