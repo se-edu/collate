@@ -57,12 +57,16 @@ public class TestCommandParserAndCommand {
         assertEquals("C:\\", command.getDirectory());
         assertFalse(command.willScanCurrentDirOnly());
         assertEquals(2, command.getFileTypes().size());
+        assertEquals("java", command.getFileTypes().get(0));
+        assertEquals("css", command.getFileTypes().get(1));
 
-        command = commandParser.parse("collate include css from C:/");
+        command = commandParser.parse("collate include css, FXML from C:/");
         assertEquals(Command.Type.COLLATE, command.getCommandType());
         assertEquals("C:\\", command.getDirectory());
         assertFalse(command.willScanCurrentDirOnly());
-        assertEquals(1, command.getFileTypes().size());
+        assertEquals(2, command.getFileTypes().size());
+        assertEquals("css", command.getFileTypes().get(0));
+        assertEquals("fxml", command.getFileTypes().get(1));
 
         command = commandParser.parse("collate include css from \"C:/Program Files\" only");
         assertEquals(Command.Type.COLLATE, command.getCommandType());

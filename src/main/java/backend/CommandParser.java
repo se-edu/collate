@@ -18,7 +18,7 @@ public class CommandParser {
     private static final int POSITION_PARAM_COMMAND = 0;
     private static final int POSITION_FIRST_PARAM_ARGUMENT = 1;
 
-    private static final String REGEX_WHITESPACES = "\\s+";
+    private static final String REGEX_WHITESPACES = "[\\s,]+";
     
     private static final String STRING_BACKSLASH = "\\";
     private static final String STRING_FORWARD_SLASH = "/";
@@ -176,7 +176,7 @@ public class CommandParser {
         if (arguments.contains(KEYWORD_INCLUDE)) {
             int fileTypesIndex = arguments.indexOf(KEYWORD_INCLUDE) + 1;
             for (int i = fileTypesIndex; i < arguments.size(); i++) {
-                String inputFileType = arguments.get(i);
+                String inputFileType = arguments.get(i).toLowerCase();
                 if (isValidFileType(inputFileType)) {
                     fileTypes.add(inputFileType);
                 } else {
@@ -192,8 +192,7 @@ public class CommandParser {
      * 
      * @param inputFileType
      */
-    private boolean isValidFileType(String inputFileType) {
-        String fileType = inputFileType.trim().toLowerCase();
+    private boolean isValidFileType(String fileType) {
         for (String keyword : KEYWORDS) {
             if (keyword.equals(fileType)) {
                 return false;
