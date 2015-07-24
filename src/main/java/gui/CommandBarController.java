@@ -17,7 +17,7 @@ public class CommandBarController extends TextField {
 
     private static final String COMMAND_BAR_LAYOUT_FXML = "/main/resources/layouts/CommandBar.fxml";
     private static final String COMMAND_BAR_DEFAULT_TEXT = 
-            "collate from D:\\Documents\\Sebastian\\Dropbox\\collate\\src\\test\\testFiles";
+            "";
 
     private MainApp mainApp;
 
