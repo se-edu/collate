@@ -25,7 +25,6 @@ public class MainApp extends Application {
     private static final String ROOT_LAYOUT_FXML = "/main/resources/layouts/RootLayout.fxml";
 
     private static final String WINDOW_TITLE = "Collate";
-    private static final String COMMAND_BAR_DEFAULT_TEXT = "collate from D:\\Documents\\Sebastian\\Dropbox\\collate\\src";
 
     private Stage primaryStage;
     private BorderPane rootLayout;
@@ -76,8 +75,7 @@ public class MainApp extends Application {
     }
 
     private void addCommandBar(MainApp mainApp) {
-        rootLayout.setBottom(new CommandBarController(mainApp,
-                                                      COMMAND_BAR_DEFAULT_TEXT));
+        rootLayout.setBottom(new CommandBarController(mainApp));
     }
 
     private void addSummary(MainApp mainApp) {
@@ -93,6 +91,7 @@ public class MainApp extends Application {
     // ================================================================
     // Methods which refer to Logic directly
     // ================================================================
+    
     public ObservableList<Author> getSummaryData() {
         return logic.getSummaryData();
     }
