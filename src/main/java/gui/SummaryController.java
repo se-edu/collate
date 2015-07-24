@@ -22,7 +22,7 @@ public class SummaryController extends StackPane {
     @FXML
     private TableColumn<Author, Double> proportionColumn;
 
-    private static final String OVERVIEW_LAYOUT_FXML = "/main/resources/layouts/Overview.fxml";
+    private static final String OVERVIEW_LAYOUT_FXML = "/main/resources/layouts/Summary.fxml";
 
     public SummaryController(MainApp mainApp, ObservableList<Author> overviewData) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(OVERVIEW_LAYOUT_FXML));

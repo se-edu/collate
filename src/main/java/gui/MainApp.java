@@ -14,7 +14,12 @@ import main.java.backend.Author;
 import main.java.backend.Logic;
 import main.java.backend.SourceFile;
 
-// @@author Sebastian Quek
+/**
+ * MainApp is the entry point for JavaFX applications.
+ * 
+ * @author Sebastian Quek
+ *
+ */
 public class MainApp extends Application {
 
     private static final String ROOT_LAYOUT_FXML = "/main/resources/layouts/RootLayout.fxml";
@@ -76,7 +81,7 @@ public class MainApp extends Application {
     }
 
     private void addSummary(MainApp mainApp) {
-        rootLayout.setCenter(new SummaryController(mainApp, getOverviewData()));
+        rootLayout.setCenter(new SummaryController(mainApp, getSummaryData()));
     }
 
     private void addFileStats(String authorName,
@@ -88,8 +93,8 @@ public class MainApp extends Application {
     // ================================================================
     // Methods which refer to Logic directly
     // ================================================================
-    public ObservableList<Author> getOverviewData() {
-        return logic.getOverviewData();
+    public ObservableList<Author> getSummaryData() {
+        return logic.getSummaryData();
     }
 
     public void handleKeyPress(CommandBarController commandBarController,
