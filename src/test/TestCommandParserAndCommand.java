@@ -28,7 +28,7 @@ public class TestCommandParserAndCommand {
         assertFalse(command.willScanCurrentDirOnly());
         assertEquals(0, command.getFileTypes().size());
 
-        command = commandParser.parse("collate from C:/Windows");
+        command = commandParser.parse("collate from        C:/Windows");
         assertEquals(Command.Type.COLLATE, command.getCommandType());
         assertEquals("C:\\Windows", command.getDirectory());
         assertFalse(command.willScanCurrentDirOnly());
