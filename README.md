@@ -31,14 +31,14 @@ h1 {
 ```
 
 ### Commands:
-#### collate
+#### `collate`
 * `collate from <DIR>` - Collate all files within `<DIR>` including subfolders
 * `collate from <DIR> only` / `collate only from <DIR>` - Only collate files in `<DIR>`
 * `collate from <DIR> include java, css` / `collate include java, css from <DIR>`- Only collate java and css files
 * `collate from <DIR> only include java` - Only collate java files in `<DIR>`
 
-#### view
+#### `view`
 * `view <AUTHOR'S NAME>` - See author's individual statistics
 
-#### summary
+#### `summary`
 * `summary` - See default statistics summary table.
