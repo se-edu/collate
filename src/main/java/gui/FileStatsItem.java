@@ -9,7 +9,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 
-public class FileStatsItem extends BorderPane implements Comparable<FileStatsItem>{
+/**
+ * This class represents each row in the custom FileStats view.
+ * It implements Comparable so that they can be sorted by their percentage
+ * values.
+ * 
+ * @author Sebastian Quek
+ *
+ */
+public class FileStatsItem extends BorderPane implements
+        Comparable<FileStatsItem> {
+
     @FXML
     private HBox card;
     
@@ -26,16 +36,23 @@ public class FileStatsItem extends BorderPane implements Comparable<FileStatsIte
     private Shape circle;
     
     private static final String FILE_STATS_ITEM_FXML = "/main/resources/layouts/FileStatsItem.fxml";
-    private static final String BASE_COLOUR_0 = "#ff4081";
-    private static final String BASE_COLOUR_20 = "#ff5722";
-    private static final String BASE_COLOUR_40 = "#ffa726";
-    private static final String BASE_COLOUR_60 = "#00c853";
-    private static final String BASE_COLOUR_80 = "#2196f3";
-    
+
+    private static final String STRING_TRUNCATED_FORMAT = "...%s";
+    private static final String STRING_LINES_OF_CODE_FORMAT = "%s lines";
+    private static final String STRING_PERCENTAGE_FORMAT = "%.0f%%";
+    private static final String STRING_CIRCLE_FILL_STYLE_FORMAT = "-fx-fill: %s";
+
+    private static final int MAX_FILENAME_LENGTH = 40;
+
+    private static final String BASE_COLOUR_0 = "#FF4D5E";
+    private static final String BASE_COLOUR_20 = "#E8803D";
+    private static final String BASE_COLOUR_40 = "#FFD251";
+    private static final String BASE_COLOUR_60 = "#D7E84A";
+    private static final String BASE_COLOUR_80 = "#51FF61";
+
     private double percentageValue;
 
     public FileStatsItem(String filename, int linesOfCode, double percentage) {
-        
         FXMLLoader loader = new FXMLLoader(getClass().getResource(FILE_STATS_ITEM_FXML));
         loader.setController(this);
         loader.setRoot(this);
@@ -47,11 +64,14 @@ public class FileStatsItem extends BorderPane implements Comparable<FileStatsIte
         }
         
         this.percentageValue = percentage;
-        
-        this.filename.setText(truncatedName(filename));
-        this.linesOfCode.setText(linesOfCode + " lines");
-        this.percentage.setText(String.format("%.0f%%", percentage));
-        this.circle.setStyle("-fx-fill: " + generateColour(percentage));
+
+        this.filename.setText(generateTruncatedName(filename));
+        this.linesOfCode.setText(String.format(STRING_LINES_OF_CODE_FORMAT,
+                                               linesOfCode));
+        this.percentage.setText(String.format(STRING_PERCENTAGE_FORMAT,
+                                              percentage));
+        this.circle.setStyle(String.format(STRING_CIRCLE_FILL_STYLE_FORMAT,
+                                           generateColour(percentage)));
     }
 
     private String generateColour(double percentage) {
@@ -68,9 +88,9 @@ public class FileStatsItem extends BorderPane implements Comparable<FileStatsIte
         }
     }
 
-    private String truncatedName(String filename) {
-        if (filename.length() >= 40) {
-            return "..." + filename.substring(filename.length() - 37);
+    private String generateTruncatedName(String filename) {
+        if (filename.length() >= MAX_FILENAME_LENGTH) {
+            return String.format(STRING_TRUNCATED_FORMAT, filename);
         }
         return filename;
     }
@@ -80,7 +100,8 @@ public class FileStatsItem extends BorderPane implements Comparable<FileStatsIte
     }
 
     @Override
-    public int compareTo(FileStatsItem o) {
-        return (int) Math.round(o.getPercentageValue() - percentageValue);
+    public int compareTo(FileStatsItem otherItem) {
+        return (int) Math.round(otherItem.getPercentageValue() -
+                                percentageValue);
     }
 }
