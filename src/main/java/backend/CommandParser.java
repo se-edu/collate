@@ -18,6 +18,8 @@ public class CommandParser {
     private static final int POSITION_PARAM_COMMAND = 0;
     private static final int POSITION_FIRST_PARAM_ARGUMENT = 1;
 
+    private static final String REGEX_WHITESPACES = "\\s+";
+    
     private static final String STRING_BACKSLASH = "\\";
     private static final String STRING_FORWARD_SLASH = "/";
     private static final String STRING_DOUBLE_INVERTED_COMMA = "\"";
@@ -38,7 +40,7 @@ public class CommandParser {
 
     public Command parse(String userInput) {
         Command command;
-        ArrayList<String> parameters = splitString(userInput, STRING_ONE_SPACE);
+        ArrayList<String> parameters = splitString(userInput);
         String userCommand = getUserCommand(parameters);
         ArrayList<String> arguments = getUserArguments(parameters);
 
@@ -63,8 +65,8 @@ public class CommandParser {
         return command;
     }
 
-    private ArrayList<String> splitString(String arguments, String delimiter) {
-        String[] strArray = arguments.trim().split(delimiter);
+    private ArrayList<String> splitString(String arguments) {
+        String[] strArray = arguments.trim().split(REGEX_WHITESPACES);
         return new ArrayList<String>(Arrays.asList(strArray));
     }
 
@@ -97,6 +99,22 @@ public class CommandParser {
         }
     }
 
+    private String findDirectory(ArrayList<String> arguments) {
+        if (arguments.contains(KEYWORD_DIRECTORY)) {
+            int directoryIndex = arguments.indexOf(KEYWORD_DIRECTORY) + 1;
+
+            try {
+                String directory = getFullDirectory(arguments, directoryIndex);
+                return standardiseDirectoryString(directory);
+            } catch (IndexOutOfBoundsException e) {
+                // No directory was specified
+                return STRING_EMPTY;
+            }
+        } else {
+            return STRING_EMPTY;
+        }
+    }
+    
     /**
      * A valid collate command requires the following:
      * 
@@ -115,22 +133,6 @@ public class CommandParser {
         File dir = new File(directory);
         return !directory.isEmpty() && dir.exists() &&
                !(arguments.contains(KEYWORD_INCLUDE) && fileTypes.isEmpty());
-    }
-
-    private String findDirectory(ArrayList<String> arguments) {
-        if (arguments.contains(KEYWORD_DIRECTORY)) {
-            int directoryIndex = arguments.indexOf(KEYWORD_DIRECTORY) + 1;
-
-            try {
-                String directory = getFullDirectory(arguments, directoryIndex);
-                return standardiseDirectoryString(directory);
-            } catch (IndexOutOfBoundsException e) {
-                // No directory was specified
-                return STRING_EMPTY;
-            }
-        } else {
-            return STRING_EMPTY;
-        }
     }
 
     /**
