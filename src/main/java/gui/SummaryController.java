@@ -11,10 +11,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import main.java.backend.Author;
 
-// @@author Sebastian Quek
+/**
+ * This class controls the Summary view by loading the corresponding fxml file
+ * and initialising the table's columns with the authors' properties.
+ * 
+ * @author Sebastian Quek
+ *
+ */
 public class SummaryController extends StackPane {
     @FXML
-    private TableView<Author> overviewTable;
+    private TableView<Author> summaryTable;
     @FXML
     private TableColumn<Author, String> authorNameColumn;
     @FXML
@@ -24,7 +30,7 @@ public class SummaryController extends StackPane {
 
     private static final String OVERVIEW_LAYOUT_FXML = "/main/resources/layouts/Summary.fxml";
 
-    public SummaryController(MainApp mainApp, ObservableList<Author> overviewData) {
+    public SummaryController(MainApp mainApp, ObservableList<Author> summaryData) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(OVERVIEW_LAYOUT_FXML));
         loader.setController(this);
         loader.setRoot(this);
@@ -35,7 +41,7 @@ public class SummaryController extends StackPane {
             e.printStackTrace();
         }
 
-        overviewTable.setItems(overviewData);
+        summaryTable.setItems(summaryData);
         authorNameColumn.setCellValueFactory(new PropertyValueFactory<Author, String>("name"));
         linesOfCodeColumn.setCellValueFactory(new PropertyValueFactory<Author, Integer>("linesOfCode"));
         proportionColumn.setCellValueFactory(new PropertyValueFactory<Author, Double>("proportion"));
