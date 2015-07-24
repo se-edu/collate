@@ -23,7 +23,6 @@ import main.java.backend.SourceFile;
 public class MainApp extends Application {
 
     private static final String ROOT_LAYOUT_FXML = "/main/resources/layouts/RootLayout.fxml";
-
     private static final String WINDOW_TITLE = "Collate";
 
     private Stage primaryStage;
@@ -114,8 +113,7 @@ public class MainApp extends Application {
             case VIEW :
                 String authorName = logic.getTargetAuthorName();
                 if (authorName != null) {
-                    addFileStats(authorName,
-                                 logic.getTargetAuthorStatistics());
+                    addFileStats(authorName, logic.getTargetAuthorStatistics());
                 }
             case INVALID :
             default :

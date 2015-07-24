@@ -19,7 +19,7 @@ public class Storage {
     
     private static final String LOG_TAG = "CollatedFilesStorage";
     public static final String DEFAULT_SAVE_DIRECTORY = "collated";
-    private static final String COLLATED_FILE_PATH = DEFAULT_SAVE_DIRECTORY + "/%s.md";
+    private static final String COLLATED_FILE_PATH_FORMAT = DEFAULT_SAVE_DIRECTORY + "/%s.md";
 
     public Storage() {
         createSaveDirectory();
@@ -35,7 +35,7 @@ public class Storage {
     }
 
     public void addCollatedFile(String fileName, ArrayList<String> collatedLines) {
-        try (PrintWriter writer = new PrintWriter(String.format(COLLATED_FILE_PATH, fileName))) {
+        try (PrintWriter writer = new PrintWriter(String.format(COLLATED_FILE_PATH_FORMAT, fileName))) {
             for (String line : collatedLines) {
                 writer.println(line);
             }

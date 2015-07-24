@@ -19,6 +19,7 @@ import main.java.backend.Author;
  *
  */
 public class SummaryController extends StackPane {
+    
     @FXML
     private TableView<Author> summaryTable;
     @FXML

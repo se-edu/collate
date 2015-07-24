@@ -6,8 +6,7 @@ import java.util.StringJoiner;
 /**
  * Each code snippet contains lines that belong to an author (as annotated by
  * the @@author tag). This class also has a SourceFile field which specifies
- * which
- * file this snippet belongs to.
+ * which file this snippet belongs to.
  * 
  * @author Sebastian Quek
  *

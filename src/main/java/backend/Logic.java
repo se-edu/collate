@@ -24,8 +24,6 @@ public class Logic {
     private String rootDirectory;
     private Author targetAuthor;
 
-    
-
     private static final String AUTHOR_TAG = "@@author";
 
     private static final String MARKDOWN_TITLE = "# %s";

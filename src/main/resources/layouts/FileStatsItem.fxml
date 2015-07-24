@@ -7,7 +7,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.HBox?>
 
-<fx:root styleClass="fileStatsItem" type="BorderPane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root styleClass="fileStatsItem" type="BorderPane"
+	xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
 	<center>
 		<StackPane styleClass="cardBg">
 			<children>
@@ -24,8 +25,10 @@
 					</StackPane>
 					<VBox alignment="TOP_LEFT" prefWidth="100.0" styleClass="text">
 						<children>
-							<Text fx:id="filename" strokeWidth="0.0" styleClass="filename" text="Filename" />
-							<Text fx:id="linesOfCode" strokeWidth="0.0" styleClass="linesOfCode" text="Lines of code" />
+							<Text fx:id="filename" strokeWidth="0.0" styleClass="filename"
+								text="Filename" />
+							<Text fx:id="linesOfCode" strokeWidth="0.0" styleClass="linesOfCode"
+								text="Lines of code" />
 						</children>
 					</VBox>
 				</HBox>
