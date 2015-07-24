@@ -1,30 +1,44 @@
 # Collate
-Collate is a tool to find out the contributions of each contributor of the project.
+Collate is a tool to find out the contributions of the project's authors.
 
 It will export collated files formatted in Markdown. Example collated file: [Sebastian Quek.md](collated/Sebastian Quek.md)
 
 ## Usage
-Include `@author` tags to the areas of code you wrote.
+Include `@@author` tags to the areas of code you wrote.
 ```java
-// @author John Doe
-public class MyCustomClass {
+// @@author John Doe
+public class MyCustomPrinter {
+    
+    private String text;
 
-	public MyCustomClass() {
-		System.out.println("hello");
+	public MyCustomPrinter(String text) {
+        this.text = text;
 	}
+
+    // @@author Jane Doe
+    public void print() {
+        System.out.println(text);
+    }
 }
 ```
 
-Commands:
+Collate works regardless of filetype, as long as the `@@author` tag is supplied.
+```css
+/* @@author John Doe */
+h1 {
+    font-size: 3em;
+}
+```
+
+### Commands:
+#### collate
 * `collate from <DIR>` - Collate all files within `<DIR>` including subfolders
 * `collate from <DIR> only` / `collate only from <DIR>` - Only collate files in `<DIR>`
-* `collate from <DIR> include java, css` - Only collate java and css files
+* `collate from <DIR> include java, css` / `collate include java, css from <DIR>`- Only collate java and css files
+* `collate from <DIR> only include java` - Only collate java files in `<DIR>`
 
-## Resources
-* [Eclipse] - IDE for java
-* [e(fx)clipse] - Eclipse add-on which adds JavaFX tools such as a CSS editor with all the JavaFX properties
-* [Scene Builder 8.0.0] - For laying out JavaFX scenes
+#### view
+* `view <AUTHOR'S NAME>` - See author's individual statistics
 
-[Eclipse]: https://eclipse.org/
-[e(fx)clipse]: http://www.eclipse.org/efxclipse/install.html#for-the-lazy
-[Scene Builder 8.0.0]: http://gluonhq.com/products/scene-builder/
+#### summary
+* `summary` - See default statistics summary table.
