@@ -55,7 +55,9 @@ public class CommandParser {
                 break;
 
             case USER_COMMAND_SUMMARY :
-                command = initSummaryCommand(arguments);
+                command = initSummaryCommand();
+                break;
+                
                 break;
 
             default :
@@ -230,7 +232,7 @@ public class CommandParser {
     // Create summary command method
     // ================================================================
    
-    private Command initSummaryCommand(ArrayList<String> arguments) {
+    private Command initSummaryCommand() {
         return new Command(Command.Type.SUMMARY);
     }
     
