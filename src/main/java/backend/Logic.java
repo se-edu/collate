@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import javafx.collections.FXCollections;
@@ -272,13 +273,17 @@ public class Logic {
 
 
     // ================================================================
-    // Methods that MainApp uses
+    // Methods for GUI/TUI
     // ================================================================
 
     public ObservableList<Author> getSummaryData() {
         ObservableList<Author> authorObsList = FXCollections.observableArrayList();
         authorObsList.addAll(authors.values());
         return authorObsList;
+    }
+    
+    public Collection<Author> getAuthors() {
+        return authors.values();
     }
     
     public String getTargetAuthorName() {
