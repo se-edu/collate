@@ -22,19 +22,19 @@ public class FileStatsItem extends BorderPane implements
 
     @FXML
     private HBox card;
-    
+
     @FXML
     private Text filename;
-    
+
     @FXML
     private Text linesOfCode;
-    
+
     @FXML
     private Text percentage;
-    
+
     @FXML
     private Shape circle;
-    
+
     private static final String FILE_STATS_ITEM_FXML = "/main/resources/layouts/FileStatsItem.fxml";
 
     private static final String STRING_TRUNCATED_FORMAT = "...%s";
@@ -62,7 +62,7 @@ public class FileStatsItem extends BorderPane implements
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         this.percentageValue = percentage;
 
         this.filename.setText(generateTruncatedName(filename));
@@ -90,11 +90,13 @@ public class FileStatsItem extends BorderPane implements
 
     private String generateTruncatedName(String filename) {
         if (filename.length() >= MAX_FILENAME_LENGTH) {
-            return String.format(STRING_TRUNCATED_FORMAT, filename);
+            return String.format(STRING_TRUNCATED_FORMAT,
+                                 filename.substring(filename.length() -
+                                                    MAX_FILENAME_LENGTH));
         }
         return filename;
     }
-    
+
     public double getPercentageValue() {
         return percentageValue;
     }
