@@ -54,6 +54,8 @@ public class Logic {
                 return Command.Type.VIEW;
             case SUMMARY :
                 return Command.Type.SUMMARY;
+            case EXIT :
+                return Command.Type.EXIT;
             case INVALID :
             default :
                 return Command.Type.INVALID;

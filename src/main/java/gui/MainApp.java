@@ -115,6 +115,8 @@ public class MainApp extends Application {
                 if (authorName != null) {
                     addFileStats(authorName, logic.getTargetAuthorStatistics());
                 }
+            case EXIT :
+                primaryStage.hide();
             case INVALID :
             default :
                 break;

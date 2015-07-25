@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Command {
     
     public enum Type {
-        COLLATE, VIEW, SUMMARY, INVALID
+        COLLATE, VIEW, SUMMARY, EXIT, INVALID
     }
 
     private Type type;

@@ -29,6 +29,7 @@ public class CommandParser {
     private static final String USER_COMMAND_COLLATE = "collate";
     private static final String USER_COMMAND_VIEW = "view";
     private static final String USER_COMMAND_SUMMARY = "summary";
+    private static final String USER_COMMAND_EXIT = "exit";
 
     private static final String[] KEYWORDS = {"from", "only", "include"};
     private static final String KEYWORD_DIRECTORY = KEYWORDS[0];
@@ -58,6 +59,8 @@ public class CommandParser {
                 command = initSummaryCommand();
                 break;
                 
+            case USER_COMMAND_EXIT :
+                command = initExitCommand();
                 break;
 
             default :
@@ -243,5 +246,14 @@ public class CommandParser {
 
     private Command initInvalidCommand() {
         return new Command(Command.Type.INVALID);
+    }
+    
+    
+    // ================================================================
+    // Create exit command method
+    // ================================================================
+
+    private Command initExitCommand() {
+        return new Command(Command.Type.EXIT);
     }
 }
