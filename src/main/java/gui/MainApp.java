@@ -1,18 +1,14 @@
 package main.java.gui;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import main.java.backend.Author;
 import main.java.backend.Logic;
-import main.java.backend.SourceFile;
 
 /**
  * MainApp is the entry point for JavaFX applications.
@@ -78,22 +74,19 @@ public class MainApp extends Application {
     }
 
     private void addSummary(MainApp mainApp) {
-        rootLayout.setCenter(new SummaryController(mainApp, getSummaryData()));
+        rootLayout.setCenter(new SummaryController(mainApp,
+                                                   logic.getSummaryData()));
     }
 
-    private void addFileStats(String authorName,
-                              HashMap<SourceFile, Integer> statistics) {
-        rootLayout.setCenter(new FileStatsController(authorName, statistics));
+    private void addFileStats(String authorName) {
+        rootLayout.setCenter(new FileStatsController(authorName,
+                                                     logic.getTargetAuthorStatistics()));
     }
 
 
     // ================================================================
     // Methods which refer to Logic directly
     // ================================================================
-    
-    public ObservableList<Author> getSummaryData() {
-        return logic.getSummaryData();
-    }
 
     public void handleKeyPress(CommandBarController commandBarController,
                                KeyCode key,
@@ -113,7 +106,7 @@ public class MainApp extends Application {
             case VIEW :
                 String authorName = logic.getTargetAuthorName();
                 if (authorName != null) {
-                    addFileStats(authorName, logic.getTargetAuthorStatistics());
+                    addFileStats(authorName);
                 }
                 break;
             case EXIT :
