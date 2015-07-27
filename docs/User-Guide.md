@@ -16,7 +16,7 @@ You can also enter an author tag without a name to explicitly tell Collate that 
 
 You can include any type of file, as long as the `@@author` tag is present.
 
-![author tags](docs/images/add-author-tags.png)
+![author tags](images/add-author-tags.png)
 
 # Using Collate
 ## Launch
@@ -31,11 +31,11 @@ So you have marked the areas of code that you wrote. To collate them, simply ent
 
 > The `from` option tells Collate where to look for your source files.
 
-![collate all subfolders](docs/images/collate-all-subfolders.gif)
+![collate all subfolders](images/collate-all-subfolders.gif)
 
 If your directory includes whitespaces, you will need to surround the directory with double inverted commas.
 
-![collate folder with whitespace](docs/images/collate-folder-with-whitespace.gif)
+![collate folder with whitespace](images/collate-folder-with-whitespace.gif)
 
 #### Only the specified folder
 If you would like to collate files only from the specified folder, and not files from subfolders, you can add the `only` option.
@@ -44,7 +44,7 @@ If you would like to collate files only from the specified folder, and not files
 
 > Collate allows for flexible input options. You need not worry about the position of these options, just remember to start each command with the `collate` keyword.
 
-![collate only specified folder](docs/images/collate-only-folder.gif)
+![collate only specified folder](images/collate-only-folder.gif)
 
 #### Only certain types of files
 Collate scans the folder you specified for all types of file. What if you want to collate only `java` files? Well, you can use the `include` option.
@@ -55,7 +55,7 @@ You can include multiple filetypes by separating them with commas.
 
 `collate from <FOLDER> include java, css, fxml`
 
-![collate only certain filetypes](docs/images/collate-only-certain-filetypes.gif)
+![collate only certain filetypes](images/collate-only-certain-filetypes.gif)
 
 ## View an author's statistics
 Viewing an author's contribution statistics can be done by entering the following command.
@@ -66,11 +66,11 @@ Viewing an author's contribution statistics can be done by entering the followin
 
 This view allows you to see the proportion and number of lines of code the author wrote for files he/she contributed to.
 
-![view author statistics](docs/images/view-author-statistics.gif)
+![view author statistics](images/view-author-statistics.gif)
 
 ## Summary
 The summary view is the default screen that shows you the contributions of all authors. To access it, simply enter the following.
 
 `summary`
 
-![summary view](docs/images/summary.gif)
+![summary view](images/summary.gif)
