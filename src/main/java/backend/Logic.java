@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import main.java.data.Author;
+import main.java.data.CodeSnippet;
+import main.java.data.SourceFile;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

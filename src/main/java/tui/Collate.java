@@ -3,9 +3,9 @@ package main.java.tui;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import main.java.backend.Author;
 import main.java.backend.Logic;
-import main.java.backend.SourceFile;
+import main.java.data.Author;
+import main.java.data.SourceFile;
 
 public class Collate {
 

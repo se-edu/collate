@@ -11,7 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
-import main.java.backend.SourceFile;
+import main.java.data.SourceFile;
 
 /**
  * This class controls the view that shows an author's individual contributions

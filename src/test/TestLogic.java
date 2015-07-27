@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import main.java.backend.Command;
 import main.java.backend.Logic;
-import main.java.backend.SourceFile;
+import main.java.data.SourceFile;
 
 import org.junit.Before;
 import org.junit.Test;

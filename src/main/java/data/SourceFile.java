@@ -1,4 +1,4 @@
-package main.java.backend;
+package main.java.data;
 
 /**
  * Each SourceFile contains its file location (relative to the root directory)

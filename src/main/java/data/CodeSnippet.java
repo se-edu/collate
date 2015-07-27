@@ -1,4 +1,4 @@
-package main.java.backend;
+package main.java.data;
 
 import java.util.ArrayList;
 import java.util.StringJoiner;

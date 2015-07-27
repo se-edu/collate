@@ -1,9 +1,9 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
-import main.java.backend.Author;
-import main.java.backend.CodeSnippet;
-import main.java.backend.SourceFile;
+import main.java.data.Author;
+import main.java.data.CodeSnippet;
+import main.java.data.SourceFile;
 
 import org.junit.Before;
 import org.junit.Test;

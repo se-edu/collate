@@ -9,7 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
-import main.java.backend.Author;
+import main.java.data.Author;
 
 /**
  * This class controls the Summary view by loading the corresponding fxml file
