@@ -20,6 +20,10 @@ public class MainApp extends Application {
 
     private static final String ROOT_LAYOUT_FXML = "/main/resources/layouts/RootLayout.fxml";
     private static final String WINDOW_TITLE = "Collate";
+    
+    private static final String FEEDBACK_COLLATE_SUCCESSFUL = "Collate successful!";
+    private static final String FEEDBACK_EMPTY = "";
+    private static final String FEEDBACK_INVALID_COMMAND = "Invalid command.";
 
     private Stage primaryStage;
     private BorderPane rootLayout;
@@ -99,21 +103,27 @@ public class MainApp extends Application {
     private void handleEnterPress(CommandBarController commandBarController,
                                   String userInput) {
         switch (logic.executeCommand(userInput)) {
+            
             case COLLATE :
+                commandBarController.setFeedback(FEEDBACK_COLLATE_SUCCESSFUL);
             case SUMMARY :
                 addSummary(this);
                 break;
-            case VIEW :
-                String authorName = logic.getTargetAuthorName();
-                if (authorName != null) {
-                    addFileStats(authorName);
-                }
-                break;
+                
             case EXIT :
                 primaryStage.hide();
                 break;
+                
+            case VIEW :
+                String authorName = logic.getTargetAuthorName();
+                if (authorName != null) {
+                    commandBarController.setFeedback(FEEDBACK_EMPTY);
+                    addFileStats(authorName);
+                    break;
+                }
             case INVALID :
             default :
+                commandBarController.setFeedback(FEEDBACK_INVALID_COMMAND);
                 break;
         }
         commandBarController.clear();

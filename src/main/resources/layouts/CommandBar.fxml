@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.layout.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.control.TextField?>
 
-<fx:root onKeyPressed="#onKeyPress" type="TextField"
-	xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" />
+<fx:root type="BorderPane" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <TextField fx:id="commandBar" onKeyPressed="#onKeyPress" />
+   </center>
+   <top>
+      <Label fx:id="feedback" focusTraversable="false" BorderPane.alignment="CENTER" />
+   </top>
+</fx:root>
