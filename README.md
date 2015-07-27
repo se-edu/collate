@@ -46,3 +46,6 @@ h1 {
 
 #### `summary`
 * `summary` - See default statistics summary table.
+
+#### `exit`
+* `exit` - Exit Collate using the command bar.

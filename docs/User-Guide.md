@@ -74,3 +74,8 @@ The summary view is the default screen that shows you the contributions of all a
 `summary`
 
 ![summary view](images/summary.gif)
+
+## Exit
+The following command allows you to exit Collate through the command bar.
+
+`exit`
