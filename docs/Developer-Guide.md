@@ -3,6 +3,29 @@ Collate is a simple tool for developers to consolidate the contributions of a pr
 
 This guide describes the design and implementation of Collate. It will help you understand how Collate works and how you can further contribute to its development. I have organised this guide in a top-down manner so that you can understand the big picture before moving on to the more detailed sections.
 
+# Table of Contents
+<!-- TOC depth:3 withLinks:1 updateOnSave:0 orderedList:0 -->
+
+- [Architecture](#architecture)
+- [GUI Component](#gui-component)
+	- [MainApp Class](#mainapp-class)
+	- [CommandBarController Class](#commandbarcontroller-class)
+	- [SummaryController Class](#summarycontroller-class)
+	- [FileStatsController Class](#filestatscontroller-class)
+		- [FileStatsItem Class](#filestatsitem-class)
+- [TUI component](#tui-component)
+- [Backend Component](#backend-component)
+	- [Logic Class](#logic-class)
+	- [CommandParser Class](#commandparser-class)
+		- [Command Class](#command-class)
+	- [Storage Class](#storage-class)
+- [Data Component](#data-component)
+	- [Author Class](#author-class)
+	- [CodeSnippet Class](#codesnippet-class)
+	- [SourceFile Class](#sourcefile-class)
+- [Test Driver Component](#test-driver-component)
+<!-- /TOC -->
+
 # Architecture
 ![Architecture](images/architecture.png)
 
