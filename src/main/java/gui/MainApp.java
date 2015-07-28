@@ -78,8 +78,7 @@ public class MainApp extends Application {
     }
 
     private void addSummary(MainApp mainApp) {
-        rootLayout.setCenter(new SummaryController(mainApp,
-                                                   logic.getSummaryData()));
+        rootLayout.setCenter(new SummaryController(logic.getSummaryData()));
     }
 
     private void addFileStats(String authorName) {

@@ -31,7 +31,7 @@ public class SummaryController extends StackPane {
 
     private static final String OVERVIEW_LAYOUT_FXML = "/main/resources/layouts/Summary.fxml";
 
-    public SummaryController(MainApp mainApp, ObservableList<Author> summaryData) {
+    public SummaryController(ObservableList<Author> summaryData) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(OVERVIEW_LAYOUT_FXML));
         loader.setController(this);
         loader.setRoot(this);
