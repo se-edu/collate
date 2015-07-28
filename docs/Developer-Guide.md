@@ -73,7 +73,7 @@ void | `clear()`: Clear the command bar
 void | `setFeedback(String feedbackText)`: Set the text of the feedback label
 
 ## SummaryController Class
-The `SummaryController` is the default view after entering the `collate` command. It shows a table with three columns: author's name, lines of code and proportion of code written by the author.
+The `SummaryController` controls the default view after entering the `collate` command. It shows a table with three columns: author's name, lines of code and proportion of code written by the author.
 
 This class loads `Summary.fxml` which is a type of `StackPane` (also a type of `Pane`) and contains a `TableView`.
 
@@ -84,7 +84,38 @@ This class loads `Summary.fxml` which is a type of `StackPane` (also a type of `
 > More details of these JavaFX APIs can be found [here](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableView.html).
 
 ## FileStatsController Class
+The `FileStatsController` controls the view that is shown when a user enters the `view` command. It shows the files that the specified target author has contributed to and the proportion of code he/she wrote in those files.
+
+This class loads `FileStats.fxml` which is a type of `BorderPane` and has a `Label` positioned on top and a `ListView` positioned in the center. The `Label` is used to indicate the target author's name and the `ListView` is used to show his/her contribution statistics.
+
+This class' constructor requires a `HashMap` of `SourceFile` objects (from the `data` package) and the corresponding number of lines the target author has written for that `SourceFile`. It then uses this data to construct `FileStatsItem` objects to be shown in a `ListView`.
+
+> The `SourceFile` object is a representation of source files that have been collated.
+
+A `ListView` contains objects of a certain type and these objects are laid out vertically. In this case, the `ListView` contains our custom `FileStatsItem` objects. JavaFX will then render these objects as per the layouts of the corresponding `FileStatsItem` objects which will be elaborated upon in the following section.
+
+> By creating custom objects and using `ListView` to show them, you can create complex list-based layouts.
+
 ### FileStatsItem Class
+![FileStatsItem](images/filestatsitem.png)
+Each `FileStatsItem` object consists of nine JavaFX components.
+1. `BorderPane` - The `FileStatsItem.fxml` is of type `BorderPane`. It has a `StackPane` at its center.
+2. `StackPane` - The outer container which facilitates the styling of the shadow of the object.
+3. `HBox card` - Forms the inner container of this custom component and lays out its children horizontally.
+4. `StackPane` - Forms the container for the `circle` and `percentage` components.
+5. `Shape circle` - Coloured circle behind the percentage value.
+6. `Text percentage` - The text that overlays the circle.
+7. `VBox` - Lays out the `filename` and `linesOfCode` vertically
+8. `Text filename`
+9. `Text linesOfCode`
+
+The `StackPane` allows the `percentage` to appear in front of the `circle`. The `card` `HBox` component has two children, first, this `StackPane` and second, the `VBox`.
+
+> The `StackPane` component enables you to position elements along the z-axis while the `HBox` and `VBox` components enable you to position elements horizontally or vertically. Together, they allow you to create your own custom components.
+
+This class' constructor uses its percentage parameter to generate a colour for the `circle`, with green indicating a higher percentage and red indicating a lower percentage.
+
+This class also implements `Comparable` to enable sorting of `FileStatsItem` objects based on their percentage values.
 
 # TUI component
 
