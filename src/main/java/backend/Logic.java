@@ -11,8 +11,6 @@ import java.util.HashMap;
 import main.java.data.Author;
 import main.java.data.CodeSnippet;
 import main.java.data.SourceFile;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  * This class handles commands created from a user's input.
@@ -278,12 +276,6 @@ public class Logic {
     // ================================================================
     // Methods for GUI/TUI
     // ================================================================
-
-    public ObservableList<Author> getSummaryData() {
-        ObservableList<Author> authorObsList = FXCollections.observableArrayList();
-        authorObsList.addAll(authors.values());
-        return authorObsList;
-    }
     
     public Collection<Author> getAuthors() {
         return authors.values();

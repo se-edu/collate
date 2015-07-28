@@ -10,16 +10,17 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 
 /**
- * This class handles the TextField that users input commands in.
+ * This class handles the TextField that users input commands in and the Label
+ * that shows feedback.
  * 
- * @author Sebastian
+ * @author Sebastian Quek
  *
  */
 public class CommandBarController extends BorderPane {
-    
+
     @FXML
     private Label feedback;
-    
+
     @FXML
     private TextField commandBar;
 
@@ -44,11 +45,11 @@ public class CommandBarController extends BorderPane {
     public void onKeyPress(KeyEvent event) {
         mainApp.handleKeyPress(this, event.getCode(), commandBar.getText());
     }
-    
+
     public void clear() {
         commandBar.clear();
     }
-    
+
     public void setFeedback(String feedbackText) {
         feedback.setText(feedbackText);
     }

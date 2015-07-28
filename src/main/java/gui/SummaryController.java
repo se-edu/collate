@@ -1,8 +1,9 @@
 package main.java.gui;
 
 import java.io.IOException;
+import java.util.Collection;
 
-import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
@@ -31,7 +32,7 @@ public class SummaryController extends StackPane {
 
     private static final String OVERVIEW_LAYOUT_FXML = "/main/resources/layouts/Summary.fxml";
 
-    public SummaryController(ObservableList<Author> summaryData) {
+    public SummaryController(Collection<Author> summaryData) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(OVERVIEW_LAYOUT_FXML));
         loader.setController(this);
         loader.setRoot(this);
@@ -42,7 +43,7 @@ public class SummaryController extends StackPane {
             e.printStackTrace();
         }
 
-        summaryTable.setItems(summaryData);
+        summaryTable.setItems(FXCollections.observableArrayList(summaryData));
         authorNameColumn.setCellValueFactory(new PropertyValueFactory<Author, String>("name"));
         linesOfCodeColumn.setCellValueFactory(new PropertyValueFactory<Author, Integer>("linesOfCode"));
         proportionColumn.setCellValueFactory(new PropertyValueFactory<Author, Double>("proportion"));
