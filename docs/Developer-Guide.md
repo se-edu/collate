@@ -10,7 +10,7 @@ Collate is made up for five main components. Users can either use Collate throug
 
 1) The GUI component consists of JavaFX's FXML files which define the layout that users interact with and the Java files which control these FXML files.
 
-2) The TUI component is an alternative of the GUI component. Users can enter commands through the command line interface (CLI),
+2) The TUI component is an alternative of the GUI component. Users can enter commands through the command line interface (CLI).
 
 2) The Backend component contains all the logic needed to parse users' commands, store collated data into individual files, etc.
 
@@ -44,13 +44,45 @@ private void initPrimaryStage(Stage primaryStage) {
     this.primaryStage.show();
 }
 ```
+`RootLayout.fxml` has a type of JavaFX's `BorderPane` which is a type of `Pane`. It allows us to layout JavaFX components by specifying which position of the `BorderPane` they should appear in, be it top, left, right, bottom or center. The command bar where users enter commands in is positioned at the bottom and the statistics from the `collate` command is placed in the center.
+
+> You can also customise the height and width of the window by modifying the `prefHeight` and `prefWidth` parameters in `RootLayout.fxml`.
 
 When a user presses any key, `MainApp` receives this information and decides what to do with them. The current implementation listens for the enter key which implies that the user has entered a command and would like for it to be executed.
 
-> This implementation allows Collate to be extended to listen for other keystrokes such as `tab`, `space`, etc.
+> This implementation allows Collate to be extended to listen for other keystrokes such as `tab`, `up`, `down`, etc.
+
+#### Notable APIs
+Return type | Method and Description
+----------- | ----------------------
+void | `handleKeyPress(CommandBarController commandBarController, KeyCode key, String userInput)`: Decides what to do when the `key` is entered.
 
 ## CommandBarController Class
+The `CommandBarController` loads `CommandBar.fxml` which contains a JavaFX `TextField` for users to enter commands and a JavaFX `Label` which shows feedback when commands are entered.
+
+`CommandBar.fxml`, similar to `RootLayout.fxml`, has a type of `BorderPane`. The `Label` is placed at the top of the `BorderPane` and the `TextField` is placed in the center.
+
+> As no preferred heights or widths are specified, JavaFX takes the default heights of the components and uses its parent container to calculate their widths. In the case of Collate, the `Label` and `TextField` inherit the width of `RooyLayout.fxml`. You can read more about `BorderPane` [here](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/BorderPane.html).
+
+This class has a reference to `MainApp` and calls the `handleKeyPress` method of `MainApp` whenever a key is pressed. This ensures that the logic is handled by `MainApp` to avoid unnecessary coupling between `commandBarController` and `Logic`.
+
+#### Notable APIs
+Return type | Method and Description
+----------- | ----------------------
+void | `clear()`: Clear the command bar
+void | `setFeedback(String feedbackText)`: Set the text of the feedback label
+
 ## SummaryController Class
+The `SummaryController` is the default view after entering the `collate` command. It shows a table with three columns: author's name, lines of code and proportion of code written by the author.
+
+This class loads `Summary.fxml` which is a type of `StackPane` (also a type of `Pane`) and contains a `TableView`.
+
+> The use of `StackPane` ensures the `TableView` has a maximum height and width i.e fills the space given by its parent container.
+
+`SummaryController` uses JavaFX's APIs to iterate through `Author` objects (from the `data` package) and construct rows based on certain attributes of these objects.
+
+> More details of these JavaFX APIs can be found [here](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableView.html).
+
 ## FileStatsController Class
 ### FileStatsItem Class
 
