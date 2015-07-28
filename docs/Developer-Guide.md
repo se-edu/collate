@@ -8,15 +8,11 @@ This guide describes the design and implementation of Collate. It will help you 
 
 Collate is made up for five main components. Users can either use Collate through the GUI or Text UI (TUI) components.
 
-1) The GUI component consists of JavaFX's FXML files which define the layout that users interact with and the Java files which control these FXML files.
-
-2) The TUI component is an alternative of the GUI component. Users can enter commands through the command line interface (CLI).
-
-2) The Backend component contains all the logic needed to parse users' commands, store collated data into individual files, etc.
-
-3) The Data component represent data objects such as the authors of the project and code snippets that were written.
-
-4) The Test Driver component utilises JUnit for unit testing.
+1. The GUI component consists of JavaFX's FXML files which define the layout that users interact with and the Java files which control these FXML files.
+2. The TUI component is an alternative of the GUI component. Users can enter commands through the command line interface (CLI).
+3. The Backend component contains all the logic needed to parse users' commands, store collated data into individual files, etc.
+4. The Data component represent data objects such as the authors of the project and code snippets that were written.
+5. The Test Driver component utilises JUnit for unit testing.
 
 # GUI Component
 ![Class diagram for GUI](images/gui-class-diagram.png)
@@ -112,7 +108,7 @@ Each `FileStatsItem` object consists of nine JavaFX components.
 
 The `StackPane` allows the `percentage` to appear in front of the `circle`. The `card` `HBox` component has two children, first, this `StackPane` and second, the `VBox`.
 
-> The `StackPane` component enables you to position elements along the z-axis while the `HBox` and `VBox` components enable you to position elements horizontally or vertically. Together, they allow you to create your own custom components.
+> The `StackPane` component enables you to position elements along the z-axis while the `HBox` and `VBox` components enable you to position elements horizontally or vertically. Together, they allow you to create your own custom components easily.
 
 This class' constructor uses its percentage parameter to generate a colour for the `circle`, with green indicating a higher percentage and red indicating a lower percentage.
 
