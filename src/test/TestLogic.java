@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import main.java.backend.Command;
 import main.java.backend.Logic;
+import main.java.data.Author;
 import main.java.data.SourceFile;
 
 import org.junit.Before;
@@ -78,10 +79,12 @@ public class TestLogic {
     }
 
     @Test
-    public void testGetOverviewData() {
+    public void testGetAuthors() {
         logic.executeCommand("collate from " + FULL_PATH_TEST_FILE1);
-        assertEquals(1, logic.getSummaryData().size());
-        assertEquals(AUTHOR1, logic.getSummaryData().get(0).getName());
+        assertEquals(1, logic.getAuthors().size());
+        for (Author author : logic.getAuthors()) {
+            assertEquals(AUTHOR1, author.getName());
+        }
     }
 
     @Test
