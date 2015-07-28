@@ -99,6 +99,7 @@ A `ListView` contains objects of a certain type and these objects are laid out v
 ### FileStatsItem Class
 ![FileStatsItem](images/filestatsitem.png)
 Each `FileStatsItem` object consists of nine JavaFX components.
+
 1. `BorderPane` - The `FileStatsItem.fxml` is of type `BorderPane`. It has a `StackPane` at its center.
 2. `StackPane` - The outer container which facilitates the styling of the shadow of the object.
 3. `HBox card` - Forms the inner container of this custom component and lays out its children horizontally.
