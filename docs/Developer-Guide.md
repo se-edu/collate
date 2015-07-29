@@ -23,7 +23,8 @@ This guide describes the design and implementation of Collate. It will help you 
 	- [Author Class](#author-class)
 	- [CodeSnippet Class](#codesnippet-class)
 	- [SourceFile Class](#sourcefile-class)
-- [Test Driver Component](#test-driver-component)
+- [Testing](#testing)
+- [Future Development](#future-development)
 
 <!-- /TOC -->
 
