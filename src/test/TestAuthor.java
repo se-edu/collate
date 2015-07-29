@@ -20,15 +20,15 @@ public class TestAuthor {
         author2 = new Author(AUTHOR_NAME_2);
         CodeSnippet.resetTotalLines();
         CodeSnippet codeSnippet1 = new CodeSnippet(author1,
-                                                   new SourceFile("test1.txt"),
-                                                   "txt");
+                                                   new SourceFile("test1.txt",
+                                                                  "txt"));
         codeSnippet1.addLine("line1");
         codeSnippet1.addLine("line2");
         codeSnippet1.addLine("line3");
 
         CodeSnippet codeSnippet2 = new CodeSnippet(author1,
-                                                   new SourceFile("test2.txt"),
-                                                   "txt");
+                                                   new SourceFile("test2.txt",
+                                                                  "txt"));
         codeSnippet2.addLine("line1");
         codeSnippet2.addLine("line2");
         codeSnippet2.addLine("line3");
@@ -36,8 +36,8 @@ public class TestAuthor {
         codeSnippet2.addLine("line5");
 
         CodeSnippet codeSnippet3 = new CodeSnippet(author2,
-                                                   new SourceFile("test2.txt"),
-                                                   "txt");
+                                                   new SourceFile("test2.txt",
+                                                                  "txt"));
         codeSnippet3.addLine("line4");
         codeSnippet3.addLine("line5");
     }

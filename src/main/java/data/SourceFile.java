@@ -11,10 +11,12 @@ public class SourceFile {
 
     private int numLines;
     private String relativeFilePath;
+    private String language;
 
-    public SourceFile(String relativeFilePath) {
+    public SourceFile(String relativeFilePath, String language) {
         this.numLines = 0;
         this.relativeFilePath = relativeFilePath;
+        this.language = language;
     }
     
     public int getNumLines() {
@@ -27,5 +29,9 @@ public class SourceFile {
 
     public String getRelativeFilePath() {
         return relativeFilePath;
+    }
+    
+    public String getLanguage() {
+        return language;
     }
 }

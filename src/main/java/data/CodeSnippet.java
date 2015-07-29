@@ -21,12 +21,10 @@ public class CodeSnippet {
     private Author author;
     private SourceFile file;
     private ArrayList<String> lines;
-    private String language;
 
-    public CodeSnippet(Author author, SourceFile file, String language) {
+    public CodeSnippet(Author author, SourceFile file) {
         this.author = author;
         this.file = file;
-        this.language = language;
         this.lines = new ArrayList<String>();
         author.addCodeSnippet(this);
     }
@@ -62,10 +60,6 @@ public class CodeSnippet {
     
     public SourceFile getFile() {
         return file;
-    }
-
-    public String getLanguage() {
-        return language;
     }
 
     /*

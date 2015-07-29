@@ -17,9 +17,9 @@ public class TestCodeSnippet {
     @Before
     public void init() {
         author = new Author("John Doe");
-        file = new SourceFile("test.java");
+        file = new SourceFile("test.java", "java");
         CodeSnippet.resetTotalLines();
-        codeSnippet = new CodeSnippet(author, file, "java");
+        codeSnippet = new CodeSnippet(author, file);
         /*
          * public class Test {
          *     public Test() {

@@ -141,7 +141,8 @@ public class Logic {
             boolean ignoreLine = false;
             Author currentAuthor = null;
             CodeSnippet currentSnippet = null;
-            SourceFile currentFile = new SourceFile(generateRelativePath(file.getPath()));
+            SourceFile currentFile = new SourceFile(generateRelativePath(file.getPath()),
+                                                    extension);
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -155,8 +156,7 @@ public class Logic {
                         ignoreLine = false;
                         currentAuthor = getAuthorByName(authorName);
                         currentSnippet = new CodeSnippet(currentAuthor,
-                                                         currentFile,
-                                                         extension);
+                                                         currentFile);
                     }
                 } else {
                     currentFile.addNumLines(1);
@@ -246,7 +246,7 @@ public class Logic {
                                             codeSnippet.getFile()
                                                        .getRelativeFilePath()));
             collatedLines.add(String.format(MARKDOWN_CODE_LANGUAGE_START,
-                                            codeSnippet.getLanguage()));
+                                            codeSnippet.getFile().getLanguage()));
             collatedLines.add(codeSnippet.toString());
             collatedLines.add(MARKDOWN_CODE_LANGUAGE_END);
         }
@@ -276,11 +276,11 @@ public class Logic {
     // ================================================================
     // Methods for GUI/TUI
     // ================================================================
-    
+
     public Collection<Author> getAuthors() {
         return authors.values();
     }
-    
+
     public String getTargetAuthorName() {
         if (targetAuthor != null) {
             return targetAuthor.getName();
