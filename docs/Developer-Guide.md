@@ -195,8 +195,53 @@ void | `addCollatedFile(String fileName, ArrayList<String> collatedLines)`: Save
 
 # Data Component
 ![Class diagram for Data](images/data-class-diagram.png)
+
+The `Data` component contains the classes that represent the various elements that are required in contribution statistics.
+
+`Logic` manipulates these classes and the UI components will use the data within these classes to render the view that users will see.
+
 ## Author Class
+This class represents authors who have contributed to the project. Each `Author` can have multiple associated `CodeSnippet` objects.
+
+`Author` objects have several fields of `Property` type. These class variables are special JavaFX constructs which behave in a similar manner as typical integer, double and String Java types. For example, `Author` has a `IntegerProperty` type for its `linesOfCode` variable. This variable contains an integer which can be accessed by calling `linesOfCode.get()`.
+
+By utilising JavaFX `Property` types, the `GUI` can interact directly with the `Author` class to render details in a table easily.
+
+> You can read more about JavaFX Properties [here](https://docs.oracle.com/javase/8/javafx/properties-binding-tutorial/binding.htm).
+
+#### Notable APIs
+Return type | Method and Description
+----------- | ----------------------
+ArrayList<CodeSnippet> | `getCodeSnippets()`: Get a list of the author's code snippets.
+void | `addCodeSnippet(CodeSnippet snippet)`: Add a `CodeSnippet` to the list of code snippets.
+int | `getLinesOfCode()`: Gets the total number of lines of code the author wrote.
+String | `getName()`: Gets the name of the author.
+double | `getProportion()`: Gets the overall percentage of code the author wrote as compared to the total number of lines of code in the project.
+
 ## CodeSnippet Class
+Each `CodeSnippet` represents the lines of code between two consecutive author tags that were written by an `Author`. Since this code belongs to a file, a `SourceFile` object is associated with each `CodeSnippet` object.
+
+The `CodeSnippet` class has a static variable `totalLines`. This variable stores the total number of lines of code of all code snippets and is used to calculate the overall proportion of code each author wrote.
+
+#### Notable APIs
+Return type | Method and Description
+----------- | ----------------------
+void | `addLine(String line)`: Add a line of code to the code snippet.
+Author | `getAuthor()`: Get the `Author` of the code snippet.
+SourceFile | `getFile()`: Get the `SourceFile` of the code snippet.
+int | `getNumLines()`: Get the number of lines of code in this code snippet.
+static int | `getTotalLines()`: Get the total number of lines of code of all code snippets.
+static void | `resetTotalLines()`: Resets the total number of lines of code of all code snippets.
+
 ## SourceFile Class
+This class represents source files that contain at least one author tag. Each `SourceFile` object is constructed with the file's path relative to the user's specified base folder and the file's language. The base folder is specified through the `collate from <FOLDER>` command.
+
+#### Notable APIs
+Return type | Method and Description
+----------- | ----------------------
+int | `getNumLines()`: Get the number of lines of code in this source file.
+void | `addNumLines(int value)`: Add to the number of lines of code in this source file.
+String | `getLanguage()`: Get the programming language of the source file.
+String | `getRelativeFilePath()`: Get the relative path of the source file.
 
 # Test Driver Component
