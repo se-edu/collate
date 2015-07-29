@@ -244,4 +244,27 @@ void | `addNumLines(int value)`: Add to the number of lines of code in this sour
 String | `getLanguage()`: Get the programming language of the source file.
 String | `getRelativeFilePath()`: Get the relative path of the source file.
 
-# Test Driver Component
+# Testing
+Collate uses JUnit to perform unit tests on the `Backend`, `TUI` and `Data` components. Every method is unit tested to ensure everything works as intended.
+
+Tests are placed in the `src/test` folder and if you require that actual files be used for tests, you can place them in the `src/test/testFiles` folder. Be mindful to update existing tests that rely on the current source files within the `src/text/testFiles` folder.
+
+# Future Development
+There are several additions that can be made to Collate to further increase its usefulness and usability.
+
+#### GUI testing
+The current implementation does not perform any tests on the `GUI` component and relies solely on visual feedback to ensure the user interface is showing information correctly.
+
+#### Saving and loading of statistics.
+By enabling users to save and load the statistics from a `collate` command, users will be able to view the progression of contributions of authors by collating at different stages of the project.
+
+Furthermore, Collate can show a graph of contribution statistics based on these saved statistics.
+
+#### Better command feedback
+Having more specific feedback to users' commands will allow users to find that what exactly happened after the command was entered. Invalid commands will show more intelligent feedback based on what the user entered.
+
+#### Auto-completion of commands
+Allowing users to press a button to auto-complete a command makes it much easier to enter commands and reduces the margin of error.
+
+#### History of commands
+Users can traverse this history to re-execute previously typed commands. This becomes especially useful if a user wants to collate the source files in the same folder periodically.
