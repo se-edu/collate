@@ -24,6 +24,7 @@ This guide describes the design and implementation of Collate. It will help you 
 	- [CodeSnippet Class](#codesnippet-class)
 	- [SourceFile Class](#sourcefile-class)
 - [Test Driver Component](#test-driver-component)
+
 <!-- /TOC -->
 
 # Architecture
@@ -141,10 +142,56 @@ This class also implements `Comparable` to enable sorting of `FileStatsItem` obj
 
 # Backend Component
 ![Class diagram for Backend](images/backend-class-diagram.png)
+The `Backend` component is made up of four classes. At the centre of this component is the `Logic` class which is in charge of handling the execution of user inputs from the `GUI` component. This component only relies on the `Data` component and works independently from the `GUI` and `TUI` components.
+
 ## Logic Class
+The `Logic` class contains the methods that form the functionality of Collate. It can be thought of as the "brain" of Collate. User inputs are passed to the `executeCommand(String)` method which parses the input to find out what type of command the input is. Finding the type of command is done in the `CommandParser` class which will be elaborated in the next section.
+
+After knowing the type of command, `Logic` executes the command and updates the its relevant fields before calling the `Storage` class to store the collated data if necessary. The data is stored in Markdown files. More details are mentioned in the `Storage` section.
+
+The `executeCommand(String)` method will then return the type of command to its caller method. The caller method can then decide how to update the user interface.
+
+This class provides several APIs for the user interface components (`GUI` and `TUI`) to obtain information and render them for the user.
+
+#### Notable APIs
+Return type | Method and Description
+----------- | ----------------------
+Command.Type | `executeCommand(String userInput)`: Handle the execution of user inputs
+Collection<Author> | `getAuthors()`: Get the authors of the project that has been collated.
+String | `getTargetAuthorName()`: Get the name of the target author that was specified in the user's `view` command.
+HashMap&lt;SourceFile, Integer&gt; | `getTargetAuthorStatistics()`: Get the statistics of the target author in the form of a `HashMap` with the keys as the `SourceFile` objects that the author contributed to and the values as the number of lines he/she wrote for that `SourceFile`.
+
 ## CommandParser Class
+The `CommandParser` class figures out what type of command has been entered by the user. It creates `Command` objects which are then passed to `Logic` to be executed.
+
+This class plays the important role of defining the fields in each `Command` object depending on the type of command. For example, if a user enters `view author1`, `CommandParser` creates a `Command` object that has its `authorName` initialised to "author1". These fields can then be accessed by `Logic` to execute the command properly.
+
+#### Notable APIs
+Return type | Method and Description
+----------- | ----------------------
+Command | `parse(String userInput)`: Analyses the given `userInput` to determine its type and returns a `Command` object with all the relevant fields initialised.
+
 ### Command Class
+This class is solely created by `CommandParser` and is executed by `Logic`. It is a simple Java class with several fields and corresponding public getters and setters.
+
+#### Notable getter APIs
+Return type | Method and Description
+----------- | ----------------------
+Type | `getCommandType()`: Returns the `Type` of command.
+String | `getDirectory()`: Returns the directory for `collate` commands.
+boolean | `willScanCurrentDirOnly()`: Returns the boolean that determines whether only the current folder should be scanned for source files.
+ArrayList&lt;String&gt; | `getFileTypes()`: Returns the list of types of files that are to be scanned.
+String | `getAuthorName()`: Returns the target author name from `view` commands.
+
 ## Storage Class
+`Storage` is a simple class that has one public method which takes in a list of lines and saves them to a local file in a default directory. This default directory is defined in this class.
+
+The current implementation saves collated data in Markdown files. These files are human-readable and editable, and utilises syntax from [Github Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/).
+
+#### Notable APIs
+Return type | Method and Description
+----------- | ----------------------
+void | `addCollatedFile(String fileName, ArrayList<String> collatedLines)`: Saves the `collatedLines` in the default save directory with `fileName` as its name and `.md` as its extension.
 
 # Data Component
 ![Class diagram for Data](images/data-class-diagram.png)
