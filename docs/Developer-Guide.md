@@ -139,7 +139,11 @@ This class' constructor uses its percentage parameter to generate a colour for t
 
 This class also implements `Comparable` to enable sorting of `FileStatsItem` objects based on their percentage values.
 
-# TUI component
+# Text UI component
+The `TUI` components consists of one class, `Collate`. You can export the `.jar` file and specify this class as the main class and run Collate from the command line i.e `java -jar Collate-TUI.jar`.
+
+## Collate class
+The `Collate` class receives commands from the command line and passes them to the `Backend` component to handle. `Collate` then prints the respective statistics in the command line. This class relies on the `Data` component to show the appropriate statistics.
 
 # Backend Component
 ![Class diagram for Backend](images/backend-class-diagram.png)
@@ -256,7 +260,7 @@ There are several additions that can be made to Collate to further increase its 
 #### GUI testing
 The current implementation does not perform any tests on the `GUI` component and relies solely on visual feedback to ensure the user interface is showing information correctly.
 
-#### Saving and loading of statistics.
+#### Saving and loading of statistics
 By enabling users to save and load the statistics from a `collate` command, users will be able to view the progression of contributions of authors by collating at different stages of the project.
 
 Furthermore, Collate can show a graph of contribution statistics based on these saved statistics.
