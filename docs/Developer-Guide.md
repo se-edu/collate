@@ -36,23 +36,22 @@ Collate is made up for five main components. Users can either use Collate throug
 1. The GUI component consists of JavaFX's FXML files which define the layout that users interact with and the Java files which control these FXML files.
 2. The TUI component is an alternative of the GUI component. Users can enter commands through the command line interface (CLI).
 3. The Backend component contains all the logic needed to parse users' commands, store collated data into individual files, etc.
-4. The Data component represent data objects such as the authors of the project and code snippets that were written.
-5. The Test Driver component utilises JUnit for unit testing.
+4. The Data component represents objects involved in the collation of source files such as the authors of the project and code snippets that were written.
+5. The Test Driver component tests the TUI, Backend and Data components. It utilises JUnit for unit testing.
 
 # GUI Component
 ![Class diagram for GUI](images/gui-class-diagram.png)
 
-The GUI component is made up of two packages, `gui` and `view`. The `gui` package contains the Java files that control what users see while the `view` package contains JavaFX's `fxml` files that describe how to layout JavaFX components.
-A `stylesheet.css` is also found in the `view` package. This stylesheet customises the appearance and style of JavaFX components.
+The GUI component is made up of two packages, `gui` and `view`. The `gui` package contains the Java files that control what users see while the `view` package contains JavaFX's `fxml` files that describe how to layout JavaFX components. A `stylesheet.css` is also found in the `view` package. This stylesheet customises the appearance and style of JavaFX components.
 
 Users will enter commands through the `CommandBarController`, which then passes these commands to the `MainApp`. `MainApp` will then call `Logic` in the `backend` package to handle the actual execution of these commands.
 
-`MainApp` is then responsible for displaying the correct view to update what the user sees. Collate has two views, a `Summary` view and `FileStats` view which are controlled by their corresponding controller classes. These classes will be elaborated upon in the following sections.
+`MainApp` is then responsible for correctly displaying and updating the GUI. Collate has two views that users can see, a `Summary` view and `FileStats` view which are controlled by their corresponding controller classes. These classes will be elaborated upon in the following sections.
 
 ## MainApp Class
 The `MainApp` class is the main driver for the GUI component. It controls what users see and handles user inputs by passing them to the `backend` package.
 
-`MainApp` extends from JavaFX's `Application` class and overrides its `start` method. This method is the starting point of the whole application and very importantly, initialises all the components that are required for the GUI. This method facilitates the loading of `RootLayout.fxml` from the `view` package.
+`MainApp` extends from JavaFX's `Application` class and overrides its `start` method. This method is the starting point of the whole application and very importantly, initialises all the components that are required for the GUI. This method also calls another method to load `RootLayout.fxml` from the `view` package. `RootLayout.fxml` contains the information about the layout of Collate's base components.
 
 The `start` method then calls `initPrimaryStage(Stage)` as seen below. This method creates a new JavaFX `Scene` using this `RootLayout` and sets the main `Stage` to show this scene.
 
@@ -65,11 +64,11 @@ private void initPrimaryStage(Stage primaryStage) {
     this.primaryStage.show();
 }
 ```
-`RootLayout.fxml` has a type of JavaFX's `BorderPane` which is a type of `Pane`. It allows us to layout JavaFX components by specifying which position of the `BorderPane` they should appear in, be it top, left, right, bottom or center. The command bar where users enter commands in is positioned at the bottom and the statistics from the `collate` command is placed in the center.
+`RootLayout.fxml` is a type of JavaFX's `BorderPane` which in turn is a type of `Pane`. It allows us to layout JavaFX components by specifying which position of the `BorderPane` they should appear in, be it top, left, right, bottom or centre. The command bar where users enter commands in is positioned at the bottom and the statistics from the `collate` command is placed in the centre.
 
 > You can also customise the height and width of the window by modifying the `prefHeight` and `prefWidth` parameters in `RootLayout.fxml`.
 
-When a user presses any key, `MainApp` receives this information and decides what to do with them. The current implementation listens for the enter key which implies that the user has entered a command and would like for it to be executed.
+When a user presses any key, `MainApp` receives this information and decides what to do next. The current implementation listens for the enter key being pressed. The enter key is used by users to express their intent to execute the command they have typed out.
 
 > This implementation allows Collate to be extended to listen for other keystrokes such as `tab`, `up`, `down`, etc.
 
@@ -81,7 +80,7 @@ void | `handleKeyPress(CommandBarController commandBarController, KeyCode key, S
 ## CommandBarController Class
 The `CommandBarController` loads `CommandBar.fxml` which contains a JavaFX `TextField` for users to enter commands and a JavaFX `Label` which shows feedback when commands are entered.
 
-`CommandBar.fxml`, similar to `RootLayout.fxml`, has a type of `BorderPane`. The `Label` is placed at the top of the `BorderPane` and the `TextField` is placed in the center.
+`CommandBar.fxml`, similar to `RootLayout.fxml`, is a `BorderPane`. The `Label` is placed at the top of the `BorderPane` and the `TextField` is placed in the centre.
 
 > As no preferred heights or widths are specified, JavaFX takes the default heights of the components and uses its parent container to calculate their widths. In the case of Collate, the `Label` and `TextField` inherit the width of `RooyLayout.fxml`. You can read more about `BorderPane` [here](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/BorderPane.html).
 
@@ -150,6 +149,8 @@ The `Collate` class receives commands from the command line and passes them to t
 The `Backend` component is made up of four classes. At the centre of this component is the `Logic` class which is in charge of handling the execution of user inputs from the `GUI` component. This component only relies on the `Data` component and works independently from the `GUI` and `TUI` components.
 
 ## Logic Class
+![Sequence diagram for collate command](images/sequence-diagram-collate-command.png)
+
 The `Logic` class contains the methods that form the functionality of Collate. It can be thought of as the "brain" of Collate. User inputs are passed to the `executeCommand(String)` method which parses the input to find out what type of command the input is. Finding the type of command is done in the `CommandParser` class which will be elaborated in the next section.
 
 After knowing the type of command, `Logic` executes the command and updates the its relevant fields before calling the `Storage` class to store the collated data if necessary. The data is stored in Markdown files. More details are mentioned in the `Storage` section.
