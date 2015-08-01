@@ -93,9 +93,9 @@ void | `clear()`: Clear the command bar
 void | `setFeedback(String feedbackText)`: Set the text of the feedback label
 
 ## SummaryController Class
-The `SummaryController` controls the default view after entering the `collate` command. It shows a table with three columns: author's name, lines of code and proportion of code written by the author.
+The `SummaryController` controls the default display after entering the `collate` command. It shows a table with three columns: author's name, lines of code and proportion of code written by the author.
 
-This class loads `Summary.fxml` which is a type of `StackPane` (also a type of `Pane`) and contains a `TableView`.
+This class loads `Summary.fxml` which is a type of `StackPane` (also a type of `Pane`) and contains a `TableView`. The `TableView` is simply a table and rows can be added to it.
 
 > The use of `StackPane` ensures the `TableView` has a maximum height and width i.e fills the space given by its parent container.
 
@@ -104,13 +104,13 @@ This class loads `Summary.fxml` which is a type of `StackPane` (also a type of `
 > More details of these JavaFX APIs can be found [here](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableView.html).
 
 ## FileStatsController Class
-The `FileStatsController` controls the view that is shown when a user enters the `view` command. It shows the files that the specified target author has contributed to and the proportion of code he/she wrote in those files.
+The `FileStatsController` controls the display that is shown when a user enters the `view` command. It shows the files that the specified target author has contributed to and the proportion of code he/she wrote in those files.
 
-This class loads `FileStats.fxml` which is a type of `BorderPane` and has a `Label` positioned on top and a `ListView` positioned in the center. The `Label` is used to indicate the target author's name and the `ListView` is used to show his/her contribution statistics.
+This class loads `FileStats.fxml` which is a type of `BorderPane` and has a `Label` positioned on top and a `ListView` positioned in the centre. The `Label` is used to indicate the target author's name and the `ListView` is used to show his/her contribution statistics.
 
-This class' constructor requires a `HashMap` of `SourceFile` objects (from the `data` package) and the corresponding number of lines the target author has written for that `SourceFile`. It then uses this data to construct `FileStatsItem` objects to be shown in a `ListView`.
+This class' constructor requires a `HashMap` which maps `SourceFile` objects and the corresponding number of lines the target author has written for that `SourceFile`. It then uses this data to construct `FileStatsItem` objects to be shown in a `ListView`.
 
-> The `SourceFile` object is a representation of source files that have been collated.
+> `SourceFile` is part of the `data` package and each `SourceFile` object is a representation of a source file that has been collated.
 
 A `ListView` contains objects of a certain type and these objects are laid out vertically. In this case, the `ListView` contains our custom `FileStatsItem` objects. JavaFX will then render these objects as per the layouts of the corresponding `FileStatsItem` objects which will be elaborated upon in the following section.
 
@@ -120,7 +120,7 @@ A `ListView` contains objects of a certain type and these objects are laid out v
 ![FileStatsItem](images/filestatsitem.png)
 Each `FileStatsItem` object consists of nine JavaFX components.
 
-1. `BorderPane` - The `FileStatsItem.fxml` is of type `BorderPane`. It has a `StackPane` at its center.
+1. `BorderPane` - The `FileStatsItem.fxml` is a `BorderPane` with a `StackPane` at its center.
 2. `StackPane` - The outer container which facilitates the styling of the shadow of the object.
 3. `HBox card` - Forms the inner container of this custom component and lays out its children horizontally.
 4. `StackPane` - Forms the container for the `circle` and `percentage` components.
@@ -130,28 +130,29 @@ Each `FileStatsItem` object consists of nine JavaFX components.
 8. `Text filename`
 9. `Text linesOfCode`
 
-The `StackPane` allows the `percentage` to appear in front of the `circle`. The `card` `HBox` component has two children, first, this `StackPane` and second, the `VBox`.
+The `StackPane` allows the `percentage` to appear in front of the `circle`. The `card` `HBox` component has two children, first, this `StackPane` and second, the `VBox` that contains the `filename` and `linesOfCode`.
 
-> The `StackPane` component enables you to position elements along the z-axis while the `HBox` and `VBox` components enable you to position elements horizontally or vertically. Together, they allow you to create your own custom components easily.
+> The `StackPane` component enables you to position elements along the z-axis while the `HBox` and `VBox` components enable you to position elements along the x-axis and y-axis. Together, they allow you to create your own unique custom components.
 
-This class' constructor uses its percentage parameter to generate a colour for the `circle`, with green indicating a higher percentage and red indicating a lower percentage.
+This class' constructor has a percentage parameter which is used to generate a colour for the `circle`, with green indicating a higher percentage and red indicating a lower percentage.
 
 This class also implements `Comparable` to enable sorting of `FileStatsItem` objects based on their percentage values.
 
 # Text UI component
-The `TUI` components consists of one class, `Collate`. You can export the `.jar` file and specify this class as the main class and run Collate from the command line i.e `java -jar Collate-TUI.jar`.
+The `TUI` components consists of one class, `Collate`. You can export the `.jar` file and specify this class as the main class. Subsequently, you can run Collate from the command line i.e `java -jar Collate-TUI.jar`.
 
 ## Collate class
 The `Collate` class receives commands from the command line and passes them to the `Backend` component to handle. `Collate` then prints the respective statistics in the command line. This class relies on the `Data` component to show the appropriate statistics.
 
 # Backend Component
 ![Class diagram for Backend](images/backend-class-diagram.png)
+
 The `Backend` component is made up of four classes. At the centre of this component is the `Logic` class which is in charge of handling the execution of user inputs from the `GUI` component. This component only relies on the `Data` component and works independently from the `GUI` and `TUI` components.
 
 ## Logic Class
 ![Sequence diagram for collate command](images/sequence-diagram-collate-command.png)
 
-The `Logic` class contains the methods that form the functionality of Collate. It can be thought of as the "brain" of Collate. User inputs are passed to the `executeCommand(String)` method which parses the input to find out what type of command the input is. Finding the type of command is done in the `CommandParser` class which will be elaborated in the next section.
+The `Logic` class contains the methods that handle the core functionality of Collate. It can be thought of as the "brain" of Collate. User inputs are passed to the `executeCommand(String)` method which parses the input to find out what type of command the input is. Finding the type of command is done in the `CommandParser` class which will be elaborated in the next section.
 
 After knowing the type of command, `Logic` executes the command and updates the its relevant fields before calling the `Storage` class to store the collated data if necessary. The data is stored in Markdown files. More details are mentioned in the `Storage` section.
 
@@ -162,7 +163,7 @@ This class provides several APIs for the user interface components (`GUI` and `T
 #### Notable APIs
 Return type | Method and Description
 ----------- | ----------------------
-Command.Type | `executeCommand(String userInput)`: Handle the execution of user inputs
+Command.Type | `executeCommand(String userInput)`: Handle the execution of user inputs.
 Collection<Author> | `getAuthors()`: Get the authors of the project that has been collated.
 String | `getTargetAuthorName()`: Get the name of the target author that was specified in the user's `view` command.
 HashMap&lt;SourceFile, Integer&gt; | `getTargetAuthorStatistics()`: Get the statistics of the target author in the form of a `HashMap` with the keys as the `SourceFile` objects that the author contributed to and the values as the number of lines he/she wrote for that `SourceFile`.
@@ -184,7 +185,7 @@ This class is solely created by `CommandParser` and is executed by `Logic`. It i
 Return type | Method and Description
 ----------- | ----------------------
 Type | `getCommandType()`: Returns the `Type` of command.
-String | `getDirectory()`: Returns the directory for `collate` commands.
+String | `getDirectory()`: Returns the directory of `collate` commands.
 boolean | `willScanCurrentDirOnly()`: Returns the boolean that determines whether only the current folder should be scanned for source files.
 ArrayList&lt;String&gt; | `getFileTypes()`: Returns the list of types of files that are to be scanned.
 String | `getAuthorName()`: Returns the target author name from `view` commands.
@@ -202,14 +203,14 @@ void | `addCollatedFile(String fileName, ArrayList<String> collatedLines)`: Save
 # Data Component
 ![Class diagram for Data](images/data-class-diagram.png)
 
-The `Data` component contains the classes that represent the various elements that are required in contribution statistics.
+The `Data` component contains the classes that represent the various elements that are required in calculating contribution statistics.
 
-`Logic` manipulates these classes and the UI components will use the data within these classes to render the view that users will see.
+`Logic` manipulates these classes and the UI components will use the data within these classes to render the display that users will see.
 
 ## Author Class
 This class represents authors who have contributed to the project. Each `Author` can have multiple associated `CodeSnippet` objects.
 
-`Author` objects have several fields of `Property` type. These class variables are special JavaFX constructs which behave in a similar manner as typical integer, double and String Java types. For example, `Author` has a `IntegerProperty` type for its `linesOfCode` variable. This variable contains an integer which can be accessed by calling `linesOfCode.get()`.
+`Author` objects have several fields of `Property` type. These class variables are special JavaFX constructs which behave in a similar manner as typical Java types such as integer, double and String types. For example, `Author` has a `IntegerProperty` type for its `linesOfCode` variable. This variable contains an integer which can be accessed by calling `linesOfCode.get()`.
 
 By utilising JavaFX `Property` types, the `GUI` can interact directly with the `Author` class to render details in a table easily.
 
@@ -240,7 +241,7 @@ static int | `getTotalLines()`: Get the total number of lines of code of all cod
 static void | `resetTotalLines()`: Resets the total number of lines of code of all code snippets.
 
 ## SourceFile Class
-This class represents source files that contain at least one author tag. Each `SourceFile` object is constructed with the file's path relative to the user's specified base folder and the file's language. The base folder is specified through the `collate from <FOLDER>` command.
+This class represents source files that contain at least one author tag. Each `SourceFile` object is constructed with the file's path relative to the user's specified base folder and the file's language. The base folder is specified through the `collate from <BASE FOLDER>` command.
 
 #### Notable APIs
 Return type | Method and Description
