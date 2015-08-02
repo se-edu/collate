@@ -1,5 +1,5 @@
 # Collate
-![view author statistics](docs/images/view-author-statistics.gif)
+![view author statistics](docs/images/user-guide/view-author-statistics.gif)
 
 Collate is a tool to find out the contributions of the project's authors.
 
