@@ -6,6 +6,7 @@ Collate is a tool to find out the contributions of the project's authors.
 It will export collated files formatted in Markdown. Example collated file: [Sebastian Quek.md](collated/Sebastian Quek.md)
 
 The following section gives a brief overview of how to use Collate. If you'd like to learn more, check out the documentation:
+* [Installation Guide](docs/Installation-Guide.md)
 * [User Guide](docs/User-Guide.md)
 * [Developer Guide](docs/Developer-Guide.md)
 
