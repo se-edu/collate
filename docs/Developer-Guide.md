@@ -40,15 +40,48 @@ Collate is made up of five main components. Users can either use Collate through
 5. The Test Driver component tests the TUI, Backend and Data components. It utilises JUnit for unit testing.
 
 # Text UI component
-The `TUI` components consists of one class, `Collate`. You can export the `.jar` file and specify this class as the main class. Subsequently, you can run Collate from the command line i.e `java -jar Collate-TUI.jar`.
+This component is the entry point for Collate if you want to use Collate through the command line without any graphical elements. It consists of one class, `Collate` and interacts with the Backend and Data components to generate and display the appropriate statistics.
 
 ## `Collate` class
-The `Collate` class receives commands from the command line and passes them to the `Backend` component to handle. `Collate` then prints the respective statistics in the command line. This class relies on the `Data` component to show the appropriate statistics.
+The `Collate` class receives commands from the command line and passes them to the `Logic` class in the Backend component to handle. `Collate` then decides which statistics to show in the command line. In addition to the Backend component, this class also relies on the Data component to show the appropriate statistics.
+
+``` java
+public static void main(String[] args) {
+    ...
+    Logic logic = new Logic();
+    ...
+    while (!isTimeToExit) {
+        ...
+        String userInput = input.nextLine();
+        ...
+        output.println(handleUserInput(logic, userInput));
+    }
+    ...
+}
+
+public static String handleUserInput(Logic logic, String userInput) {
+    switch (logic.executeCommand(userInput)) {
+        case COLLATE :
+        case SUMMARY :
+            return handleSummaryCommand(logic);
+        case VIEW :
+            return handleViewCommand(logic);
+        case EXIT :
+            isTimeToExit = true;
+            return MESSAGE_EXIT;
+        case INVALID :
+        default :
+            return handleInvalidCommand();
+    }
+}
+```
+
+The above code snippet shows you the main method which receives a user's input and passes it to `handleUserInput()`. This process repeats continuously until an exit command is entered.
 
 # Backend Component
 ![Class diagram for Backend](images/developer-guide/backend-class-diagram.png)
 
-The `Backend` component is made up of four classes. At the centre of this component is the `Logic` class which is in charge of handling the execution of user inputs from the `GUI` component. This component only relies on the `Data` component and works independently from the `GUI` and `TUI` components.
+The Backend component is made up of four classes. At the centre of this component is the `Logic` class which is in charge of handling the execution of user inputs from the GUI component. This component only relies on the Data component and works independently from the GUI and TUI components.
 
 ## `Logic` Class
 ![Sequence diagram for collate command](images/developer-guide/sequence-diagram-collate-command.png)
@@ -59,7 +92,7 @@ After knowing the type of command, `Logic` executes the command and updates the 
 
 The `executeCommand(String)` method will then return the type of command to its caller method. The caller method can then decide how to update the user interface.
 
-This class provides several APIs for the user interface components (`GUI` and `TUI`) to obtain information and render them for the user.
+This class provides several APIs for the user interface components (GUI and TUI) to obtain information and render them for the user.
 
 #### Notable APIs
 Return type | Method and Description
@@ -92,16 +125,16 @@ void | `addCollatedFile(String fileName, ArrayList<String> collatedLines)`: Save
 # Data Component
 ![Class diagram for Data](images/developer-guide/data-class-diagram.png)
 
-The `Data` component contains the classes that represent the various elements that are required in calculating contribution statistics.
+The Data component contains the classes that represent the various elements that are required in calculating contribution statistics.
 
 `Logic` manipulates these classes and the UI components will use the data within these classes to render the display that users will see.
 
 ## `Author` Class
 This class represents authors who have contributed to the project. Each `Author` can have multiple associated `CodeSnippet` objects.
 
-`Author` objects have several fields of `Property` type. These class variables are special JavaFX constructs which behave in a similar manner as typical Java types such as integer, double and String types. For example, `Author` has a `IntegerProperty` type for its `linesOfCode` variable. This variable contains an integer which can be accessed by calling `linesOfCode.get()`.
+The `Author` class is also specially constructed to make it easier for the GUI to use its fields. `Author` objects have several fields of `Property` type. These class variables are special JavaFX constructs which behave in a similar manner as typical Java types such as integer, double and String types. For example, `Author` has a `IntegerProperty` type for its `linesOfCode` variable. This variable contains an integer which can be accessed by calling `linesOfCode.get()`.
 
-By utilising JavaFX `Property` types, the `GUI` can interact directly with the `Author` class to render details in a table easily.
+By utilising JavaFX `Property` types, the GUI can interact directly with the `Author` class to render details in a table easily.
 
 > You can read more about JavaFX Properties [here](https://docs.oracle.com/javase/8/javafx/properties-binding-tutorial/binding.htm).
 
@@ -121,12 +154,12 @@ This class represents source files that contain at least one author tag. Each `S
 
 The GUI component is made up of two packages, `gui` and `view`. The `gui` package contains the Java files that control what users see while the `view` package contains JavaFX's `fxml` files that describe how to layout JavaFX components. A `stylesheet.css` is also found in the `view` package. This stylesheet customises the appearance and style of JavaFX components.
 
-Users will enter commands through the `CommandBarController`, which then passes these commands to the `MainApp`. `MainApp` will then call `Logic` in the `backend` package to handle the actual execution of these commands.
+Users will enter commands through the `CommandBarController`, which then passes these commands to the `MainApp`. `MainApp` will then call `Logic` in the Backend component to handle the actual execution of these commands.
 
 `MainApp` is then responsible for correctly displaying and updating the GUI. Collate has two views that users can see, a `Summary` view and `FileStats` view which are controlled by their corresponding controller classes. These classes will be elaborated upon in the following sections.
 
 ## `MainApp` Class
-The `MainApp` class is the main driver for the GUI component. It controls what users see and handles user inputs by passing them to the `backend` package.
+The `MainApp` class is the main driver for the GUI component. It controls what users see and handles user inputs by passing them to the Backend component.
 
 `MainApp` extends from JavaFX's `Application` class and overrides its `start` method. This method is the starting point of the whole application and very importantly, initialises all the components that are required for the GUI. This method also calls another method to load `RootLayout.fxml` from the `view` package. `RootLayout.fxml` contains the information about the layout of Collate's base components.
 
@@ -161,7 +194,7 @@ The `CommandBarController` loads `CommandBar.fxml` which contains a JavaFX `Text
 
 > As no preferred heights or widths are specified, JavaFX takes the default heights of the components and uses its parent container to calculate their widths. In the case of Collate, the `Label` and `TextField` inherit the width of `RooyLayout.fxml`. You can read more about `BorderPane` [here](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/BorderPane.html).
 
-This class has a reference to `MainApp` and calls the `handleKeyPress` method of `MainApp` whenever a key is pressed. This ensures that the logic is handled by `MainApp` to avoid unnecessary coupling between `commandBarController` and `Logic`.
+This class has a reference to `MainApp` and calls the `handleKeyPress` method of `MainApp` whenever a key is pressed. This ensures that the logic is handled by `MainApp` to avoid unnecessary coupling between `CommandBarController` and `Logic`.
 
 #### Notable APIs
 Return type | Method and Description
@@ -216,7 +249,7 @@ This class' constructor has a percentage parameter which is used to generate a c
 This class also implements `Comparable` to enable sorting of `FileStatsItem` objects based on their percentage values.
 
 # Testing
-Collate uses JUnit to perform unit tests on the `Backend`, `TUI` and `Data` components. Every method is unit tested to ensure everything works as intended.
+Collate uses JUnit to perform unit tests on the Backend, Data and TUI components. Every method is unit tested to ensure everything works as intended.
 
 Tests are placed in the `src/test` folder and if you require that actual files be used for tests, you can place them in the `src/test/testFiles` folder. Be mindful to update existing tests that rely on the current source files within the `src/text/testFiles` folder.
 
@@ -224,7 +257,7 @@ Tests are placed in the `src/test` folder and if you require that actual files b
 There are several additions that can be made to Collate to further increase its usefulness and usability.
 
 #### GUI testing
-The current implementation does not perform any tests on the `GUI` component and relies solely on visual feedback to ensure the user interface is showing information correctly.
+The current implementation does not perform any tests on the GUI component and relies solely on visual feedback to ensure the user interface is showing information correctly.
 
 #### Saving and loading of statistics
 By enabling users to save and load the statistics from a `collate` command, users will be able to view the progression of contributions of authors by collating at different stages of the project.
