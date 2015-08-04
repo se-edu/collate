@@ -1,4 +1,4 @@
-# Installation Guide
+# Development Environment Setup
 This guide aims to help you set up Collate, edit its source code and export it as `.jar` files.
 
 If you want to run the Graphical UI version of Collate, follow the guide to set up the Text UI version before moving on to the setup of the Graphical UI version.

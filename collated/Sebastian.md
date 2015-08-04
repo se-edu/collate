@@ -1,4 +1,4 @@
-# Sebastian Quek
+# Sebastian
 ###### main\java\gui\CommandBarController.java
 ```java
 public class CommandBarController extends TextField {
