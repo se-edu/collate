@@ -11,3 +11,4 @@ The following section gives a brief overview of how to use Collate. If you'd lik
 * [Development Environment Setup](docs/Development-Environment-Setup.md)
 * [User Guide](docs/User-Guide.md)
 * [Developer Guide](docs/Developer-Guide.md)
+* [Learning Resources](docs/Learning-Resources.md)

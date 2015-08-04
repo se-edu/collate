@@ -114,6 +114,9 @@ The `CodeSnippet` class has a static variable `totalLines`. This variable stores
 This class represents source files that contain at least one author tag. Each `SourceFile` object is constructed with the file's path relative to the user's specified base folder and the file's language. The base folder is specified through the `collate from <BASE FOLDER>` command.
 
 # GUI Component
+
+> Check out the [Learning Resources](Learning-Resources.md) page to learn more about JavaFX.
+
 ![Class diagram for GUI](images/developer-guide/gui-class-diagram.png)
 
 The GUI component is made up of two packages, `gui` and `view`. The `gui` package contains the Java files that control what users see while the `view` package contains JavaFX's `fxml` files that describe how to layout JavaFX components. A `stylesheet.css` is also found in the `view` package. This stylesheet customises the appearance and style of JavaFX components.
