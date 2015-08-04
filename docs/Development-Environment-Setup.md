@@ -53,25 +53,25 @@ Follow the installation instructions in the link above.
 1. In Preferences window, go to Java > Installed JREs
 2. Remove the existing entries
 
-![remove-jre](images/installation-guide/remove-jre.png)
+![remove-jre](images/dev-env-setup/remove-jre.png)
 
 3. Click Add...
 4. Select Standard VM and click Next
 
-![add-jdk-1](images/installation-guide/add-jdk-1.png)
+![add-jdk-1](images/dev-env-setup/add-jdk-1.png)
 
 5. Navigate to the directory of your installed JDK
 
-![add-jdk-2](images/installation-guide/add-jdk-2.png)
+![add-jdk-2](images/dev-env-setup/add-jdk-2.png)
 
 6. Click Finish
 7. Tick the checkbox beside this entry and click Apply
 
-![add-jdk-3](images/installation-guide/add-jdk-3.png)
+![add-jdk-3](images/dev-env-setup/add-jdk-3.png)
 
 8. Go to Java > Compiler and ensure the Compiler compliance level is at least 1.8
 
-![compiler-compliance-level](images/installation-guide/compiler-compliance-level.png)
+![compiler-compliance-level](images/dev-env-setup/compiler-compliance-level.png)
 
 ## Import and run Collate
 
@@ -80,7 +80,7 @@ Follow the installation instructions in the link above.
 1. Navigate to https://github.com/collate/collate/releases
 2. Download and extract the source code of the latest release
 
-![download-collate](images/installation-guide/download-collate.png)
+![download-collate](images/dev-env-setup/download-collate.png)
 
 ### Import project into Eclipse
 
@@ -88,19 +88,19 @@ Follow the installation instructions in the link above.
 2. Select General > Existing Projects into Workspace and click Next
 3. Select root directory of the extracted source code and click Finish.
 
-![import-collate](images/installation-guide/import-collate.png)
+![import-collate](images/dev-env-setup/import-collate.png)
 
 > The default view of the Package Explorer shows the packages in a flat manner. If you want to see packages in a hierarchical manner, click on the downward pointing triangle and change the Package Presentation.
 
-![package-view-1](images/installation-guide/package-view-1.png)
-![package-view-2](images/installation-guide/package-view-2.png)
+![package-view-1](images/dev-env-setup/package-view-1.png)
+![package-view-2](images/dev-env-setup/package-view-2.png)
 
 ### Run Collate
 
 1. Open `Collate.java` from the `tui` package
 2. Click Run `Collate.java`
 
-![run-tui](images/installation-guide/run-tui.png)
+![run-tui](images/dev-env-setup/run-tui.png)
 
 ## Export Collate
 
@@ -108,24 +108,24 @@ Follow the installation instructions in the link above.
 2. Select Java > JAR file
 3. Select the src file to be exported and set the export destination
 
-![export-tui-1](images/installation-guide/export-tui-1.png)
+![export-tui-1](images/dev-env-setup/export-tui-1.png)
 
 4. Click Next 2 times
 5. Set the Main class
 6. Click Finish
 
-![export-tui-2](images/installation-guide/export-tui-2.png)
+![export-tui-2](images/dev-env-setup/export-tui-2.png)
 
 ### Run exported jar
 1. Open a command window/terminal in the directory of the jar file
 
 > For Windows, Shift+Right click in the directory of the jar file and click open command window here.
 
-![command-window-shortcut](images/installation-guide/command-window-shortcut.png)
+![command-window-shortcut](images/dev-env-setup/command-window-shortcut.png)
 
 2. Enter `java -jar collate-tui.jar` (replace the filename accordingly)
 
-![command-line-collate](images/installation-guide/command-line-collate.png)
+![command-line-collate](images/dev-env-setup/command-line-collate.png)
 
 # Setup Graphical UI version of Collate
 
@@ -148,7 +148,7 @@ Download and *install* Scene Builder using the link above. Do not download the e
 3. Find the SceneBuilder executable. For Windows, it can be found here: `C:\Users\<USER>\AppData\Local\SceneBuilder\SceneBuilder.exe`
 4. Click Apply
 
-![set scene builder](images/installation-guide/set-scene-builder.png)
+![set scene builder](images/dev-env-setup/set-scene-builder.png)
 
 ## Edit and run Collate
 
@@ -158,33 +158,33 @@ Download and *install* Scene Builder using the link above. Do not download the e
 
 1. Right click on the `.fxml` file and click Open with SceneBuilder.
 
-![open-with-scenebuilder](images/installation-guide/open-with-scenebuilder.png)
-![scenebuilder](images/installation-guide/scenebuilder.png)
+![open-with-scenebuilder](images/dev-env-setup/open-with-scenebuilder.png)
+![scenebuilder](images/dev-env-setup/scenebuilder.png)
 
 2. After you have saved your edits, refresh the project to ensure the latest `.fxml` files are used.
 
-![refresh-project](images/installation-guide/refresh-project.png)
+![refresh-project](images/dev-env-setup/refresh-project.png)
 
 ### Run Collate
 
 1. Open `MainApp.java` from the `gui` package
 2. Click Run `MainApp.java`
 
-![run-gui](images/installation-guide/run-gui.png)
+![run-gui](images/dev-env-setup/run-gui.png)
 
 ## Export Collate
 
 1. File > Export...
 2. Select Java > Runnable JAR file
 
-![export-gui-1](images/installation-guide/export-gui-1.png)
+![export-gui-1](images/dev-env-setup/export-gui-1.png)
 
 3. Select MainApp as the Launch configuration
 4. Set Export destination
 5. Ensure "Package required libraries into generated JAR" is selected
 6. Click Finish
 
-![export-gui-2](images/installation-guide/export-gui-2.png)
+![export-gui-2](images/dev-env-setup/export-gui-2.png)
 
 ### Run exported jar
 
