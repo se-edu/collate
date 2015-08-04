@@ -22,11 +22,11 @@ This guide describes the design and implementation of Collate. It will help you 
     - [`CommandBarController` Class](#commandbarcontroller-class)
     - [`SummaryController` Class](#summarycontroller-class)
     - [`FileStatsController` Class](#filestatscontroller-class)
+    - [`FileStatsItem` Class](#filestatsitem-class)
 - [Testing](#testing)
 - [Future Development](#future-development)
 
 <!-- /MarkdownTOC -->
-
 
 # Architecture
 ![Architecture](images/developer-guide/architecture.png)
@@ -79,18 +79,6 @@ Return type | Method and Description
 ----------- | ----------------------
 Command | `parse(String userInput)`: Analyses the given `userInput` to determine its type and returns a `Command` object with all the relevant fields initialised.
 
-### `Command` Class
-This class is solely created by `CommandParser` and is executed by `Logic`. It is a simple Java class with several fields and corresponding public getters and setters.
-
-#### Notable getter APIs
-Return type | Method and Description
------------ | ----------------------
-Type | `getCommandType()`: Returns the `Type` of command.
-String | `getDirectory()`: Returns the directory of `collate` commands.
-boolean | `willScanCurrentDirOnly()`: Returns the boolean that determines whether only the current folder should be scanned for source files.
-ArrayList&lt;String&gt; | `getFileTypes()`: Returns the list of types of files that are to be scanned.
-String | `getAuthorName()`: Returns the target author name from `view` commands.
-
 ## `Storage` Class
 `Storage` is a simple class that has one public method which takes in a list of lines and saves them to a local file in a default directory. This default directory is defined in this class.
 
@@ -117,40 +105,13 @@ By utilising JavaFX `Property` types, the `GUI` can interact directly with the `
 
 > You can read more about JavaFX Properties [here](https://docs.oracle.com/javase/8/javafx/properties-binding-tutorial/binding.htm).
 
-#### Notable APIs
-Return type | Method and Description
------------ | ----------------------
-ArrayList<CodeSnippet> | `getCodeSnippets()`: Get a list of the author's code snippets.
-void | `addCodeSnippet(CodeSnippet snippet)`: Add a `CodeSnippet` to the list of code snippets.
-int | `getLinesOfCode()`: Gets the total number of lines of code the author wrote.
-String | `getName()`: Gets the name of the author.
-double | `getProportion()`: Gets the overall percentage of code the author wrote as compared to the total number of lines of code in the project.
-
 ## `CodeSnippet` Class
 Each `CodeSnippet` represents the lines of code between two consecutive author tags that were written by an `Author`. Since this code belongs to a file, a `SourceFile` object is associated with each `CodeSnippet` object.
 
 The `CodeSnippet` class has a static variable `totalLines`. This variable stores the total number of lines of code of all code snippets and is used to calculate the overall proportion of code each author wrote.
 
-#### Notable APIs
-Return type | Method and Description
------------ | ----------------------
-void | `addLine(String line)`: Add a line of code to the code snippet.
-Author | `getAuthor()`: Get the `Author` of the code snippet.
-SourceFile | `getFile()`: Get the `SourceFile` of the code snippet.
-int | `getNumLines()`: Get the number of lines of code in this code snippet.
-static int | `getTotalLines()`: Get the total number of lines of code of all code snippets.
-static void | `resetTotalLines()`: Resets the total number of lines of code of all code snippets.
-
 ## `SourceFile` Class
 This class represents source files that contain at least one author tag. Each `SourceFile` object is constructed with the file's path relative to the user's specified base folder and the file's language. The base folder is specified through the `collate from <BASE FOLDER>` command.
-
-#### Notable APIs
-Return type | Method and Description
------------ | ----------------------
-int | `getNumLines()`: Get the number of lines of code in this source file.
-void | `addNumLines(int value)`: Add to the number of lines of code in this source file.
-String | `getLanguage()`: Get the programming language of the source file.
-String | `getRelativeFilePath()`: Get the relative path of the source file.
 
 # GUI Component
 ![Class diagram for GUI](images/developer-guide/gui-class-diagram.png)
@@ -229,7 +190,7 @@ A `ListView` contains objects of a certain type and these objects are laid out v
 
 > By creating custom objects and using `ListView` to show them, you can create complex list-based layouts.
 
-### `FileStatsItem` Class
+## `FileStatsItem` Class
 ![FileStatsItem](images/developer-guide/filestatsitem.png)
 Each `FileStatsItem` object consists of nine JavaFX components.
 
