@@ -1,11 +1,33 @@
 # About
-Have you ever wanted to collate all your contributions to a project and see them in an easily readable file? How about comparing your contributions with other authors of a project?
+Now that you know what Collate is [about](../README.md), you can follow this guide to learn how to use Collate effectively.
 
-Collate does all that and more! It is a simple tool that will scan a directory to find and collate parts of the code that you wrote. On top of being able to see everyone's overall contributions to the project, you can see the proportion of code an author wrote for files he/she contributed to.
+# Quick Start Guide
+Include `@@author` tags to the areas of code you wrote.
+```java
+// @@author John Doe
+public class MyCustomPrinter {
+    
+    private String text;
 
-This guide will illustrate how to use Collate effectively.
+    public MyCustomPrinter(String text) {
+        this.text = text;
+    }
 
-# Getting Started
+    // @@author Jane Doe
+    public void print() {
+        System.out.println(text);
+    }
+}
+```
+
+Below are some commands to get you started.
+* `collate from <DIR>` - Collate all files within `<DIR>` including subfolders
+* `view <AUTHOR'S NAME>` - See author's individual statistics
+* `summary` - See default statistics summary table.
+* `exit` - Exit Collate using the command bar.
+
+# Feature Walkthrough
+## Getting Started
 The first thing that you need to do before you can collate any source code is to demarcate the lines that you wrote.
 
 Using the `@@author` tag, you can specify the lines of code that you have written. Lines between your author tag and the next author tag will be marked as yours. Your name can include letters and numbers.
@@ -18,13 +40,13 @@ You can include any type of file, as long as the `@@author` tag is present.
 
 ![author tags](images/user-guide/add-author-tags.png)
 
-# Using Collate
-## Launch
+## Using Collate
+### Launch
 Simply double-click on the `Collate.jar` file to start Collate.
 You will be greeted with a simple interface that has a command bar. This command bar is where you enter short commands to tell Collate what to do.
 
-## Collate files
-#### All subfolders
+### Collate files
+##### All subfolders
 So you have marked the areas of code that you wrote. To collate them, simply enter the following command with the location of your source files.
 
 `collate from <FOLDER>`
@@ -37,7 +59,7 @@ If your directory includes whitespaces, you will need to surround the directory 
 
 ![collate folder with whitespace](images/user-guide/collate-folder-with-whitespace.gif)
 
-#### Only the specified folder
+##### Only the specified folder
 If you would like to collate files only from the specified folder, and not files from subfolders, you can add the `only` option.
 
 `collate from <FOLDER> only` or `collate only from <FOLDER>`
@@ -46,7 +68,7 @@ If you would like to collate files only from the specified folder, and not files
 
 ![collate only specified folder](images/user-guide/collate-only-folder.gif)
 
-#### Only certain types of files
+##### Only certain types of files
 Collate scans the folder you specified for all types of file. What if you want to collate only `java` files? Well, you can use the `include` option.
 
 `collate from <FOLDER> include java`
@@ -57,7 +79,7 @@ You can include multiple filetypes by separating them with commas.
 
 ![collate only certain filetypes](images/user-guide/collate-only-certain-filetypes.gif)
 
-## View an author's statistics
+### View an author's statistics
 Viewing an author's contribution statistics can be done by entering the following command.
 
 `view <AUTHOR's NAME>`
@@ -68,14 +90,14 @@ This view allows you to see the proportion and number of lines of code the autho
 
 ![view author statistics](images/user-guide/view-author-statistics.gif)
 
-## Summary
+### Summary
 The summary view is the default screen that shows you the contributions of all authors. To access it, simply enter the following.
 
 `summary`
 
 ![summary view](images/user-guide/summary.gif)
 
-## Exit
+### Exit
 The following command allows you to exit Collate through the command bar.
 
 `exit`
