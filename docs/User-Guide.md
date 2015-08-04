@@ -1,6 +1,17 @@
 # About
 Now that you know what Collate is [about](../README.md), you can follow this guide to learn how to use Collate effectively.
 
+# Table of Contents
+<!-- MarkdownTOC -->
+
+- [Quick Start Guide](#quick-start-guide)
+- [Feature Walkthrough](#feature-walkthrough)
+    - [Getting Started](#getting-started)
+    - [Using Collate](#using-collate)
+- [Cheatsheet](#cheatsheet)
+
+<!-- /MarkdownTOC -->
+
 # Quick Start Guide
 Include `@@author` tags to the areas of code you wrote.
 ```java
@@ -106,3 +117,14 @@ The summary view is the default screen that shows you the contributions of all a
 The following command allows you to exit Collate through the command bar.
 
 `exit`
+
+# Cheatsheet
+Command | Description
+--------| ------------
+`collate from <FOLDER>` | Collate all files within `<FOLDER>` including subfolders
+`collate from <FOLDER> only` | Collate files in `<FOLDER>` only
+`collate from <FOLDER> include <FILETYPE1>, <FILETYPE2>` | Collate `<FILETYPE1>` and `<FILETYPE2>` files in `<FOLDER>` and its subfolders
+`collate from <FOLDER> only include <FILETYPE1>` | Collate `<FILETYPE1>` files in `<FOLDER>` only
+`view <AUTHOR'S NAME>` | See author's individual statistics
+`summary` | See default statistics summary table
+`exit` | Exit Collate
