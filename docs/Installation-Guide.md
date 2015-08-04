@@ -13,6 +13,7 @@ If you want to run the Graphical UI version of Collate, follow the guide to set 
 - [Setup Graphical UI version of Collate](#setup-graphical-ui-version-of-collate)
     - [Setup development environment](#setup-development-environment-1)
     - [Configure development environment](#configure-development-environment-1)
+    - [Edit and run Collate](#edit-and-run-collate)
     - [Export Collate](#export-collate-1)
 
 <!-- /MarkdownTOC -->
@@ -148,6 +149,8 @@ Download and *install* Scene Builder using the link above. Do not download the e
 4. Click Apply
 
 ![set scene builder](images/installation-guide/set-scene-builder.png)
+
+## Edit and run Collate
 
 ### Edit `.fxml` files
 
