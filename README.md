@@ -7,8 +7,11 @@ Collate does all that and more! It is a simple tool that will scan a directory t
 
 It will export collated files formatted in Markdown. Example collated file: [Sebastian.md](collated/Sebastian.md)
 
-The following section gives a brief overview of how to use Collate. If you'd like to learn more, check out the documentation:
-* [Development Environment Setup](docs/Development-Environment-Setup.md)
+**Want to use Collate?**
+* [Download the latest release](releases) 
 * [User Guide](docs/User-Guide.md)
+
+**Want to contribute to Collate?**
 * [Developer Guide](docs/Developer-Guide.md)
+* [Environment Setup](docs/Development-Environment-Setup.md)
 * [Learning Resources](docs/Learning-Resources.md)
