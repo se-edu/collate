@@ -1,20 +1,34 @@
 # Development Environment Setup
 This guide aims to help you set up Collate, edit its source code and export it as `.jar` files.
 
-If you want to run the Graphical UI version of Collate, follow the guide to set up the Text UI version before moving on to the setup of the Graphical UI version.
+If you want to run the GUI version of Collate, follow the guide to set up the Text UI version before moving 
+on to the setup of the GUI version.
 
 <!-- MarkdownTOC -->
 
 - [Setup Text UI version of Collate](#setup-text-ui-version-of-collate)
     - [Setup development environment](#setup-development-environment)
+        - [JDK 8u40 or later](#jdk-8u40-or-later)
+        - [Eclipse Luna or later](#eclipse-luna-or-later)
+        - [e(fx)clipse 1.2.0 or later](#efxclipse-120-or-later)
     - [Configure development environment](#configure-development-environment)
+        - [Set Java JDK](#set-java-jdk)
     - [Import and run Collate](#import-and-run-collate)
+        - [Download the latest release](#download-the-latest-release)
+        - [Import project into Eclipse](#import-project-into-eclipse)
+        - [Run Collate](#run-collate)
     - [Export Collate](#export-collate)
-- [Setup Graphical UI version of Collate](#setup-graphical-ui-version-of-collate)
+        - [Run exported jar](#run-exported-jar)
+- [Setup GUI version of Collate](#setup-gui-version-of-collate)
     - [Setup development environment](#setup-development-environment-1)
+        - [Scene Builder 8.0.0 or later](#scene-builder-800-or-later)
     - [Configure development environment](#configure-development-environment-1)
+        - [Set SceneBuilder executable](#set-scenebuilder-executable)
     - [Edit and run Collate](#edit-and-run-collate)
+        - [Edit `.fxml` files](#edit-fxml-files)
+        - [Run Collate](#run-collate-1)
     - [Export Collate](#export-collate-1)
+        - [Run exported jar](#run-exported-jar-1)
 
 <!-- /MarkdownTOC -->
 
@@ -40,7 +54,8 @@ https://www.eclipse.org/downloads/
 
 ### e(fx)clipse 1.2.0 or later 
 
-> e(fx)clipse enables you to create new JavaFX FXML projects using Eclipse and start Scene Builder from within the IDE.
+> e(fx)clipse enables you to create new JavaFX FXML projects using Eclipse and start Scene Builder from
+ within the IDE.
 
 http://www.eclipse.org/efxclipse/install.html
 
@@ -90,7 +105,8 @@ Follow the installation instructions in the link above.
 
 ![import-collate](images/dev-env-setup/import-collate.png)
 
-> The default view of the Package Explorer shows the packages in a flat manner. If you want to see packages in a hierarchical manner, click on the downward pointing triangle and change the Package Presentation.
+> The default view of the Package Explorer shows the packages in a flat manner. If you want to see packages 
+in a hierarchical manner, click on the downward pointing triangle and change the Package Presentation.
 
 ![package-view-1](images/dev-env-setup/package-view-1.png)
 ![package-view-2](images/dev-env-setup/package-view-2.png)
@@ -127,9 +143,10 @@ Follow the installation instructions in the link above.
 
 ![command-line-collate](images/dev-env-setup/command-line-collate.png)
 
-# Setup Graphical UI version of Collate
+# Setup GUI version of Collate
 
 ## Setup development environment
+Follow the setup instructions for the TUI version before moving on.
 
 ### Scene Builder 8.0.0 or later
 
@@ -137,20 +154,24 @@ Follow the installation instructions in the link above.
 
 http://gluonhq.com/open-source/scene-builder/
 
-Download and *install* Scene Builder using the link above. Do not download the executable jar as it will not work when attempting to open Scene Builder from Eclipse.
+Download and *install* Scene Builder using the link above. Do not download the executable jar as it will 
+not work when attempting to open Scene Builder from Eclipse.
 
 ## Configure development environment
+Follow the configuration instructions for the TUI version before moving on.
 
 ### Set SceneBuilder executable
 
 1. Go to Window > Preferences
 2. Click on JavaFX tab
-3. Find the SceneBuilder executable. For Windows, it can be found here: `C:\Users\<USER>\AppData\Local\SceneBuilder\SceneBuilder.exe`
+3. Find the SceneBuilder executable. For Windows, it can be 
+found here: `C:\Users\<USER>\AppData\Local\SceneBuilder\SceneBuilder.exe`
 4. Click Apply
 
 ![set scene builder](images/dev-env-setup/set-scene-builder.png)
 
 ## Edit and run Collate
+If you're unsure how to import Collate, ![see the above instructions](#import-and-run-collate).
 
 ### Edit `.fxml` files
 
