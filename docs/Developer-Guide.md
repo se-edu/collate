@@ -207,6 +207,9 @@ Java files that control what users see while the `view` package contains JavaFX'
 describe how to layout JavaFX components. A `stylesheet.css` is also found in the `view` package. 
 This stylesheet customises the appearance and style of JavaFX components.
 
+<img src="images/developer-guide/sequence-diagram-gui-logic.png">
+> Figure 6: Object interactions when a user enters a command through the GUI
+
 Users will enter commands through the `CommandBarController`, which then passes these commands to the `MainApp`. 
 `MainApp` will then call `Logic` in the Backend component to handle the actual execution of these commands.
 
@@ -318,7 +321,7 @@ the layouts of the corresponding `FileStatsItem` objects which will be elaborate
 ## `FileStatsItem` Class
 
 <img src="images/developer-guide/filestatsitem.png" width="600">
-> Figure 6: Appearance of a FileStatsItem
+> Figure 7: Appearance of a FileStatsItem
 
 Each `FileStatsItem` object consists of nine JavaFX components.
 
