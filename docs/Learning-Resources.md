@@ -13,3 +13,6 @@
 ## Markdown
 * GitHub Flavored Markdown: https://help.github.com/articles/github-flavored-markdown/
 * Cheatsheet: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+
+## Others
+* Make GIFs: http://www.cockos.com/licecap/
