@@ -95,7 +95,7 @@ The above code snippet shows you the main method which receives a user's input a
 `handleUserInput()`. This process repeats continuously until an exit command is entered.
 
 # Backend Component
-<img src="images/developer-guide/backend-class-diagram.png">
+<img src="images/developer-guide/backend-class-diagram.png" width="600">
 > Figure 2: Structure of the Backend component
 
 At the centre of the `Backend` component is the `Logic` class which is in charge of handling the execution 
@@ -160,7 +160,7 @@ void | `addCollatedFile(String fileName, ArrayList<String> collatedLines)`: Save
 in the default save folder with `fileName` as its name and `.md` as its extension.
 
 # Data Component
-<img src="images/developer-guide/data-class-diagram.png">
+<img src="images/developer-guide/data-class-diagram.png" width="600">
 > Figure 4: Structure of the Data component
 
 The Data component contains the classes that represent the various elements that are required in calculating 
