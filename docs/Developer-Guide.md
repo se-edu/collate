@@ -29,7 +29,8 @@ This guide describes the design and implementation of Collate. It will help you 
 <!-- /MarkdownTOC -->
 
 # Architecture
-![Architecture](images/developer-guide/architecture.png)
+<img src="images/developer-guide/architecture.png">
+> Figure 1: Components of Collate and their dependencies
 
 Collate is made up of five main components. Users can either use Collate through the GUI or Text UI (TUI) components.
 
@@ -79,12 +80,14 @@ public static String handleUserInput(Logic logic, String userInput) {
 The above code snippet shows you the main method which receives a user's input and passes it to `handleUserInput()`. This process repeats continuously until an exit command is entered.
 
 # Backend Component
-![Class diagram for Backend](images/developer-guide/backend-class-diagram.png)
+<img src="images/developer-guide/backend-class-diagram.png">
+> Figure 2: Structure of the Backend component
 
 The Backend component is made up of four classes. At the centre of this component is the `Logic` class which is in charge of handling the execution of user inputs from the GUI component. This component only relies on the Data component and works independently from the GUI and TUI components.
 
 ## `Logic` Class
-![Sequence diagram for collate command](images/developer-guide/sequence-diagram-collate-command.png)
+<img src="images/developer-guide/sequence-diagram-collate-command.png">
+> Figure 3: Object interactions for executing a basic collate command
 
 The `Logic` class contains the methods that handle the core functionality of Collate. It can be thought of as the "brain" of Collate. User inputs are passed to the `executeCommand(String)` method which parses the input to find out what type of command the input is. Finding the type of command is done in the `CommandParser` class which will be elaborated in the next section.
 
@@ -113,17 +116,18 @@ Return type | Method and Description
 Command | `parse(String userInput)`: Analyses the given `userInput` to determine its type and returns a `Command` object with all the relevant fields initialised.
 
 ## `Storage` Class
-`Storage` is a simple class that has one public method which takes in a list of lines and saves them to a local file in a default directory. This default directory is defined in this class.
+`Storage` is a simple class that has one public method which takes in a list of lines and saves them to a local file in a default folder. This default folder is defined in this class.
 
 The current implementation saves collated data in Markdown files. These files are human-readable and editable, and utilises syntax from [Github Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/).
 
 #### Notable APIs
 Return type | Method and Description
 ----------- | ----------------------
-void | `addCollatedFile(String fileName, ArrayList<String> collatedLines)`: Saves the `collatedLines` in the default save directory with `fileName` as its name and `.md` as its extension.
+void | `addCollatedFile(String fileName, ArrayList<String> collatedLines)`: Saves the `collatedLines` in the default save folder with `fileName` as its name and `.md` as its extension.
 
 # Data Component
-![Class diagram for Data](images/developer-guide/data-class-diagram.png)
+<img src="images/developer-guide/data-class-diagram.png">
+> Figure 4: Structure of the Data component
 
 The Data component contains the classes that represent the various elements that are required in calculating contribution statistics.
 
@@ -150,7 +154,8 @@ This class represents source files that contain at least one author tag. Each `S
 
 > Check out the [Learning Resources](Learning-Resources.md) page to learn more about JavaFX.
 
-![Class diagram for GUI](images/developer-guide/gui-class-diagram.png)
+<img src="images/developer-guide/gui-class-diagram.png">
+> Figure 5: Structure of the GUI component
 
 The GUI component is made up of two packages, `gui` and `view`. The `gui` package contains the Java files that control what users see while the `view` package contains JavaFX's `fxml` files that describe how to layout JavaFX components. A `stylesheet.css` is also found in the `view` package. This stylesheet customises the appearance and style of JavaFX components.
 
@@ -227,7 +232,9 @@ A `ListView` contains objects of a certain type and these objects are laid out v
 > By creating custom objects and using `ListView` to show them, you can create complex list-based layouts.
 
 ## `FileStatsItem` Class
-![FileStatsItem](images/developer-guide/filestatsitem.png)
+<img src="images/developer-guide/filestatsitem.png">
+> Figure 6: Appearance of a FileStatsItem
+
 Each `FileStatsItem` object consists of nine JavaFX components.
 
 1. `BorderPane` - The `FileStatsItem.fxml` is a `BorderPane` with a `StackPane` at its center.

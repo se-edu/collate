@@ -8,6 +8,10 @@ Now that you know what Collate is [about](../README.md), you can follow this gui
 - [Feature Walkthrough](#feature-walkthrough)
     - [Getting Started](#getting-started)
     - [Using Collate](#using-collate)
+        - [Collate files](#collate-files)
+        - [View an author's statistics](#view-an-authors-statistics)
+        - [Summary](#summary)
+        - [Exit](#exit)
 - [Cheatsheet](#cheatsheet)
 
 <!-- /MarkdownTOC -->
@@ -39,7 +43,7 @@ You can then download `Collate-GUI.jar` or `Collate-TUI.jar` from the latest rel
 
 *To open the graphical user interface version*, simply double-click on the `Collate-GUI.jar` file to start Collate. You will be greeted with a simple interface that has a command bar. This command bar is where you enter short commands to tell Collate what to do.
 
-*To open the text-based user interface version*, open a command window in the same directory as `Collate-TUI.jar` and enter `java -jar Collate-TUI.jar`. You can then enter commands within the command window.
+*To open the text-based user interface version*, open a command window in the same folder as `Collate-TUI.jar` and enter `java -jar Collate-TUI.jar`. You can then enter commands within the command window.
 
 Below are some commands to get you started.
 * `collate from <FOLDER>` - Collate all files within `<FOLDER>` including subfolders
@@ -75,7 +79,7 @@ So you have marked the areas of code that you wrote. To collate them, simply ent
 ![tui collate all subfolders](images/user-guide/tui-collate-all-subfolders.gif)
 ![gui collate all subfolders](images/user-guide/gui-collate-all-subfolders.gif)
 
-If your directory includes whitespaces, you will need to surround the directory with double inverted commas. For example, `collate from "C:/source files"`.
+If your folder includes whitespaces, you will need to surround the folder with double inverted commas. For example, `collate from "C:/source files"`.
 
 ##### Only the specified folder
 If you would like to collate files only from the specified folder, and not files from subfolders, you can add the `only` option.
