@@ -11,5 +11,5 @@
 * How to create your own format settings for <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd>: http://www.wikihow.com/Change-the-Default-Format-Settings-in-Eclipse
 
 ## Markdown
-* Cheatsheet: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 * GitHub Flavored Markdown: https://help.github.com/articles/github-flavored-markdown/
+* Cheatsheet: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
