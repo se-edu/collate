@@ -14,15 +14,24 @@ import java.util.ArrayList;
 public class Storage {
     
     public static final String DEFAULT_SAVE_DIRECTORY = "collated";
-    private static final String COLLATED_FILE_PATH_FORMAT = DEFAULT_SAVE_DIRECTORY + "/%s.md";
-    private static final String ERROR_FILE_NOT_FOUND = "%s was not found";
-
+    private static final String SAVE_DIRECTORY_FORMAT = "%s\\collated";
+    private static final String COLLATED_FILE_PATH_FORMAT = "%s\\%s.md";
+    private static final String ERROR_FILE_NOT_FOUND = "File was not found: %s";
+    
+    private String saveFolder;
+    
+    public Storage(String directory) {
+        saveFolder = String.format(SAVE_DIRECTORY_FORMAT, directory);
+        createSaveDirectory(saveFolder);
+    }
+    
     public Storage() {
-        createSaveDirectory();
+        saveFolder = DEFAULT_SAVE_DIRECTORY;
+        createSaveDirectory(DEFAULT_SAVE_DIRECTORY);
     }
 
-    private void createSaveDirectory() {
-        File dir = new File(DEFAULT_SAVE_DIRECTORY);
+    private void createSaveDirectory(String directory) {
+        File dir = new File(directory);
 
         if (!dir.exists()) {
             dir.mkdir();
@@ -30,7 +39,8 @@ public class Storage {
     }
 
     public void addCollatedFile(String fileName, ArrayList<String> collatedLines) {
-        try (PrintWriter writer = new PrintWriter(String.format(COLLATED_FILE_PATH_FORMAT, fileName))) {
+        createSaveDirectory(saveFolder);
+        try (PrintWriter writer = new PrintWriter(String.format(COLLATED_FILE_PATH_FORMAT, saveFolder, fileName))) {
             for (String line : collatedLines) {
                 writer.println(line);
             }

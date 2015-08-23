@@ -43,7 +43,6 @@ public class Logic {
     
     public Logic() {
         commandParser = new CommandParser();
-        storage = new Storage();
         authors = new HashMap<String, Author>();
     }
 
@@ -75,6 +74,7 @@ public class Logic {
         resetVariables();
 
         rootDirectory = command.getDirectory();
+        storage = new Storage(rootDirectory);
         boolean willScanCurrentDirOnly = command.willScanCurrentDirOnly();
         ArrayList<String> fileTypes = command.getFileTypes();
 
