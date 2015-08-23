@@ -39,6 +39,8 @@ public class Logic {
 
     private static final String REGEX_NEITHER_ALPHANUMERIC_NOR_SPACE = "[^ a-zA-Z0-9]+";
 
+    private static final String ERROR_IO_EXCEPTION = "Encountered IOException for %s";
+    
     public Logic() {
         commandParser = new CommandParser();
         storage = new Storage();
@@ -166,7 +168,7 @@ public class Logic {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(String.format(ERROR_IO_EXCEPTION, file.toString()));
         }
     }
 

@@ -2,7 +2,7 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 import main.java.backend.Logic;
-import main.java.tui.Collate;
+import main.java.tui.CollateTui;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +21,7 @@ public class TestCollate {
     @Test
     public void testCollateCommand() {
         String userInput = "collate from " + ROOT_DIR + TEST_RESOURCES_DIR;
-        String output = Collate.handleUserInput(logic, userInput);
+        String output = CollateTui.handleUserInput(logic, userInput);
 
         assertEquals("Author                LOC      Proportion (%)\n"
                      + "---------------------------------------------\n"
@@ -36,7 +36,7 @@ public class TestCollate {
         testCollateCommand();
 
         String userInput = "summary";
-        String output = Collate.handleUserInput(logic, userInput);
+        String output = CollateTui.handleUserInput(logic, userInput);
 
         assertEquals("Author                LOC      Proportion (%)\n"
                      + "---------------------------------------------\n"
@@ -51,7 +51,7 @@ public class TestCollate {
         testCollateCommand();
 
         String userInput = "view author2";
-        String output = Collate.handleUserInput(logic, userInput);
+        String output = CollateTui.handleUserInput(logic, userInput);
 
         assertEquals("File path                                           LOC      Proportion (%)\n"
                      + "---------------------------------------------------------------------------\n"
@@ -59,7 +59,7 @@ public class TestCollate {
                      output);
 
         userInput = "view Long author name";
-        output = Collate.handleUserInput(logic, userInput);
+        output = CollateTui.handleUserInput(logic, userInput);
 
         assertEquals("File path                                           LOC      Proportion (%)\n"
                      + "---------------------------------------------------------------------------\n"
@@ -70,12 +70,12 @@ public class TestCollate {
     @Test
     public void testInvalidCommand() {
         String userInput = "view";
-        String output = Collate.handleUserInput(logic, userInput);
+        String output = CollateTui.handleUserInput(logic, userInput);
 
         assertEquals("Invalid command.", output);
 
         userInput = "view author1";
-        output = Collate.handleUserInput(logic, userInput);
+        output = CollateTui.handleUserInput(logic, userInput);
 
         assertEquals("Invalid command.", output);
     }
@@ -83,7 +83,7 @@ public class TestCollate {
     @Test
     public void testExitCommand() {
         String userInput = "exit";
-        String output = Collate.handleUserInput(logic, userInput);
+        String output = CollateTui.handleUserInput(logic, userInput);
 
         assertEquals("Goodbye!", output);
     }

@@ -11,7 +11,7 @@ so that you can understand the big picture before moving on to the more detailed
 
 - [Architecture](#architecture)
 - [Text UI component](#text-ui-component)
-    - [`Collate` class](#collate-class)
+    - [`CollateTui` class](#collatetui-class)
 - [Backend Component](#backend-component)
     - [`Logic` Class](#logic-class)
     - [`CommandParser` Class](#commandparser-class)
@@ -51,12 +51,12 @@ JUnit for unit testing.
 
 # Text UI component
 This component is the entry point for Collate if you want to use Collate through the command line without 
-a GUI. It consists of one class, `Collate` and interacts with the `Backend` and `Data` 
+a GUI. It consists of one class, `CollateTui` and interacts with the `Backend` and `Data` 
 components to generate and display the appropriate statistics.
 
-## `Collate` class
-The `Collate` class receives commands from the command line and passes them to the `Logic` class in the 
-Backend component to handle. `Collate` then decides which statistics to show in the command line. 
+## `CollateTui` class
+The `CollateTui` class receives commands from the command line and passes them to the `Logic` class in the 
+Backend component to handle. `CollateTui` then decides which statistics to show in the command line. 
 In addition to the Backend component, this class also relies on the Data component to show the 
 appropriate statistics.
 

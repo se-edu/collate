@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * This class saves collated lines as Markdown files.
@@ -14,16 +12,13 @@ import java.util.logging.Logger;
  *
  */
 public class Storage {
-
-    private Logger logger;
     
-    private static final String LOG_TAG = "CollatedFilesStorage";
     public static final String DEFAULT_SAVE_DIRECTORY = "collated";
     private static final String COLLATED_FILE_PATH_FORMAT = DEFAULT_SAVE_DIRECTORY + "/%s.md";
+    private static final String ERROR_FILE_NOT_FOUND = "%s was not found";
 
     public Storage() {
         createSaveDirectory();
-        logger = Logger.getLogger(LOG_TAG);
     }
 
     private void createSaveDirectory() {
@@ -40,7 +35,7 @@ public class Storage {
                 writer.println(line);
             }
         } catch (FileNotFoundException e) {
-            logger.log(Level.SEVERE, e.getMessage());
+            System.out.println(String.format(ERROR_FILE_NOT_FOUND, fileName));
         }
     }
 }

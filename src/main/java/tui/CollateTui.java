@@ -15,7 +15,7 @@ import main.java.data.SourceFile;
  * @author Sebastian Quek
  *
  */
-public class Collate {
+public class CollateTui {
 
     // ================================================================
     // Message prompts
