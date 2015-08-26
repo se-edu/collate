@@ -50,7 +50,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
 https://www.eclipse.org/downloads/
 
 1. Download "Eclipse IDE for Java Developers"
-2. Extract the contents to whichever directory you want. E.g. C:/eclipse
+2. Extract the contents to whichever folder you want. E.g. C:/eclipse
 
 ### e(fx)clipse 1.2.0 or later 
 
@@ -75,7 +75,7 @@ Follow the installation instructions in the link above.
 
 ![add-jdk-1](images/dev-env-setup/add-jdk-1.png)
 
-5. Navigate to the directory of your installed JDK
+5. Navigate to the folder of your installed JDK
 
 ![add-jdk-2](images/dev-env-setup/add-jdk-2.png)
 
@@ -101,7 +101,7 @@ Follow the installation instructions in the link above.
 
 1. In Eclipse, go to File > Import...
 2. Select General > Existing Projects into Workspace and click Next
-3. Select root directory of the extracted source code and click Finish.
+3. Select root folder of the extracted source code and click Finish.
 
 ![import-collate](images/dev-env-setup/import-collate.png)
 
@@ -133,9 +133,9 @@ in a hierarchical manner, click on the downward pointing triangle and change the
 ![export-tui-2](images/dev-env-setup/export-tui-2.png)
 
 ### Run exported jar
-1. Open a command window/terminal in the directory of the jar file
+1. Open a command window/terminal in the folder of the jar file
 
-> For Windows, Shift+Right click in the directory of the jar file and click open command window here.
+> For Windows, Shift+Right click in the folder of the jar file and click open command window here.
 
 ![command-window-shortcut](images/dev-env-setup/command-window-shortcut.png)
 

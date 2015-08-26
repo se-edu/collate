@@ -6,14 +6,14 @@ Now that you know what Collate is [about](../README.md), you can follow this gui
 
 - [Quick Start](#quick-start)
 - [Feature Details](#feature-details)
-    - [Marking code](#marking-code)
-    - [Collating](#collating)
-        - [Omitting sub directories](#omitting-sub-directories)
-        - [Collating only certain types of files](#collating-only-certain-types-of-files)
-    - [Viewing an author's statistics](#viewing-an-authors-statistics)
-    - [Viewing the summary](#viewing-the-summary)
-    - [Exiting](#exiting)
-    - [Using the Text UI](#using-the-text-ui)
+  - [Marking code](#marking-code)
+  - [Collating](#collating)
+    - [Omitting sub folders](#omitting-sub-folders)
+    - [Collating only certain types of files](#collating-only-certain-types-of-files)
+  - [Viewing an author's statistics](#viewing-an-authors-statistics)
+  - [Viewing the summary](#viewing-the-summary)
+  - [Exiting](#exiting)
+  - [Using the Text UI](#using-the-text-ui)
 - [Cheatsheet](#cheatsheet)
 
 <!-- /MarkdownTOC -->
@@ -67,9 +67,9 @@ enter his/her author tags.
 
 ## Collating 
 
-To collate files in a DIR and all its sub directories, use this command.
+To collate files in a folder and all its sub folders, use this command.
 
-`collate from <DIR>`
+`collate from <FOLDER>`
 
 > Tip: If your folder includes whitespaces, you will need to surround the folder with double inverted commas.
 
@@ -81,11 +81,11 @@ Examples:
 
 ![gui collate all subfolders](images/user-guide/gui-collate-all-subfolders.gif)
 
-### Omitting sub directories
-If you would like to collate files only from the specified folder, and not files from sub directories, 
+### Omitting sub folders
+If you would like to collate files only from the specified folder, and not files from sub folders, 
 you can add the `only` option.
 
-`collate from <DIR> only` or `collate only from <DIR>`
+`collate from <FOLDER> only` or `collate only from <FOLDER>`
 
 > Tip: option order of the `collate` command is flexible. You need not worry about the position of these options, 
 just remember to start each command with the `collate` keyword.
