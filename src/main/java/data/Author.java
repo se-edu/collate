@@ -2,75 +2,57 @@ package main.java.data;
 
 import java.util.ArrayList;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 /**
- * This class contains information about an author.
- * It utilises Properties so that JavaFX can display the information easily.
- * 
- * https://docs.oracle.com/javase/8/javafx/properties-binding-tutorial/binding.htm
+ * This class contains information about each author of the project.
  * 
  * @author Sebastian Quek
  * 
  */
 public class Author {
     
-    private StringProperty name;
-    private IntegerProperty linesOfCode;
-    private DoubleProperty proportion;
+    private String name;
+    private int linesOfCode;
+    private double proportion;
 
     private ArrayList<CodeSnippet> codeSnippets;
 
     public Author(String name) {
-        this.name = new SimpleStringProperty(name);
-        this.linesOfCode = new SimpleIntegerProperty(0);
-        this.proportion = new SimpleDoubleProperty(0);
+        this.name = name;
+        this.linesOfCode = 0;
+        this.proportion = 0;
         this.codeSnippets = new ArrayList<CodeSnippet>();
     }
 
     
     // ================================================================
-    // Name property
+    // Name
     // ================================================================
-    
-    public StringProperty nameProperty() {
-        return name;
-    }
 
     public void setName(String name) {
-        this.name.set(name);
+        this.name = name;
     }
 
     public String getName() {
-        return nameProperty().get();
+        return name;
     }
 
     
     // ================================================================
-    // Lines of code property
+    // Lines of code
     // ================================================================
     
-    public IntegerProperty linesOfCodeProperty() {
-        setLinesOfCode(calculateNumLines());
-        return linesOfCode;
-    }
-
     public void setLinesOfCode(int value) {
-        this.linesOfCode.set(value);
+        this.linesOfCode = value;
     }
 
     public int getLinesOfCode() {
-        return linesOfCodeProperty().get();
+        setLinesOfCode(calculateNumLines());
+        return linesOfCode;
     }
     
     private int calculateNumLines() {
         int totalLines = 0;
-        for (CodeSnippet codeSnippet : codeSnippets) {
+        for (CodeSnippet codeSnippet : getCodeSnippets()) {
             totalLines += codeSnippet.getNumLines();
         }
         return totalLines;
@@ -78,20 +60,16 @@ public class Author {
     
     
     // ================================================================
-    // Proportion property
+    // Proportion
     // ================================================================
-    
-    public DoubleProperty proportionProperty() {
-        setProportion(calculateProportion());
-        return proportion;
-    }
 
     public void setProportion(Double value) {
-        this.proportion.set(value);
+        this.proportion = value;
     }
 
     public double getProportion() {
-        return proportionProperty().get();
+        setProportion(calculateProportion());
+        return proportion;
     }
 
     private Double calculateProportion() {
@@ -102,7 +80,7 @@ public class Author {
     
     
     // ================================================================
-    // Code snippets field
+    // Code snippets
     // ================================================================
     
     public ArrayList<CodeSnippet> getCodeSnippets() {
@@ -110,6 +88,6 @@ public class Author {
     }
 
     public void addCodeSnippet(CodeSnippet snippet) {
-        this.codeSnippets.add(snippet);
+        getCodeSnippets().add(snippet);
     }
 }

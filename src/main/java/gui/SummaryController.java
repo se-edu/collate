@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
@@ -22,17 +23,17 @@ import main.java.data.Author;
 public class SummaryController extends StackPane {
     
     @FXML
-    private TableView<Author> summaryTable;
+    private TableView<AuthorBean> summaryTable;
     @FXML
-    private TableColumn<Author, String> authorNameColumn;
+    private TableColumn<AuthorBean, String> authorNameColumn;
     @FXML
-    private TableColumn<Author, Integer> linesOfCodeColumn;
+    private TableColumn<AuthorBean, Integer> linesOfCodeColumn;
     @FXML
-    private TableColumn<Author, Double> proportionColumn;
+    private TableColumn<AuthorBean, Double> proportionColumn;
 
     private static final String OVERVIEW_LAYOUT_FXML = "/main/resources/layouts/Summary.fxml";
 
-    public SummaryController(Collection<Author> summaryData) {
+    public SummaryController(Collection<Author> inputSummaryData) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(OVERVIEW_LAYOUT_FXML));
         loader.setController(this);
         loader.setRoot(this);
@@ -42,10 +43,15 @@ public class SummaryController extends StackPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        ObservableList<AuthorBean> summaryData = FXCollections.observableArrayList();
+        for (Author author : inputSummaryData) {
+            summaryData.add(new AuthorBean(author));
+        }
 
-        summaryTable.setItems(FXCollections.observableArrayList(summaryData));
-        authorNameColumn.setCellValueFactory(new PropertyValueFactory<Author, String>("name"));
-        linesOfCodeColumn.setCellValueFactory(new PropertyValueFactory<Author, Integer>("linesOfCode"));
-        proportionColumn.setCellValueFactory(new PropertyValueFactory<Author, Double>("proportion"));
+        summaryTable.setItems(summaryData);
+        authorNameColumn.setCellValueFactory(new PropertyValueFactory<AuthorBean, String>("name"));
+        linesOfCodeColumn.setCellValueFactory(new PropertyValueFactory<AuthorBean, Integer>("linesOfCode"));
+        proportionColumn.setCellValueFactory(new PropertyValueFactory<AuthorBean, Double>("proportion"));
     }
 }
