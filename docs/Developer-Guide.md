@@ -24,6 +24,7 @@ so that you can understand the big picture before moving on to the more detailed
     - [`MainApp` Class](#mainapp-class)
     - [`CommandBarController` Class](#commandbarcontroller-class)
     - [`SummaryController` Class](#summarycontroller-class)
+    - [`AuthorBean` Class](#authorbean-class)
     - [`FileStatsController` Class](#filestatscontroller-class)
     - [`FileStatsItem` Class](#filestatsitem-class)
 - [Testing](#testing)
@@ -173,16 +174,6 @@ display that users will see.
 This class represents authors who have contributed to the project. Each `Author` can have multiple 
 associated `CodeSnippet` objects.
 
-The `Author` class is also specially constructed to make it easier for the GUI to use its fields. 
-`Author` objects have several fields of `Property` type. These class variables are special JavaFX constructs 
-which behave in a similar manner as typical Java types such as integer, double and String types. For example, 
-`Author` has a `IntegerProperty` type for its `linesOfCode` variable. This variable contains an integer 
-which can be accessed by calling `linesOfCode.get()`.
-
-By utilising JavaFX `Property` types, the GUI can interact directly with the `Author` class to render details in a table easily.
-
-> You can read more about JavaFX Properties [here](https://docs.oracle.com/javase/8/javafx/properties-binding-tutorial/binding.htm).
-
 ## `CodeSnippet` Class
 Each `CodeSnippet` represents the lines of code between two consecutive author tags that were written by an 
 `Author`. Since this code belongs to a file, a `SourceFile` object is associated with each `CodeSnippet` object.
@@ -291,11 +282,25 @@ This class loads `Summary.fxml` which is a type of `StackPane` (also a type of `
 > The use of `StackPane` ensures the `TableView` has a maximum height and width i.e fills the space given 
 by its parent container.
 
-`SummaryController` uses JavaFX's APIs to iterate through `Author` objects (from the `data` package) and 
-construct rows based on certain attributes of these objects.
+`SummaryController` converts `Author` objects (from the `data` package) to their corresponding `AuthorBean` objects and 
+construct rows based on certain attributes of the `AuthorBean` objects.
 
 > More details of these JavaFX APIs can be found 
 [here](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableView.html).
+
+## `AuthorBean` Class
+The `AuthorBean` class is a wrapper for the `Author` class. It represents fields in the `Author` class in a way 
+that makes it easier for the GUI to interact with.
+
+`AuthorBean` objects have several fields of `Property` type. These class variables are special JavaFX constructs 
+which behave in a similar manner as typical Java types such as integer, double and String types. For example, 
+`AuthorBean` has a `IntegerProperty` type for its `linesOfCode` variable. This variable contains an integer 
+which can be accessed by calling `linesOfCode.get()`.
+
+By utilising JavaFX `Property` types, the GUI can interact indirectly with the `Author` class to render details 
+in a table easily without sacrificing the semantics of the `Author` class.
+
+> You can read more about JavaFX Properties [here](https://docs.oracle.com/javase/8/javafx/properties-binding-tutorial/binding.htm).
 
 ## `FileStatsController` Class
 The `FileStatsController` controls the display that is shown when a user enters the `view` command. 
