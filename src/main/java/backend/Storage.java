@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class Storage {
     
     public static final String DEFAULT_SAVE_DIRECTORY = "collated";
-    private static final String SAVE_DIRECTORY_FORMAT = "%s\\collated";
-    private static final String COLLATED_FILE_PATH_FORMAT = "%s\\%s.md";
+    private static final String SAVE_DIRECTORY_FORMAT = "%s" + File.separator + "collated";
+    private static final String COLLATED_FILE_PATH_FORMAT = "%s" + File.separator + "%s.md";
     private static final String ERROR_FILE_NOT_FOUND = "File was not found: %s";
     
     private String saveFolder;
