@@ -26,7 +26,9 @@ Now that you know what Collate is [about](../README.md), you can follow this gui
 2. **Download Collate**: You can then download `Collate-GUI.jar` from the latest release 
    here: https://github.com/collate/collate/releases
 
-3. **Mark your code with `@@author` tags**: Here are some examples. <br><br>
+3. **Mark your code with `@@author` tags**: Here are some examples.
+   > For `.fxml` files, ensure that the `xml` tag comes before your author tags
+   
    ![author tags](images/user-guide/add-author-tags.png)
 
 4. **Launch Collate** Simply double-click on the `Collate-GUI.jar` file to start Collate. 
