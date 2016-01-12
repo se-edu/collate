@@ -41,6 +41,7 @@ public class Logic {
 
     private static final String ERROR_IO_EXCEPTION = "Encountered IOException for %s";
     
+    //@@author James
     public Logic() {
         commandParser = new CommandParser();
         authors = new HashMap<String, Author>();
