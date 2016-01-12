@@ -107,7 +107,7 @@ public class Logic {
                                    ArrayList<String> fileTypes) {
         if (folder.isFile()) {
             scanFile(folder, getFileExtension(folder));
-        } else if (folder.isDirectory()) {
+        } else if (folder.isDirectory() && !folder.getName().equals(".git")) {
             scanFilesInFolder(folder, willScanCurrentDirOnly, fileTypes);
         }
     }
