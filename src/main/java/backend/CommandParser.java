@@ -109,8 +109,7 @@ public class CommandParser {
             int directoryIndex = arguments.indexOf(KEYWORD_DIRECTORY) + 1;
 
             try {
-                String directory = getFullDirectory(arguments, directoryIndex);
-                return standardiseDirectoryString(directory);
+                return getFullDirectory(arguments, directoryIndex);
             } catch (IndexOutOfBoundsException e) {
                 // No directory was specified
                 return STRING_EMPTY;
@@ -166,10 +165,6 @@ public class CommandParser {
                                           STRING_EMPTY);
         }
         return directory;
-    }
-
-    private String standardiseDirectoryString(String directory) {
-        return directory.replace(STRING_FORWARD_SLASH, STRING_BACKSLASH);
     }
 
     private boolean hasScanCurrentDirOnlyKeyword(ArrayList<String> arguments) {
