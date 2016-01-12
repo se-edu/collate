@@ -41,7 +41,7 @@ Now that you know what Collate is [about](../README.md), you can follow this gui
    
 6. **View reports**: The reports can be found in a folder called `collated`. 
      You'll find one `.md` for each author, containing the code written by that author.
-     [Here](https://github.com/collate/collate/blob/master/collated/Sebastian.md) is an example.
+     [Here](https://github.com/collate/collate/blob/master/collated-example/Sebastian.md) is an example.
 
 7. **Try more commands**: 
      * `view <AUTHOR'S NAME>` - See author's individual statistics e.g. `view Sebastian`

@@ -23,7 +23,7 @@ public class Logic {
     private CommandParser commandParser;
     private Storage storage;
     private HashMap<String, Author> authors;
-    private String rootDirectory;
+    private File rootDirectory;
     private Author targetAuthor;
 
     private static final String AUTHOR_TAG = "@@author";
@@ -34,14 +34,15 @@ public class Logic {
     private static final String MARKDOWN_CODE_LANGUAGE_END = "```";
 
     private static final String STRING_EMPTY = "";
-    private static final String STRING_BACKSLASH = "\\";
     private static final char STRING_PERIOD = '.';
 
-    private static final String REGEX_NEITHER_ALPHANUMERIC_NOR_SPACE = "[^ a-zA-Z0-9]+";
+    private static final String REGEX_NEITHER_ALPHANUMERIC_NOR_SPACE =
+        "[^ a-zA-Z0-9]+";
 
-    private static final String ERROR_IO_EXCEPTION = "Encountered IOException for %s";
-    
-    //@@author James
+    private static final String ERROR_IO_EXCEPTION =
+        "Encountered IOException for %s";
+
+    // @@author James
     public Logic() {
         commandParser = new CommandParser();
         authors = new HashMap<String, Author>();
@@ -74,14 +75,12 @@ public class Logic {
     private void handleCollate(Command command) {
         resetVariables();
 
-        rootDirectory = command.getDirectory();
+        rootDirectory = new File(command.getDirectory());
         storage = new Storage(rootDirectory);
         boolean willScanCurrentDirOnly = command.willScanCurrentDirOnly();
         ArrayList<String> fileTypes = command.getFileTypes();
 
-        traverseDirectory(new File(rootDirectory),
-                          willScanCurrentDirOnly,
-                          fileTypes);
+        traverseDirectory(rootDirectory, willScanCurrentDirOnly, fileTypes);
         saveCollatedFiles();
     }
 
@@ -169,7 +168,8 @@ public class Logic {
                 }
             }
         } catch (IOException e) {
-            System.out.println(String.format(ERROR_IO_EXCEPTION, file.toString()));
+            System.out.println(String.format(ERROR_IO_EXCEPTION,
+                                             file.toString()));
         }
     }
 
@@ -199,15 +199,14 @@ public class Logic {
      * @param filePath
      */
     private String generateRelativePath(String filePath) {
-        if (filePath.equals(rootDirectory)) {
-            return filePath.substring(filePath.lastIndexOf(STRING_BACKSLASH) + 1);
+        File newFile = new File(filePath);
 
-        } else if (rootDirectory.endsWith(STRING_BACKSLASH)) {
-            return filePath.replace(rootDirectory, STRING_EMPTY);
-
+        if (newFile.equals(rootDirectory)) {
+            return newFile.getName();
         } else {
-            return filePath.replace(rootDirectory + STRING_BACKSLASH,
-                                    STRING_EMPTY);
+            return newFile.getAbsolutePath()
+                          .replace(rootDirectory.getAbsolutePath(),
+                                   STRING_EMPTY);
         }
     }
 
