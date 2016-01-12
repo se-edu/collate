@@ -11,6 +11,10 @@ import org.junit.Test;
 
 public class TestCommandParserAndCommand {
 
+    private static final String ROOT_DIR = System.getProperty("user.dir");
+    private static final String TEST_RESOURCES_DIR = "/src/test/testFiles";
+    private static final String FULL_TEST_RES_DIR = ROOT_DIR + TEST_RESOURCES_DIR;
+
     private CommandParser commandParser;
 
     @Before
@@ -22,55 +26,56 @@ public class TestCommandParserAndCommand {
     public void testCollateCommand() {
         Command command;
 
-        command = commandParser.parse("collate from C:/");
+        // Normal collate
+        command = commandParser.parse("collate from /");
         assertEquals(Command.Type.COLLATE, command.getCommandType());
-        assertEquals("C:\\", command.getDirectory());
+        assertEquals("/", command.getDirectory());
         assertFalse(command.willScanCurrentDirOnly());
         assertEquals(0, command.getFileTypes().size());
 
-        command = commandParser.parse("collate from        C:/Windows");
+        // Collate with extra spaces
+        command = commandParser.parse("collate from        /");
         assertEquals(Command.Type.COLLATE, command.getCommandType());
-        assertEquals("C:\\Windows", command.getDirectory());
+        assertEquals("/", command.getDirectory());
         assertFalse(command.willScanCurrentDirOnly());
         assertEquals(0, command.getFileTypes().size());
 
-        command = commandParser.parse("collate from C:/Users\\Default");
+        // Collate folder with spaces in name
+        command = commandParser.parse("collate from \"" + FULL_TEST_RES_DIR + "/subfolder with spaces\"");
         assertEquals(Command.Type.COLLATE, command.getCommandType());
-        assertEquals("C:\\Users\\Default", command.getDirectory());
-        assertFalse(command.willScanCurrentDirOnly());
-        assertEquals(0, command.getFileTypes().size());
-        
-        command = commandParser.parse("collate from \"C:/Program Files");
-        assertEquals(Command.Type.COLLATE, command.getCommandType());
-        assertEquals("C:\\Program Files", command.getDirectory());
+        assertEquals(FULL_TEST_RES_DIR + "/subfolder with spaces", command.getDirectory());
         assertFalse(command.willScanCurrentDirOnly());
         assertEquals(0, command.getFileTypes().size());
 
-        command = commandParser.parse("collate from C:/ only");
+        // Collate folder without sub-folders
+        command = commandParser.parse("collate from \"" + FULL_TEST_RES_DIR + "\" only");
         assertEquals(Command.Type.COLLATE, command.getCommandType());
-        assertEquals("C:\\", command.getDirectory());
+        assertEquals(FULL_TEST_RES_DIR, command.getDirectory());
         assertTrue(command.willScanCurrentDirOnly());
         assertEquals(0, command.getFileTypes().size());
 
-        command = commandParser.parse("collate from C:/ include java, css");
+        // Collate only certain types of files ('include' keyword after 'from' keyword)
+        command = commandParser.parse("collate from \"" + FULL_TEST_RES_DIR + "\" include java, css");
         assertEquals(Command.Type.COLLATE, command.getCommandType());
-        assertEquals("C:\\", command.getDirectory());
+        assertEquals(FULL_TEST_RES_DIR, command.getDirectory());
         assertFalse(command.willScanCurrentDirOnly());
         assertEquals(2, command.getFileTypes().size());
         assertEquals("java", command.getFileTypes().get(0));
         assertEquals("css", command.getFileTypes().get(1));
 
-        command = commandParser.parse("collate include css, FXML from C:/");
+        // Collate only certain types of files ('include' keyword before 'from' keyword)
+        command = commandParser.parse("collate include css, FXML from \"" + FULL_TEST_RES_DIR + "\"");
         assertEquals(Command.Type.COLLATE, command.getCommandType());
-        assertEquals("C:\\", command.getDirectory());
+        assertEquals(FULL_TEST_RES_DIR, command.getDirectory());
         assertFalse(command.willScanCurrentDirOnly());
         assertEquals(2, command.getFileTypes().size());
         assertEquals("css", command.getFileTypes().get(0));
         assertEquals("fxml", command.getFileTypes().get(1));
 
-        command = commandParser.parse("collate include css from \"C:/Program Files\" only");
+        // Collate only certain file types from a folder with spaces in its name (no sub-folders)
+        command = commandParser.parse("collate include css from \"" + FULL_TEST_RES_DIR + "/subfolder with spaces\" only");
         assertEquals(Command.Type.COLLATE, command.getCommandType());
-        assertEquals("C:\\Program Files", command.getDirectory());
+        assertEquals(FULL_TEST_RES_DIR + "/subfolder with spaces", command.getDirectory());
         assertTrue(command.willScanCurrentDirOnly());
         assertEquals(1, command.getFileTypes().size());
     }
