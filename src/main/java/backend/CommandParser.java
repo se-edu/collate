@@ -190,7 +190,7 @@ public class CommandParser {
     /**
      * A valid file type is one that is not a keyword.
      * 
-     * @param inputFileType
+     * @param fileType
      */
     private boolean isValidFileType(String fileType) {
         for (String keyword : KEYWORDS) {
