@@ -20,8 +20,12 @@ public class Storage {
     
     private String saveFolder;
     
-    public Storage(String directory) {
-        saveFolder = String.format(SAVE_DIRECTORY_FORMAT, directory);
+    public Storage(File directory) {
+        if (directory.isDirectory()) {
+            saveFolder = String.format(SAVE_DIRECTORY_FORMAT, directory);
+        } else if (directory.isFile()) {
+            saveFolder = String.format(SAVE_DIRECTORY_FORMAT, directory.getParent());
+        }
         createSaveDirectory(saveFolder);
     }
     

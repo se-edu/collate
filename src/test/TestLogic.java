@@ -16,17 +16,16 @@ import org.junit.Test;
 public class TestLogic {
 
     private static final String ROOT_DIR = System.getProperty("user.dir");
-    private static final String TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH = "\\src\\test\\testFiles\\";
-    private static final String TEST_RESOURCES_DIR_NO_ENDING_BACKSLASH = "\\src\\test\\testFiles";
+    private static final String TEST_RESOURCES_DIR = "/src/test/testFiles/";
     private static final String TEST_FILE1 = "testFile1.txt";
     private static final String TEST_FILE2 = "testFile2.txt";
     private static final String TEST_FILE_NO_EXTENSION = "testFileNoExtension";
     private static final String TEST_FILE_IN_SUBFOLDER = "testFile1.txt";
-    private static final String RELATIVE_PATH_TEST_FILE_IN_SUBFOLDER = "subfolder\\" +
-                                                                       TEST_FILE_IN_SUBFOLDER;
-    private static final String FULL_PATH_TEST_FILE1 = ROOT_DIR +
-                                                       TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH +
-                                                       TEST_FILE1;
+    private static final String RELATIVE_PATH_TEST_FILE_IN_SUBFOLDER =
+        "subfolder/" + TEST_FILE_IN_SUBFOLDER;
+    private static final String FULL_PATH_TEST_FILE1 = "\"" + ROOT_DIR +
+                                                       TEST_RESOURCES_DIR +
+                                                       TEST_FILE1 + "\"";
     private static final String AUTHOR1 = "author1";
     private static final String AUTHOR2 = "author2";
 
@@ -40,30 +39,21 @@ public class TestLogic {
     @Test
     public void testHandleEnterPress() {
         assertEquals(Command.Type.COLLATE,
-                     logic.executeCommand("collate from " + ROOT_DIR +
-                                          TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH));
+                     logic.executeCommand("collate from \"" + ROOT_DIR +
+                                          TEST_RESOURCES_DIR + "\""));
 
         assertEquals(Command.Type.COLLATE,
-                     logic.executeCommand("collate from " + ROOT_DIR +
-                                          TEST_RESOURCES_DIR_NO_ENDING_BACKSLASH));
+                     logic.executeCommand("collate from \"" + ROOT_DIR +
+                                          TEST_RESOURCES_DIR + "\" only"));
 
         assertEquals(Command.Type.COLLATE,
-                     logic.executeCommand("collate from " +
-                                          ROOT_DIR +
-                                          TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH +
-                                          " only"));
+                     logic.executeCommand("collate from \"" + ROOT_DIR +
+                                          TEST_RESOURCES_DIR +
+                                          "\" include java"));
 
         assertEquals(Command.Type.COLLATE,
-                     logic.executeCommand("collate from " +
-                                          ROOT_DIR +
-                                          TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH +
-                                          " include java"));
-
-        assertEquals(Command.Type.COLLATE,
-                     logic.executeCommand("collate from " +
-                                          ROOT_DIR +
-                                          TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH +
-                                          " include txt"));
+                     logic.executeCommand("collate from \"" + ROOT_DIR +
+                                          TEST_RESOURCES_DIR + "\" include txt"));
 
         assertEquals(Command.Type.COLLATE,
                      logic.executeCommand("collate from " +
@@ -98,11 +88,12 @@ public class TestLogic {
     @Test
     public void testGetTargetAuthorStatistics() {
         logic.executeCommand("collate from " + ROOT_DIR +
-                             TEST_RESOURCES_DIR_WITH_ENDING_BACKSLASH);
+                             TEST_RESOURCES_DIR);
         assertTrue(logic.getTargetAuthorStatistics().isEmpty());
 
         logic.executeCommand("view " + AUTHOR1);
-        HashMap<SourceFile, Integer> statistics = logic.getTargetAuthorStatistics();
+        HashMap<SourceFile, Integer> statistics =
+            logic.getTargetAuthorStatistics();
         for (SourceFile sourceFile : statistics.keySet()) {
             String currentFileLocation = sourceFile.getRelativeFilePath();
             if (currentFileLocation.equals(TEST_FILE1)) {
