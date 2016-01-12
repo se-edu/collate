@@ -97,7 +97,7 @@ public class TestCommandParserAndCommand {
         command = commandParser.parse("summary");
         assertEquals(Command.Type.SUMMARY, command.getCommandType());
 
-        command = commandParser.parse("summary     C:/");
+        command = commandParser.parse("summary     extra words");
         assertEquals(Command.Type.SUMMARY, command.getCommandType());
     }
 
@@ -120,10 +120,10 @@ public class TestCommandParserAndCommand {
         command = commandParser.parse("collate from include only");
         assertEquals(Command.Type.INVALID, command.getCommandType());
         
-        command = commandParser.parse("collate from C:/ include only");
+        command = commandParser.parse("collate from \"" + FULL_TEST_RES_DIR + "\" include only");
         assertEquals(Command.Type.INVALID, command.getCommandType());
         
-        command = commandParser.parse("colate C:/");
+        command = commandParser.parse("colate /");
         assertEquals(Command.Type.INVALID, command.getCommandType());
 
         command = commandParser.parse("view");
