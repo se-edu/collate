@@ -1,33 +1,39 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+
 import main.java.backend.Logic;
 import main.java.tui.CollateTui;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestCollate {
+public class TestCollateTui {
     private static final String ROOT_DIR = System.getProperty("user.dir");
-    private static final String TEST_RESOURCES_DIR = "\\src\\test\\testFiles\\";
+    private static final String TEST_RESOURCES_DIR = "/src/test/testFiles/";
 
     private Logic logic;
+    private String slash;
 
     @Before
     public void init() {
         logic = new Logic();
+        slash = File.separator;
     }
 
     @Test
     public void testCollateCommand() {
-        String userInput = "collate from " + ROOT_DIR + TEST_RESOURCES_DIR;
+        String userInput =
+            "collate from \"" + ROOT_DIR + TEST_RESOURCES_DIR + "\"";
         String output = CollateTui.handleUserInput(logic, userInput);
-
         assertEquals("Author                LOC      Proportion (%)\n"
                      + "---------------------------------------------\n"
-                     + "author2                 4               30.77\n"
-                     + "author1                 8               61.54\n"
-                     + "Long autho...           1                7.69\n",
+                     + "author2                 5               35.71\n"
+                     + "author1                 8               57.14\n"
+                     + "Long autho...           1                7.14\n",
                      output);
     }
 
@@ -40,9 +46,9 @@ public class TestCollate {
 
         assertEquals("Author                LOC      Proportion (%)\n"
                      + "---------------------------------------------\n"
-                     + "author2                 4               30.77\n"
-                     + "author1                 8               61.54\n"
-                     + "Long autho...           1                7.69\n",
+                     + "author2                 5               35.71\n"
+                     + "author1                 8               57.14\n"
+                     + "Long autho...           1                7.14\n",
                      output);
     }
 
@@ -53,18 +59,15 @@ public class TestCollate {
         String userInput = "view author2";
         String output = CollateTui.handleUserInput(logic, userInput);
 
-        assertEquals("File path                                           LOC      Proportion (%)\n"
-                     + "---------------------------------------------------------------------------\n"
-                     + "subfolder\\testFile1.txt                               4              100.00\n",
-                     output);
+        assertTrue(output.contains(slash +
+                                   "test file with spaces.txt                            1              100.00\n"));
+        assertTrue(output.contains(slash + "subfolder" + slash +
+                                   "testFile1.txt                              4              100.00\n"));
 
         userInput = "view Long author name";
         output = CollateTui.handleUserInput(logic, userInput);
 
-        assertEquals("File path                                           LOC      Proportion (%)\n"
-                     + "---------------------------------------------------------------------------\n"
-                     + "...ceedingly_excessively_long_file_name.txt           1              100.00\n",
-                     output);
+        assertTrue(output.contains("...ceedingly_excessively_long_file_name.txt           1              100.00\n"));
     }
 
     @Test
