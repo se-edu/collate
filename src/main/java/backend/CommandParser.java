@@ -20,8 +20,6 @@ public class CommandParser {
 
     private static final String REGEX_WHITESPACES = "[\\s,]+";
     
-    private static final String STRING_BACKSLASH = "\\";
-    private static final String STRING_FORWARD_SLASH = "/";
     private static final String STRING_DOUBLE_INVERTED_COMMA = "\"";
     private static final String STRING_EMPTY = "";
     private static final String STRING_ONE_SPACE = " ";
@@ -90,12 +88,12 @@ public class CommandParser {
     // ================================================================
 
     private Command initCollateCommand(ArrayList<String> arguments) {
-        String directory = findDirectory(arguments);
+        File directory = new File(findDirectory(arguments));
         ArrayList<String> fileTypes = findIncludedFileTypes(arguments);
 
         if (isValidCollateCommand(arguments, directory, fileTypes)) {
             Command command = new Command(Command.Type.COLLATE);
-            command.setDirectory(directory);
+            command.setDirectory(directory.getAbsolutePath());
             command.setScanCurrentDirOnly(hasScanCurrentDirOnlyKeyword(arguments));
             command.setFileTypes(fileTypes);
             return command;
@@ -132,10 +130,9 @@ public class CommandParser {
      * 
      */
     private boolean isValidCollateCommand(ArrayList<String> arguments,
-                                          String directory,
+                                          File directory,
                                           ArrayList<String> fileTypes) {
-        File dir = new File(directory);
-        return !directory.isEmpty() && dir.exists() &&
+        return directory.exists() &&
                !(arguments.contains(KEYWORD_INCLUDE) && fileTypes.isEmpty());
     }
 
@@ -152,12 +149,14 @@ public class CommandParser {
                                     int directoryIndex) throws IndexOutOfBoundsException {
         String directory = arguments.get(directoryIndex);
         if (directory.startsWith(STRING_DOUBLE_INVERTED_COMMA)) {
-            for (int i = directoryIndex + 1; i < arguments.size(); i++) {
-                String currentArgument = arguments.get(i);
-                directory += STRING_ONE_SPACE + currentArgument;
-
-                if (currentArgument.endsWith(STRING_DOUBLE_INVERTED_COMMA)) {
-                    break;
+            if (!directory.endsWith(STRING_DOUBLE_INVERTED_COMMA)) {
+                for (int i = directoryIndex + 1; i < arguments.size(); i++) {
+                    String currentArgument = arguments.get(i);
+                    directory += STRING_ONE_SPACE + currentArgument;
+    
+                    if (currentArgument.endsWith(STRING_DOUBLE_INVERTED_COMMA)) {
+                        break;
+                    }
                 }
             }
             // Remove double inverted commas
