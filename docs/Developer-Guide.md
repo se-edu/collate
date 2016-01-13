@@ -95,9 +95,12 @@ public static String handleUserInput(Logic logic, String userInput) {
 The above code snippet shows you the main method which receives a user's input and passes it to 
 `handleUserInput()`. This process repeats continuously until an exit command is entered.
 
+<img src="images/developer-guide/high-level-sequence-diagram.png" width="600">
+> Figure 2: Component interactions at architectural level
+
 # Backend Component
 <img src="images/developer-guide/backend-class-diagram.png" width="600">
-> Figure 2: Structure of the Backend component
+> Figure 3: Structure of the Backend component
 
 At the centre of the `Backend` component is the `Logic` class which is in charge of handling the execution 
 of user inputs from the GUI component. This component only relies on the Data component and works 
@@ -105,7 +108,7 @@ independently from the GUI and TUI components.
 
 ## `Logic` Class
 <img src="images/developer-guide/sequence-diagram-collate-command.png">
-> Figure 3: Object interactions for executing a basic collate command
+> Figure 4: Object interactions for executing a basic collate command
 
 The `Logic` class contains the methods that handle the core functionality of Collate. 
 It can be thought of as the "brain" of Collate. User inputs are passed to the `executeCommand(String)` 
@@ -162,7 +165,7 @@ in the default save folder with `fileName` as its name and `.md` as its extensio
 
 # Data Component
 <img src="images/developer-guide/data-class-diagram.png" width="600">
-> Figure 4: Structure of the Data component
+> Figure 5: Structure of the Data component
 
 The Data component contains the classes that represent the various elements that are required in calculating 
 contribution statistics.
@@ -191,7 +194,7 @@ The base folder is specified through the `collate from <FOLDER>` command.
 > Check out the [Learning Resources](Learning-Resources.md) page to learn more about JavaFX.
 
 <img src="images/developer-guide/gui-class-diagram.png">
-> Figure 5: Structure of the GUI component
+> Figure 6: Structure of the GUI component
 
 The GUI component is made up of two packages, `gui` and `view`. The `gui` package contains the 
 Java files that control what users see while the `view` package contains JavaFX's `fxml` files that 
@@ -200,7 +203,7 @@ This stylesheet customises the appearance and style of JavaFX components.
 
 
 <img src="images/developer-guide/sequence-diagram-gui-logic.png">
-> Figure 6: Object interactions when a user enters a command through the GUI
+> Figure 7: Object interactions when a user enters a command through the GUI
 
 Users will enter commands through the `CommandBarController`, which then passes these commands to the `MainApp`. 
 `MainApp` will then call `Logic` in the Backend component to handle the actual execution of these commands.
@@ -327,7 +330,7 @@ the layouts of the corresponding `FileStatsItem` objects which will be elaborate
 ## `FileStatsItem` Class
 
 <img src="images/developer-guide/filestatsitem.png" width="600">
-> Figure 7: Appearance of a FileStatsItem
+> Figure 8: Appearance of a FileStatsItem
 
 Each `FileStatsItem` object consists of nine JavaFX components.
 
