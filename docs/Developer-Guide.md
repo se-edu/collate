@@ -389,3 +389,6 @@ reduces the margin of error.
 #### History of commands
 Users can traverse this history to re-execute previously typed commands. This becomes especially useful if a 
 user wants to collate the source files in the same folder periodically.
+
+#### Ability to ignore specific files
+Currently, users can only specify certain file types to be collated.
