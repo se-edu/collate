@@ -12,15 +12,15 @@ import main.java.backend.Logic;
 
 /**
  * MainApp is the entry point for JavaFX applications.
- * 
+ *
  * @author Sebastian Quek
  *
  */
 public class MainApp extends Application {
 
-    private static final String ROOT_LAYOUT_FXML = "/main/resources/layouts/RootLayout.fxml";
+    private static final String ROOT_LAYOUT_FXML = "/layouts/RootLayout.fxml";
     private static final String WINDOW_TITLE = "Collate";
-    
+
     private static final String FEEDBACK_COLLATE_SUCCESSFUL = "Collate successful!";
     private static final String FEEDBACK_EMPTY = "";
     private static final String FEEDBACK_INVALID_COMMAND = "Invalid command.";
@@ -59,7 +59,7 @@ public class MainApp extends Application {
 
     /**
      * Initialises the main JavaFX Stage with RootLayout being the main Scene.
-     * 
+     *
      * @param primaryStage
      */
     private void initPrimaryStage(Stage primaryStage) {
@@ -102,17 +102,17 @@ public class MainApp extends Application {
     private void handleEnterPress(CommandBarController commandBarController,
                                   String userInput) {
         switch (logic.executeCommand(userInput)) {
-            
+
             case COLLATE :
                 commandBarController.setFeedback(FEEDBACK_COLLATE_SUCCESSFUL);
             case SUMMARY :
                 addSummary(this);
                 break;
-                
+
             case EXIT :
                 primaryStage.hide();
                 break;
-                
+
             case VIEW :
                 String authorName = logic.getTargetAuthorName();
                 if (authorName != null) {

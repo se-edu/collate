@@ -20,7 +20,7 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'main.java.tui.CollateTui'
+        attributes 'Main-Class': 'main.java.gui.MainApp'
     }
 }
 

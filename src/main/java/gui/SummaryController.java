@@ -16,12 +16,12 @@ import main.java.data.Author;
 /**
  * This class controls the Summary view by loading the corresponding fxml file
  * and initialising the table's columns with the authors' properties.
- * 
+ *
  * @author Sebastian Quek
  *
  */
 public class SummaryController extends StackPane {
-    
+
     @FXML
     private TableView<AuthorBean> summaryTable;
     @FXML
@@ -31,7 +31,7 @@ public class SummaryController extends StackPane {
     @FXML
     private TableColumn<AuthorBean, Double> proportionColumn;
 
-    private static final String OVERVIEW_LAYOUT_FXML = "/main/resources/layouts/Summary.fxml";
+    private static final String OVERVIEW_LAYOUT_FXML = "/layouts/Summary.fxml";
 
     public SummaryController(Collection<Author> inputSummaryData) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(OVERVIEW_LAYOUT_FXML));
@@ -43,7 +43,7 @@ public class SummaryController extends StackPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         ObservableList<AuthorBean> summaryData = FXCollections.observableArrayList();
         for (Author author : inputSummaryData) {
             summaryData.add(new AuthorBean(author));
