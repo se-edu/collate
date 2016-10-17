@@ -36,7 +36,7 @@ public class TestCommandParserAndCommand {
         // Normal collate
         command = commandParser.parse("collate from \"" + FULL_TEST_RES_DIR + "\"");
         assertEquals(Command.Type.COLLATE, command.getCommandType());
-        assertEquals(FULL_TEST_RES_DIR, command.getDirectory());
+        assertEquals(FULL_TEST_RES_DIR, command.getReadDirectory());
         assertFalse(command.willScanCurrentDirOnly());
         assertEquals(0, command.getFileTypes().size());
 
@@ -44,7 +44,7 @@ public class TestCommandParserAndCommand {
         command = commandParser.parse("collate    from      \"" + FULL_TEST_RES_DIR +
                                       "\"");
         assertEquals(Command.Type.COLLATE, command.getCommandType());
-        assertEquals(FULL_TEST_RES_DIR, command.getDirectory());
+        assertEquals(FULL_TEST_RES_DIR, command.getReadDirectory());
         assertFalse(command.willScanCurrentDirOnly());
         assertEquals(0, command.getFileTypes().size());
 
@@ -53,7 +53,7 @@ public class TestCommandParserAndCommand {
                                       File.separator + "subfolder with spaces\"");
         assertEquals(Command.Type.COLLATE, command.getCommandType());
         assertEquals(FULL_TEST_RES_DIR + File.separator + "subfolder with spaces",
-                     command.getDirectory());
+                     command.getReadDirectory());
         assertFalse(command.willScanCurrentDirOnly());
         assertEquals(0, command.getFileTypes().size());
 
@@ -61,7 +61,7 @@ public class TestCommandParserAndCommand {
         command = commandParser.parse("collate from \"" + FULL_TEST_RES_DIR +
                                       "\" only");
         assertEquals(Command.Type.COLLATE, command.getCommandType());
-        assertEquals(FULL_TEST_RES_DIR, command.getDirectory());
+        assertEquals(FULL_TEST_RES_DIR, command.getReadDirectory());
         assertTrue(command.willScanCurrentDirOnly());
         assertEquals(0, command.getFileTypes().size());
 
@@ -70,7 +70,7 @@ public class TestCommandParserAndCommand {
         command = commandParser.parse("collate from \"" + FULL_TEST_RES_DIR +
                                       "\" include java, css");
         assertEquals(Command.Type.COLLATE, command.getCommandType());
-        assertEquals(FULL_TEST_RES_DIR, command.getDirectory());
+        assertEquals(FULL_TEST_RES_DIR, command.getReadDirectory());
         assertFalse(command.willScanCurrentDirOnly());
         assertEquals(2, command.getFileTypes().size());
         assertEquals("java", command.getFileTypes().get(0));
@@ -81,7 +81,7 @@ public class TestCommandParserAndCommand {
         command = commandParser.parse("collate include css, FXML from \"" +
                                       FULL_TEST_RES_DIR + "\"");
         assertEquals(Command.Type.COLLATE, command.getCommandType());
-        assertEquals(FULL_TEST_RES_DIR, command.getDirectory());
+        assertEquals(FULL_TEST_RES_DIR, command.getReadDirectory());
         assertFalse(command.willScanCurrentDirOnly());
         assertEquals(2, command.getFileTypes().size());
         assertEquals("css", command.getFileTypes().get(0));
@@ -94,7 +94,7 @@ public class TestCommandParserAndCommand {
                                       "subfolder with spaces\" only");
         assertEquals(Command.Type.COLLATE, command.getCommandType());
         assertEquals(FULL_TEST_RES_DIR + File.separator + "subfolder with spaces",
-                     command.getDirectory());
+                     command.getReadDirectory());
         assertTrue(command.willScanCurrentDirOnly());
         assertEquals(1, command.getFileTypes().size());
     }
