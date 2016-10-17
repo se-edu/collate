@@ -16,7 +16,8 @@ public class Command {
     }
 
     private Type type;
-    private String directory;
+    private String readDirectory;
+    private String saveDirectory;
     private boolean scanCurrentDirOnly;
     private ArrayList<String> fileTypes;
     
@@ -37,12 +38,20 @@ public class Command {
     // "Collate" command methods
     // ================================================================
 
-    public String getDirectory() {
-        return directory;
+    public String getReadDirectory() {
+        return readDirectory;
     }
 
-    public void setDirectory(String directory) {
-        this.directory = directory;
+    public String getSaveDirectory() {
+        return saveDirectory;
+    }
+
+    public void setReadDirectory(String directory) {
+        this.readDirectory = directory;
+    }
+
+    public void setSaveDirectory(String directory) {
+        this.saveDirectory = directory;
     }
 
     public boolean willScanCurrentDirOnly() {

@@ -14,6 +14,7 @@ Now that you know what Collate is [about](../README.md), you can follow this gui
   - [Viewing the summary](#viewing-the-summary)
   - [Exiting](#exiting)
   - [Using the Text UI](#using-the-text-ui)
+  - [Using the Batch mode](#using-the-batch-mode)
 - [Cheatsheet](#cheatsheet)
 
 <!-- /MarkdownTOC -->
@@ -37,11 +38,13 @@ Now that you know what Collate is [about](../README.md), you can follow this gui
    ![gui collate all subfolders](images/user-guide/gui-collate-all-subfolders.gif)
 
 5. **Ask Collate to collate your code**. As shown in the above animation, you can type 
-   `collate from <FOLDER>` to collate all files within `<FOLDER>` including subfolders.
+   `collate from <INPUT_FOLDER>` to collate all files within `<INPUT_FOLDER>`
+   including subfolders.
    
-6. **View reports**: The reports can be found in a folder called `collated`. 
+6. **View reports**: The reports can be found in the same folder as the jar file.
      You'll find one `.md` for each author, containing the code written by that author.
-     [Here](https://github.com/collate/collate/blob/master/collated-example/Sebastian.md) is an example.
+     [Here](https://github.com/collate/collate/blob/master/collated-example/Sebastian.md) is an example.<br>
+     To specify a different output folder, user the command `collate from <INPUT_FOLDER> to <OUTPUT_FOLDER>`
 
 7. **Try more commands**: 
      * `view <AUTHOR'S NAME>` - See author's individual statistics e.g. `view Sebastian`
@@ -71,14 +74,14 @@ enter his/her author tags.
 
 To collate files in a folder and all its sub folders, use this command.
 
-`collate from <FOLDER>`
+`collate from <INPUT_FOLDER> to <OUTPUT_FOLDER>` (the `to <OUTPUT_FOLDER>` part is optional)
 
 > Tip: If your folder includes whitespaces, you will need to surround the folder with double inverted commas.
 
 Examples:
-* `collate from src` 
+* `collate from src to collated`
 * `collate from .`
-* `collate from C:/myProject/component1/src`
+* `collate from C:/myProject/component1/src to collated/src`
 * `collate from "C:/source files"`
 
 ![gui collate all subfolders](images/user-guide/gui-collate-all-subfolders.gif)
@@ -87,7 +90,7 @@ Examples:
 If you would like to collate files only from the specified folder, and not files from sub folders, 
 you can add the `only` option.
 
-`collate from <FOLDER> only` or `collate only from <FOLDER>`
+`collate from <INPUT_FOLDER> only` or `collate only from <INPUT_FOLDER>`
 
 > Tip: option order of the `collate` command is flexible. You need not worry about the position of these options, 
 just remember to start each command with the `collate` keyword.
@@ -100,15 +103,15 @@ Examples:
 Collate scans the folder you specified for all types of file. What if you want to collate only `java` files? 
 Well, you can use the `include` option.
 
-`collate from <FOLDER> include java`
+`collate from <INPUT_FOLDER> include java`
 
 You can include multiple filetypes by separating them with commas.
 
-`collate from <FOLDER> include java, css, fxml`
+`collate from <INPUT_FOLDER> include java, css, fxml`
 
 Examples:  
-* `collate from C:/src java`
-* `collate from C:/src java,md,css,txt`
+* `collate from C:/src include java`
+* `collate from C:/src to ./collated include java,md,css,txt`
 
 ## Viewing an author's statistics
 Viewing an author's contribution statistics can be done by entering the following command.
@@ -150,13 +153,20 @@ Here are some examples:
 
 ![tui summary view](images/user-guide/tui-summary.gif)
 
+## Using the batch mode
+
+Collate Text UI can be run in 'batch mode' (i.e. non-interactive CLI) to execute a command in one shot.
+Here's an example.<br>
+`java -jar Collate-TUI.jar collate from src to collated`
+
 # Cheatsheet
 Command | Description
 --------| ------------
-`collate from <FOLDER>` | Collate all files within `<FOLDER>` including subfolders
-`collate from <FOLDER> only` | Collate files in `<FOLDER>` only
-`collate from <FOLDER> include <FILETYPE1>, <FILETYPE2>` | Collate `<FILETYPE1>` and `<FILETYPE2>` files in `<FOLDER>` and its subfolders
-`collate from <FOLDER> only include <FILETYPE1>` | Collate `<FILETYPE1>` files in `<FOLDER>` only
-`view <AUTHOR'S NAME>` | See author's individual statistics
-`summary` | See default statistics summary table
-`exit` | Exit Collate
+`collate from <INPUT_FOLDER>` | Collates all files within `<INPUT_FOLDER>` including subfolders and puts the collated files in the same folder
+`collate from <INPUT_FOLDER> to <OUTPUT_FOLDER>` | Collates all files within `<INPUT_FOLDER>` including subfolders and puts the collated files in the `<OUTPUT_FOLDER>`
+`collate from <INPUT_FOLDER> only` | Collates files in `<INPUT_FOLDER>` only
+`collate from <INPUT_FOLDER> include <FILETYPE1>, <FILETYPE2>` | Collates `<FILETYPE1>` and `<FILETYPE2>` files in `<INPUT_FOLDER>` and its subfolders
+`collate from <INPUT_FOLDER> only include <FILETYPE1>` | Collates `<FILETYPE1>` files in `<INPUT_FOLDER>` only
+`view <AUTHOR'S NAME>` | Shows author's individual statistics
+`summary` | Shows default statistics summary table
+`exit` | Exits Collate

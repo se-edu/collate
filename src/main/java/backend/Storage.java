@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Storage {
     
     public static final String DEFAULT_SAVE_DIRECTORY = "collated";
-    private static final String SAVE_DIRECTORY_FORMAT = "%s" + File.separator + "collated";
+    private static final String SAVE_DIRECTORY_FORMAT = "%s";
     private static final String COLLATED_FILE_PATH_FORMAT = "%s" + File.separator + "%s.md";
     private static final String ERROR_FILE_NOT_FOUND = "File was not found: %s";
     
@@ -30,15 +30,22 @@ public class Storage {
     }
     
     public Storage() {
-        saveFolder = DEFAULT_SAVE_DIRECTORY;
-        createSaveDirectory(DEFAULT_SAVE_DIRECTORY);
+        this(DEFAULT_SAVE_DIRECTORY);
+    }
+
+    public Storage(String saveDirectory) {
+        saveFolder = saveDirectory;
+        createSaveDirectory(saveFolder);
     }
 
     private void createSaveDirectory(String directory) {
         File dir = new File(directory);
 
         if (!dir.exists()) {
-            dir.mkdir();
+            boolean isDirectoryCreated = dir.mkdirs();
+            if (!isDirectoryCreated) {
+                throw new RuntimeException("Could not create directory " + dir);
+            }
         }
     }
 

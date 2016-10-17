@@ -23,7 +23,7 @@ public class Logic {
     private CommandParser commandParser;
     private Storage storage;
     private HashMap<String, Author> authors;
-    private File rootDirectory;
+    private File readDirectory;
     private Author targetAuthor;
 
     private static final String AUTHOR_TAG = "@@author";
@@ -75,12 +75,12 @@ public class Logic {
     private void handleCollate(Command command) {
         resetVariables();
 
-        rootDirectory = new File(command.getDirectory());
-        storage = new Storage(rootDirectory);
+        readDirectory = new File(command.getReadDirectory());
+        storage = new Storage(command.getSaveDirectory());
         boolean willScanCurrentDirOnly = command.willScanCurrentDirOnly();
         ArrayList<String> fileTypes = command.getFileTypes();
 
-        traverseDirectory(rootDirectory, willScanCurrentDirOnly, fileTypes);
+        traverseDirectory(readDirectory, willScanCurrentDirOnly, fileTypes);
         saveCollatedFiles();
     }
 
@@ -201,11 +201,11 @@ public class Logic {
     private String generateRelativePath(String filePath) {
         File newFile = new File(filePath);
 
-        if (newFile.equals(rootDirectory)) {
+        if (newFile.equals(readDirectory)) {
             return newFile.getName();
         } else {
             return newFile.getAbsolutePath()
-                          .replace(rootDirectory.getAbsolutePath(),
+                          .replace(readDirectory.getAbsolutePath(),
                                    STRING_EMPTY);
         }
     }

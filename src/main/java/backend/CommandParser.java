@@ -29,10 +29,11 @@ public class CommandParser {
     private static final String USER_COMMAND_SUMMARY = "summary";
     private static final String USER_COMMAND_EXIT = "exit";
 
-    private static final String[] KEYWORDS = {"from", "only", "include"};
-    private static final String KEYWORD_DIRECTORY = KEYWORDS[0];
-    private static final String KEYWORD_SCAN_CURRENT_DIR_ONLY = KEYWORDS[1];
-    private static final String KEYWORD_INCLUDE = KEYWORDS[2];
+    private static final String[] KEYWORDS = {"from", "to", "only", "include"};
+    private static final String KEYWORD_FROM_DIRECTORY = KEYWORDS[0];
+    private static final String KEYWORD_TO_DIRECTORY = KEYWORDS[1];
+    private static final String KEYWORD_SCAN_CURRENT_DIR_ONLY = KEYWORDS[2];
+    private static final String KEYWORD_INCLUDE = KEYWORDS[3];
 
     public CommandParser() {
     }
@@ -88,12 +89,14 @@ public class CommandParser {
     // ================================================================
 
     private Command initCollateCommand(ArrayList<String> arguments) {
-        File directory = new File(findDirectory(arguments));
+        File fromDirectory = new File(findDirectory(arguments, KEYWORD_FROM_DIRECTORY));
+        File toDirectory = new File(findDirectory(arguments, KEYWORD_TO_DIRECTORY));
         ArrayList<String> fileTypes = findIncludedFileTypes(arguments);
 
-        if (isValidCollateCommand(arguments, directory, fileTypes)) {
+        if (isValidCollateCommand(arguments, fromDirectory, fileTypes)) {
             Command command = new Command(Command.Type.COLLATE);
-            command.setDirectory(directory.getAbsolutePath());
+            command.setReadDirectory(fromDirectory.getAbsolutePath());
+            command.setSaveDirectory(toDirectory.getAbsolutePath());
             command.setScanCurrentDirOnly(hasScanCurrentDirOnlyKeyword(arguments));
             command.setFileTypes(fileTypes);
             return command;
@@ -102,9 +105,9 @@ public class CommandParser {
         }
     }
 
-    private String findDirectory(ArrayList<String> arguments) {
-        if (arguments.contains(KEYWORD_DIRECTORY)) {
-            int directoryIndex = arguments.indexOf(KEYWORD_DIRECTORY) + 1;
+    private String findDirectory(ArrayList<String> arguments, String directoryIdentifier) {
+        if (arguments.contains(directoryIdentifier)) {
+            int directoryIndex = arguments.indexOf(directoryIdentifier) + 1;
 
             try {
                 return getFullDirectory(arguments, directoryIndex);

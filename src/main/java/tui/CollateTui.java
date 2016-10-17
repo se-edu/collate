@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.StringJoiner;
 
 import main.java.backend.Logic;
 import main.java.data.Author;
@@ -72,6 +73,29 @@ public class CollateTui {
      * @param args
      */
     public static void main(String[] args) {
+        if (args.length == 0) {
+            runInteractiveMode();
+        } else {
+            runBatchMode(args);
+        }
+    }
+
+    private static void runBatchMode(String[] args) {
+        Logic logic = new Logic();
+        String command = stitchArgs(args);
+        System.out.println("Executing command " + command);
+        logic.executeCommand(command);
+    }
+
+    private static String stitchArgs(String args[]) {
+        StringJoiner joiner = new StringJoiner(" ");
+        for (String s: args) {
+            joiner.add(s);
+        }
+        return joiner.toString();
+    }
+
+    private static void runInteractiveMode() {
         Scanner input = new Scanner(System.in);
         PrintStream output = System.out;
         Logic logic = new Logic();
