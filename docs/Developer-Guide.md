@@ -152,7 +152,7 @@ Command | `parse(String userInput)`: Analyses the given `userInput` to determine
 
 ## `Storage` Class
 `Storage` is a simple class that has one public method which takes in a list of lines and saves them to a 
-local file in a default folder. This default folder is defined in this class.
+local file in the a specified output folder. This output folder is specified in the constructor.
 
 The current implementation saves collated data in Markdown files. These files are human-readable and editable, 
 and utilises syntax from [Github Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/).
@@ -187,7 +187,7 @@ lines of code of all code snippets and is used to calculate the overall proporti
 ## `SourceFile` Class
 This class represents source files that contain at least one author tag. Each `SourceFile` object is 
 constructed with the file's path relative to the user's specified folder and the file's language. 
-The base folder is specified through the `collate from <FOLDER>` command.
+The base folder is specified through the `collate from <INPUT_FOLDER>` command.
 
 # GUI Component
 
