@@ -152,6 +152,12 @@ Here are some examples:
 
 ![tui summary view](images/user-guide/tui-summary.gif)
 
+## Running Collate in batch mode
+
+Collate Text UI can be run in 'batch mode' (i.e. non-interactive CLI) to execute a command in one shot.
+Here's an example.<br>
+`java -jar Collate-TUI.jar collate from src to collated`
+
 # Cheatsheet
 Command | Description
 --------| ------------
