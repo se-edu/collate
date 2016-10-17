@@ -73,7 +73,7 @@ public class CollateTui {
      * @param args
      */
     public static void main(String[] args) {
-        if(args.length == 0 ) {
+        if (args.length == 0) {
             runInteractiveMode();
         } else {
             runBatchMode(args);
@@ -89,7 +89,7 @@ public class CollateTui {
 
     private static String stitchArgs(String args[]) {
         StringJoiner joiner = new StringJoiner(" ");
-        for(String s: args){
+        for (String s: args) {
             joiner.add(s);
         }
         return joiner.toString();
