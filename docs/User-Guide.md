@@ -14,6 +14,7 @@ Now that you know what Collate is [about](../README.md), you can follow this gui
   - [Viewing the summary](#viewing-the-summary)
   - [Exiting](#exiting)
   - [Using the Text UI](#using-the-text-ui)
+  - [Using the Batch mode](#using-the-batch-mode)
 - [Cheatsheet](#cheatsheet)
 
 <!-- /MarkdownTOC -->
@@ -152,7 +153,7 @@ Here are some examples:
 
 ![tui summary view](images/user-guide/tui-summary.gif)
 
-## Running Collate in batch mode
+## Using the batch mode
 
 Collate Text UI can be run in 'batch mode' (i.e. non-interactive CLI) to execute a command in one shot.
 Here's an example.<br>
