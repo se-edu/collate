@@ -264,7 +264,7 @@ public class Logic {
         setTargetAuthorIfAuthorExists(authorName);
     }
 
-    private void setTargetAuthorIfAuthorExists(String inputName) {
+    public void setTargetAuthorIfAuthorExists(String inputName) {
         for (Author author : authors.values()) {
             if (author.getName().toLowerCase().equals(inputName.toLowerCase())) {
                 targetAuthor = author;

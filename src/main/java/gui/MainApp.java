@@ -20,7 +20,7 @@ public class MainApp extends Application {
 
     private static final String ROOT_LAYOUT_FXML = "/main/resources/layouts/RootLayout.fxml";
     private static final String WINDOW_TITLE = "Collate";
-    
+
     private static final String FEEDBACK_COLLATE_SUCCESSFUL = "Collate successful!";
     private static final String FEEDBACK_EMPTY = "";
     private static final String FEEDBACK_INVALID_COMMAND = "Invalid command.";
@@ -29,6 +29,7 @@ public class MainApp extends Application {
     private BorderPane rootLayout;
 
     private Logic logic;
+    private CommandBarController commandBarController;
 
     public static void main(String[] args) {
         launch(args);
@@ -74,11 +75,12 @@ public class MainApp extends Application {
     }
 
     private void addCommandBar(MainApp mainApp) {
-        rootLayout.setBottom(new CommandBarController(mainApp));
+        commandBarController = new CommandBarController(mainApp);
+        rootLayout.setBottom(commandBarController);
     }
 
     private void addSummary(MainApp mainApp) {
-        rootLayout.setCenter(new SummaryController(logic.getAuthors()));
+        rootLayout.setCenter(new SummaryController(mainApp, logic.getAuthors()));
     }
 
     private void addFileStats(String authorName) {
@@ -91,28 +93,27 @@ public class MainApp extends Application {
     // Methods which refer to Logic directly
     // ================================================================
 
-    public void handleKeyPress(CommandBarController commandBarController,
-                               KeyCode key,
-                               String userInput) {
+    public void handleKeyPress(KeyCode key, String userInput) {
         if (key == KeyCode.ENTER) {
-            handleEnterPress(commandBarController, userInput);
+            handleEnterPress(userInput);
+        } else if (key == KeyCode.ESCAPE) {
+            addSummary(this);
         }
     }
 
-    private void handleEnterPress(CommandBarController commandBarController,
-                                  String userInput) {
+    private void handleEnterPress(String userInput) {
         switch (logic.executeCommand(userInput)) {
-            
+
             case COLLATE :
                 commandBarController.setFeedback(FEEDBACK_COLLATE_SUCCESSFUL);
             case SUMMARY :
                 addSummary(this);
                 break;
-                
+
             case EXIT :
                 primaryStage.hide();
                 break;
-                
+
             case VIEW :
                 String authorName = logic.getTargetAuthorName();
                 if (authorName != null) {
@@ -126,5 +127,12 @@ public class MainApp extends Application {
                 break;
         }
         commandBarController.clear();
+    }
+
+    public void handleMouseClick(AuthorBean selectedAuthor) {
+        String authorName = selectedAuthor.nameProperty().get();
+        logic.setTargetAuthorIfAuthorExists(authorName);
+        commandBarController.setFeedback(FEEDBACK_EMPTY);
+        addFileStats(authorName);
     }
 }
