@@ -31,9 +31,10 @@ public class TestCollateTui {
         String output = CollateTui.handleUserInput(logic, userInput);
         assertEquals("Author                LOC      Proportion (%)\n"
                      + "---------------------------------------------\n"
-                     + "author2                 5               35.71\n"
-                     + "author1                 8               57.14\n"
-                     + "Long autho...           1                7.14\n",
+                     + "author2                 5               31.25\n"
+                     + "author1                 8                50.0\n"
+                     + "author3-re...           2                12.5\n"
+                     + "Long autho...           1                6.25\n",
                      output);
     }
 
@@ -46,9 +47,10 @@ public class TestCollateTui {
 
         assertEquals("Author                LOC      Proportion (%)\n"
                      + "---------------------------------------------\n"
-                     + "author2                 5               35.71\n"
-                     + "author1                 8               57.14\n"
-                     + "Long autho...           1                7.14\n",
+                     + "author2                 5               31.25\n"
+                     + "author1                 8                50.0\n"
+                     + "author3-re...           2                12.5\n"
+                     + "Long autho...           1                6.25\n",
                      output);
     }
 
