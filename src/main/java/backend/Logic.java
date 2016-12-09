@@ -214,12 +214,24 @@ public class Logic {
         try {
             String[] split = line.split(authorTag);
 
-            // Only alphanumeric characters are allowed in the author's name
-            return split[1].replaceAll(REGEX_NEITHER_ALPHANUMERIC_NOR_SPACE_NOR_DASH,
-                                       STRING_EMPTY).trim();
+            String name = removeForbiddenCharactersInName(split[1]);
+            return name;
+            
         } catch (ArrayIndexOutOfBoundsException e) {
             return STRING_EMPTY;
         }
+    }
+    
+    /**
+     * Removes any characters that are not allowed in the author's name.
+     * 
+     * @param authorName that was found inside the code snippet
+     * @return the new author name without the forbidden characters
+     */
+    private String removeForbiddenCharactersInName(String authorName)
+    {
+        return authorName.replaceAll(REGEX_NEITHER_ALPHANUMERIC_NOR_SPACE_NOR_DASH, 
+                STRING_EMPTY).trim();
     }
 
     private String getFileExtension(File file) {
