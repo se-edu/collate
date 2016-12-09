@@ -32,6 +32,8 @@ public class Logic {
     private static final String MARKDOWN_H6 = "###### %s";
     private static final String MARKDOWN_CODE_LANGUAGE_START = "``` %s";
     private static final String MARKDOWN_CODE_LANGUAGE_END = "```";
+    
+    private static final String HTML_COMMENT_END = "-->";
 
     private static final String STRING_EMPTY = "";
     private static final char STRING_PERIOD = '.';
@@ -214,7 +216,9 @@ public class Logic {
         try {
             String[] split = line.split(authorTag);
 
-            String name = removeForbiddenCharactersInName(split[1]);
+            String name = split[1].trim();
+            name = removeHtmlCommentEndTag(name);
+            name = removeForbiddenCharactersInName(name);
             return name;
             
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -223,13 +227,30 @@ public class Logic {
     }
     
     /**
+     * Removes any HTML comment end tags so that they do not
+     * get retained when processing the author's name later.
+     * 
+     * @param line to remove the comment tag from
+     * @return the same line if no such comment tag was found, the
+     * removed version otherwise
+     */
+    private String removeHtmlCommentEndTag(String line) {
+        String result = line.trim();
+        
+        if (result.endsWith(HTML_COMMENT_END)) {
+            result = result.substring(0, line.length() - HTML_COMMENT_END.length());
+        }
+        
+        return result;
+    }
+    
+    /**
      * Removes any characters that are not allowed in the author's name.
      * 
      * @param authorName that was found inside the code snippet
      * @return the new author name without the forbidden characters
      */
-    private String removeForbiddenCharactersInName(String authorName)
-    {
+    private String removeForbiddenCharactersInName(String authorName) {
         return authorName.replaceAll(REGEX_NEITHER_ALPHANUMERIC_NOR_SPACE_NOR_DASH, 
                 STRING_EMPTY).trim();
     }
