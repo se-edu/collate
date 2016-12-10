@@ -102,11 +102,16 @@ public class TestLogic {
     }
     
     @Test
-    public void testGetAuthorsWithDashAtStartAndEnd() {
+    public void testGetAuthorsWithDashAtStartOrEndOfName() {
+        String expectedAuthor = AUTHOR2;
+        int expectedLinesOfCode = 4;
+        
         logic.executeCommand("collate from " + FULL_PATH_TEST_FILE4);
+        
         assertEquals(1, logic.getAuthors().size());
         for (Author author : logic.getAuthors()) {
-            assertEquals(AUTHOR2, author.getName());
+            assertEquals(expectedAuthor, author.getName());
+            assertEquals(expectedLinesOfCode, author.getLinesOfCode());
         }
     }
     

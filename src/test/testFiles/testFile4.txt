@@ -1,3 +1,9 @@
 
 @@author -author2-
-author name starts and ends with dash, but extracted name will not have the two dashes
+author name starts and ends with dash, but extracted 
+name will not have the two dashes
+@@author -author2
+starting dash should be removed when extracted
+@@author author2-
+ending dash should be removed when extracted
+@@author
