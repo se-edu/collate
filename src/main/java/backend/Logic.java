@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import main.java.data.Author;
 import main.java.data.CodeSnippet;
@@ -36,8 +38,9 @@ public class Logic {
     private static final String STRING_EMPTY = "";
     private static final char STRING_PERIOD = '.';
 
-    private static final String REGEX_NEITHER_ALPHANUMERIC_NOR_SPACE_NOR_DASH =
-        "[^ a-zA-Z0-9\\-]+";
+    private static final String REGEX_AUTHOR_NAME_FORMAT = "(^[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]).*";
+    private static final Pattern PATTERN_AUTHOR_NAME_FORMAT = Pattern.compile(REGEX_AUTHOR_NAME_FORMAT);
+    private static final int MATCHER_GROUP_AUTHOR_NAME = 1;
 
     private static final String ERROR_IO_EXCEPTION =
         "Encountered IOException for %s";
@@ -214,7 +217,7 @@ public class Logic {
         try {
             String[] split = line.split(authorTag);
 
-            String name = removeForbiddenCharactersInName(split[1]);
+            String name = extractAuthorName(split[1]);
             return name;
             
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -223,15 +226,21 @@ public class Logic {
     }
     
     /**
-     * Removes any characters that are not allowed in the author's name.
+     * Extracts the name that follows the specific format.
      * 
-     * @param authorName that was found inside the code snippet
-     * @return the new author name without the forbidden characters
+     * @return an empty string if no such author was found, the new author name otherwise
      */
-    private String removeForbiddenCharactersInName(String authorName)
+    private String extractAuthorName(String authorTagParameters)
     {
-        return authorName.replaceAll(REGEX_NEITHER_ALPHANUMERIC_NOR_SPACE_NOR_DASH, 
-                STRING_EMPTY).trim();
+        String trimmedParameters = authorTagParameters.trim();
+        Matcher matcher = PATTERN_AUTHOR_NAME_FORMAT.matcher(trimmedParameters);
+        
+        boolean foundMatch = matcher.find();        
+        if (!foundMatch) {
+            return STRING_EMPTY;
+        }
+
+        return matcher.group(MATCHER_GROUP_AUTHOR_NAME);
     }
 
     private String getFileExtension(File file) {
