@@ -1,0 +1,3 @@
+
+@@author -author2-
+author name starts and ends with dash, but extracted name will not have the two dashes

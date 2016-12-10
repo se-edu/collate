@@ -20,20 +20,26 @@ public class TestLogic {
     private static final String TEST_FILE1 = "testFile1.txt";
     private static final String TEST_FILE2 = "testFile2.txt";
     private static final String TEST_FILE3 = "testFile3.txt";
+    private static final String TEST_FILE4 = "testFile4.txt";
     private static final String TEST_FILE_HTML = "testFileHtml.html";
     private static final String TEST_FILE_NO_EXTENSION = "testFileNoExtension";
     private static final String TEST_FILE_IN_SUBFOLDER = "testFile1.txt";
     private static final String RELATIVE_PATH_TEST_FILE_IN_SUBFOLDER =
         "subfolder/" + TEST_FILE_IN_SUBFOLDER;
+    
     private static final String FULL_PATH_TEST_FILE1 = "\"" + ROOT_DIR +
                                                        TEST_RESOURCES_DIR +
                                                        TEST_FILE1 + "\"";
     private static final String FULL_PATH_TEST_FILE3 = "\"" + ROOT_DIR +
                                                        TEST_RESOURCES_DIR +
                                                        TEST_FILE3 + "\"";
+    private static final String FULL_PATH_TEST_FILE4 = "\"" + ROOT_DIR +
+                                                       TEST_RESOURCES_DIR +
+                                                       TEST_FILE4 + "\"";
     private static final String FULL_PATH_TEST_FILE_HTML = "\"" + ROOT_DIR +
                                                            TEST_RESOURCES_DIR +
                                                            TEST_FILE_HTML + "\"";
+    
     private static final String AUTHOR1 = "author1";
     private static final String AUTHOR2 = "author2";
     private static final String AUTHOR3_REUSED = "author3-reused";
@@ -96,6 +102,15 @@ public class TestLogic {
     }
     
     @Test
+    public void testGetAuthorsWithDashAtStartAndEnd() {
+        logic.executeCommand("collate from " + FULL_PATH_TEST_FILE4);
+        assertEquals(1, logic.getAuthors().size());
+        for (Author author : logic.getAuthors()) {
+            assertEquals(AUTHOR2, author.getName());
+        }
+    }
+    
+    @Test
     public void testGetAuthorsForHtml() {
         logic.executeCommand("collate from " + FULL_PATH_TEST_FILE_HTML);
         assertEquals(1, logic.getAuthors().size());
@@ -103,7 +118,7 @@ public class TestLogic {
             assertEquals(AUTHOR3_REUSED, author.getName());
         }
     }
-
+    
     @Test
     public void testGetTargetAuthorName() {
         assertEquals(null, logic.getTargetAuthorName());
