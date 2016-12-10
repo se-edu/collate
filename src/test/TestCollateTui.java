@@ -32,9 +32,9 @@ public class TestCollateTui {
         assertEquals("Author                LOC      Proportion (%)\n"
                      + "---------------------------------------------\n"
                      + "author2                 5               27.78\n"
+                     + "Long-autho...           1                5.56\n"
                      + "author1                 8               44.44\n"
-                     + "author3-re...           4               22.22\n"
-                     + "Long autho...           1                5.56\n",
+                     + "author3-re...           4               22.22\n",
                      output);
     }
 
@@ -48,9 +48,9 @@ public class TestCollateTui {
         assertEquals("Author                LOC      Proportion (%)\n"
                      + "---------------------------------------------\n"
                      + "author2                 5               27.78\n"
+                     + "Long-autho...           1                5.56\n"
                      + "author1                 8               44.44\n"
-                     + "author3-re...           4               22.22\n"
-                     + "Long autho...           1                5.56\n",
+                     + "author3-re...           4               22.22\n",
                      output);
     }
 
@@ -66,7 +66,7 @@ public class TestCollateTui {
         assertTrue(output.contains(slash + "subfolder" + slash +
                                    "testFile1.txt                              4              100.00\n"));
 
-        userInput = "view Long author name";
+        userInput = "view Long-author-name";
         output = CollateTui.handleUserInput(logic, userInput);
 
         assertTrue(output.contains("...ceedingly_excessively_long_file_name.txt           1              100.00\n"));

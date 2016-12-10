@@ -1,2 +1,2 @@
-@@author Long author name
+@@author Long-author-name
 line 1
