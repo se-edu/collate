@@ -38,7 +38,7 @@ public class Logic {
     private static final String STRING_EMPTY = "";
     private static final char STRING_PERIOD = '.';
 
-    private static final String REGEX_AUTHOR_NAME_FORMAT = "(^[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]).*";
+    private static final String REGEX_AUTHOR_NAME_FORMAT = "(^[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9])";
     private static final Pattern PATTERN_AUTHOR_NAME_FORMAT = Pattern.compile(REGEX_AUTHOR_NAME_FORMAT);
     private static final int MATCHER_GROUP_AUTHOR_NAME = 1;
 
