@@ -21,7 +21,7 @@ import main.java.data.Author;
  *
  */
 public class SummaryController extends StackPane {
-    
+
     @FXML
     private TableView<AuthorBean> summaryTable;
     @FXML
@@ -33,7 +33,7 @@ public class SummaryController extends StackPane {
 
     private static final String OVERVIEW_LAYOUT_FXML = "/main/resources/layouts/Summary.fxml";
 
-    public SummaryController(Collection<Author> inputSummaryData) {
+    public SummaryController(MainApp mainApp, Collection<Author> inputSummaryData) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(OVERVIEW_LAYOUT_FXML));
         loader.setController(this);
         loader.setRoot(this);
@@ -43,13 +43,18 @@ public class SummaryController extends StackPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         ObservableList<AuthorBean> summaryData = FXCollections.observableArrayList();
         for (Author author : inputSummaryData) {
             summaryData.add(new AuthorBean(author));
         }
 
         summaryTable.setItems(summaryData);
+        summaryTable.getSelectionModel().selectedItemProperty()
+                                        .addListener((observableValue, oldValue, newValue) -> {
+                                                         mainApp.handleMouseClick(newValue);
+                                                     });
+
         authorNameColumn.setCellValueFactory(new PropertyValueFactory<AuthorBean, String>("name"));
         linesOfCodeColumn.setCellValueFactory(new PropertyValueFactory<AuthorBean, Integer>("linesOfCode"));
         proportionColumn.setCellValueFactory(new PropertyValueFactory<AuthorBean, Double>("proportion"));
