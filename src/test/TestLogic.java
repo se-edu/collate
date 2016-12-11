@@ -21,6 +21,7 @@ public class TestLogic {
     private static final String TEST_FILE2 = "testFile2.txt";
     private static final String TEST_FILE3 = "testFile3.txt";
     private static final String TEST_FILE4 = "testFile4.txt";
+    private static final String TEST_FILE5 = "testFile5.txt";
     private static final String TEST_FILE_HTML = "testFileHtml.html";
     private static final String TEST_FILE_NO_EXTENSION = "testFileNoExtension";
     private static final String TEST_FILE_IN_SUBFOLDER = "testFile1.txt";
@@ -36,6 +37,9 @@ public class TestLogic {
     private static final String FULL_PATH_TEST_FILE4 = "\"" + ROOT_DIR +
                                                        TEST_RESOURCES_DIR +
                                                        TEST_FILE4 + "\"";
+    private static final String FULL_PATH_TEST_FILE5 = "\"" + ROOT_DIR +
+                                                       TEST_RESOURCES_DIR +
+                                                       TEST_FILE5 + "\"";
     private static final String FULL_PATH_TEST_FILE_HTML = "\"" + ROOT_DIR +
                                                            TEST_RESOURCES_DIR +
                                                            TEST_FILE_HTML + "\"";
@@ -43,6 +47,7 @@ public class TestLogic {
     private static final String AUTHOR1 = "author1";
     private static final String AUTHOR2 = "author2";
     private static final String AUTHOR3_REUSED = "author3-reused";
+    private static final String AUTHOR4 = "author4";
 
     private Logic logic;
 
@@ -104,9 +109,23 @@ public class TestLogic {
     @Test
     public void testGetAuthorsWithDashAtStartOrEndOfName() {
         String expectedAuthor = AUTHOR2;
-        int expectedLinesOfCode = 4;
+        int expectedLinesOfCode = 5;
         
         logic.executeCommand("collate from " + FULL_PATH_TEST_FILE4);
+        
+        assertEquals(1, logic.getAuthors().size());
+        for (Author author : logic.getAuthors()) {
+            assertEquals(expectedAuthor, author.getName());
+            assertEquals(expectedLinesOfCode, author.getLinesOfCode());
+        }
+    }
+    
+    @Test
+    public void testGetAuthorsWithNonAlphaNumericCharacters() {
+        String expectedAuthor = AUTHOR4;
+        int expectedLinesOfCode = 6;
+        
+        logic.executeCommand("collate from " + FULL_PATH_TEST_FILE5);
         
         assertEquals(1, logic.getAuthors().size());
         for (Author author : logic.getAuthors()) {

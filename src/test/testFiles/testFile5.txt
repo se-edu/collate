@@ -1,0 +1,15 @@
+
+@@author (author4
+line 1
+@@author %%%%author4
+line 2
+@@author author4)
+line 3
+@@author author4#####
+line 4
+@@author [author4]
+line 5
+@@author -@-@author4^-^-
+line 6
+@@author
+ 
