@@ -31,9 +31,11 @@ public class TestCollateTui {
         String output = CollateTui.handleUserInput(logic, userInput);
         assertEquals("Author                LOC      Proportion (%)\n"
                      + "---------------------------------------------\n"
-                     + "author2                 5               35.71\n"
-                     + "author1                 8               57.14\n"
-                     + "Long autho...           1                7.14\n",
+                     + "author2                10               34.48\n"
+                     + "Long-autho...           1                3.45\n"
+                     + "author1                 8               27.59\n"
+                     + "author3-re...           4               13.79\n"
+                     + "author4                 6               20.69\n",
                      output);
     }
 
@@ -46,9 +48,11 @@ public class TestCollateTui {
 
         assertEquals("Author                LOC      Proportion (%)\n"
                      + "---------------------------------------------\n"
-                     + "author2                 5               35.71\n"
-                     + "author1                 8               57.14\n"
-                     + "Long autho...           1                7.14\n",
+                     + "author2                10               34.48\n"
+                     + "Long-autho...           1                3.45\n"
+                     + "author1                 8               27.59\n"
+                     + "author3-re...           4               13.79\n"
+                     + "author4                 6               20.69\n",
                      output);
     }
 
@@ -64,7 +68,7 @@ public class TestCollateTui {
         assertTrue(output.contains(slash + "subfolder" + slash +
                                    "testFile1.txt                              4              100.00\n"));
 
-        userInput = "view Long author name";
+        userInput = "view Long-author-name";
         output = CollateTui.handleUserInput(logic, userInput);
 
         assertTrue(output.contains("...ceedingly_excessively_long_file_name.txt           1              100.00\n"));

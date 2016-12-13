@@ -19,15 +19,25 @@ public class TestLogic {
     private static final String TEST_RESOURCES_DIR = "/src/test/testFiles/";
     private static final String TEST_FILE1 = "testFile1.txt";
     private static final String TEST_FILE2 = "testFile2.txt";
+    private static final String TEST_FILE3 = "testFile3.txt";
+    private static final String TEST_FILE4 = "testFile4.txt";
+    private static final String TEST_FILE5 = "testFile5.txt";
+    private static final String TEST_FILE_HTML = "testFileHtml.html";
     private static final String TEST_FILE_NO_EXTENSION = "testFileNoExtension";
     private static final String TEST_FILE_IN_SUBFOLDER = "testFile1.txt";
     private static final String RELATIVE_PATH_TEST_FILE_IN_SUBFOLDER =
         "subfolder/" + TEST_FILE_IN_SUBFOLDER;
-    private static final String FULL_PATH_TEST_FILE1 = "\"" + ROOT_DIR +
-                                                       TEST_RESOURCES_DIR +
-                                                       TEST_FILE1 + "\"";
+    
+    private static final String FULL_PATH_TEST_FILE1 = getFullPath(TEST_FILE1);
+    private static final String FULL_PATH_TEST_FILE3 = getFullPath(TEST_FILE3);
+    private static final String FULL_PATH_TEST_FILE4 = getFullPath(TEST_FILE4);
+    private static final String FULL_PATH_TEST_FILE5 = getFullPath(TEST_FILE5);
+    private static final String FULL_PATH_TEST_FILE_HTML = getFullPath(TEST_FILE_HTML);
+    
     private static final String AUTHOR1 = "author1";
     private static final String AUTHOR2 = "author2";
+    private static final String AUTHOR3_REUSED = "author3-reused";
+    private static final String AUTHOR4 = "author4";
 
     private Logic logic;
 
@@ -67,16 +77,32 @@ public class TestLogic {
 
         assertEquals(Command.Type.INVALID, logic.executeCommand("from"));
     }
-
+    
     @Test
     public void testGetAuthors() {
-        logic.executeCommand("collate from " + FULL_PATH_TEST_FILE1);
-        assertEquals(1, logic.getAuthors().size());
-        for (Author author : logic.getAuthors()) {
-            assertEquals(AUTHOR1, author.getName());
-        }
+        assertCollatedOneAuthor(FULL_PATH_TEST_FILE1, AUTHOR1);
     }
-
+    
+    @Test
+    public void testGetAuthorsWithDashesInName() {
+        assertCollatedOneAuthor(FULL_PATH_TEST_FILE3, AUTHOR3_REUSED);
+    }
+    
+    @Test
+    public void testGetAuthorsWithDashAtStartOrEndOfName() {
+        assertCollatedOneAuthorWithLinesOfCode(FULL_PATH_TEST_FILE4, AUTHOR2, 5);
+    }
+    
+    @Test
+    public void testGetAuthorsWithNonAlphaNumericCharacters() {
+        assertCollatedOneAuthorWithLinesOfCode(FULL_PATH_TEST_FILE5, AUTHOR4, 6);
+    }
+    
+    @Test
+    public void testGetAuthorsForHtml() {
+        assertCollatedOneAuthor(FULL_PATH_TEST_FILE_HTML, AUTHOR3_REUSED);
+    }
+    
     @Test
     public void testGetTargetAuthorName() {
         assertEquals(null, logic.getTargetAuthorName());
@@ -114,5 +140,37 @@ public class TestLogic {
             }
         }
     }
-
+    
+    /**
+     * Expands into the full path for the file.
+     */
+    private static String getFullPath(String fileName) {
+        return "\"" + ROOT_DIR + TEST_RESOURCES_DIR + fileName + "\"";
+    }
+    
+    /**
+     * Asserts that collation is only done for the specified author for the file given.
+     */
+    private void assertCollatedOneAuthor(String filePath, String expectedAuthor) {
+        logic.executeCommand("collate from " + filePath);
+        assertEquals(1, logic.getAuthors().size());
+        for (Author author : logic.getAuthors()) {
+            assertEquals(expectedAuthor, author.getName());
+        }
+    }
+    
+    /**
+     * Asserts that collation is only done for the specified author for the file given,
+     * with the correct amount of lines of code.
+     */
+    private void assertCollatedOneAuthorWithLinesOfCode(String filePath, String expectedAuthor, 
+                                                        int expectedLinesOfCode) {
+        
+        logic.executeCommand("collate from " + filePath);
+        assertEquals(1, logic.getAuthors().size());
+        for (Author author : logic.getAuthors()) {
+            assertEquals(expectedAuthor, author.getName());
+            assertEquals(expectedLinesOfCode, author.getLinesOfCode());
+        }
+    }
 }
