@@ -57,7 +57,7 @@ To learn more details of Collate features, refer to the 'Feature Details' sectio
 ## Marking code
 Using the `@@author` tag, you can specify the lines of code that you have written. 
 Lines between your author tag and the next author tag will be marked as yours. 
-Your name can include letters and numbers.
+Your name can include alphanumeric characters and dashes `-`.
 > Tip: Make sure to use the same name so that the code you wrote will be saved correctly in a single file.
 
 You can include any type of file, as long as the `@@author` tag is present.
