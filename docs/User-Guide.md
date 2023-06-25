@@ -160,6 +160,7 @@ Here's an example.<br>
 `java -jar Collate-TUI.jar collate from src to collated`
 
 # Cheatsheet
+
 Command | Description
 --------| ------------
 `collate from <INPUT_FOLDER>` | Collates all files within `<INPUT_FOLDER>` including subfolders and puts the collated files in the same folder
